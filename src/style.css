@@ -1004,7 +1004,7 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
   font-weight: 600;
 }
 
-/* Central Orb */
+/* Central Orb — absolutely centred on desktop, static on mobile (see responsive) */
 .about__central-orb {
   position: absolute;
   top: 50%;
@@ -1012,6 +1012,11 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
   transform: translate(-50%, -50%);
   width: 160px;
   height: 160px;
+}
+
+/* Row wrapper — transparent passthrough on desktop; flex on mobile via media query */
+.about__metric-cards-row {
+  display: contents; /* invisible wrapper on desktop */
 }
 
 .about__orb-ring {
@@ -2143,9 +2148,41 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
   }
   .hero__scroll-indicator { display: none; }
 
-  /* About */
-  .about__visual { height: 320px; }
-  .about__metric-card { width: 180px; padding: 16px 20px; }
+  /* About — switch from absolute float layout to flex column */
+  .about__visual {
+    height: auto;
+  }
+  .about__card-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    position: static;
+    height: auto;
+  }
+  /* Orb is static block on mobile */
+  .about__central-orb {
+    position: static;
+    transform: none;
+    margin: 0 auto 4px;
+  }
+  /* Activate the row wrapper as flex */
+  .about__metric-cards-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    width: 100%;
+  }
+  /* All metric cards: reset absolute positioning */
+  .about__metric-card {
+    position: static;
+    transform: none !important;
+    animation: cardFloat 6s ease-in-out infinite;
+    flex: 1 1 140px;
+    max-width: 200px;
+    padding: 16px 18px;
+  }
   .about__metric-num { font-size: 15px; }
 
   /* Services 3D cube — scale down on mobile */
@@ -2213,15 +2250,13 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
   [data-animate="slideRight"] { transform: translateX(30px); }
   [data-animate="cardReveal"] { transform: translateY(40px) scale(0.97); }
 
-  /* About */
-  .about__visual { height: auto; min-height: 340px; }
-  .about__metric-card--1 { top: 20px; right: 10px; }
-  .about__metric-card--3 { bottom: 20px; right: 10px; }
-  .about__central-orb { width: 130px; height: 130px; }
-  .about__orb-core { width: 90px; height: 90px; }
-  .about__orb-ring--1 { width: 130px; height: 130px; }
-  .about__orb-ring--2 { width: 180px; height: 180px; }
+  /* About — smaller orb on small phones */
+  .about__central-orb { width: 120px; height: 120px; }
+  .about__orb-core { width: 80px; height: 80px; }
+  .about__orb-ring--1 { width: 120px; height: 120px; }
+  .about__orb-ring--2 { width: 170px; height: 170px; }
   .about__orb-ring--3 { display: none; }
+  .about__metric-card { flex: 1 1 120px; max-width: 160px; padding: 12px 14px; }
   .about__pillar { padding: 16px 18px; gap: 14px; }
 
   /* Services extras */

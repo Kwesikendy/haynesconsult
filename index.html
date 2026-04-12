@@ -219,6 +219,17 @@
       <div class="about__right" data-animate="slideRight">
         <div class="about__visual">
           <div class="about__card-stack">
+            <!-- Central graphic — sits above cards on mobile (DOM order matters) -->
+            <div class="about__central-orb">
+              <div class="about__orb-ring about__orb-ring--1"></div>
+              <div class="about__orb-ring about__orb-ring--2"></div>
+              <div class="about__orb-ring about__orb-ring--3"></div>
+              <div class="about__orb-core">
+                <img src="/logo.jpeg" alt="HC" />
+              </div>
+            </div>
+            <!-- Metric cards in a row wrapper for mobile flex layout -->
+            <div class="about__metric-cards-row">
             <div class="glass-card about__metric-card about__metric-card--1">
               <div class="about__metric-icon">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-1.96-3 2.5 2.5 0 0 1-1.32-4.24 3 3 0 0 1 .34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.18-2.46"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 1.96-3 2.5 2.5 0 0 0 1.32-4.24 3 3 0 0 0-.34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.18-2.46"/></svg>
@@ -245,17 +256,9 @@
                 <span class="about__metric-num">Global</span>
                 <span class="about__metric-label">Reach</span>
               </div>
-            </div>
-            <!-- Central graphic -->
-            <div class="about__central-orb">
-              <div class="about__orb-ring about__orb-ring--1"></div>
-              <div class="about__orb-ring about__orb-ring--2"></div>
-              <div class="about__orb-ring about__orb-ring--3"></div>
-              <div class="about__orb-core">
-                <img src="/logo.jpeg" alt="HC" />
-              </div>
-            </div>
-          </div>
+            </div><!-- /.about__metric-card--3 -->
+            </div><!-- /.about__metric-cards-row -->
+          </div><!-- /.about__card-stack -->
         </div>
       </div>
     </div>
