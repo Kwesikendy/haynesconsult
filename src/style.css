@@ -590,39 +590,89 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
   50% { transform: scale(1.5); opacity: 0.6; }
 }
 
-.hero__title {
-  font-family: var(--font-head);
-  font-size: clamp(52px, 9vw, 100px);
-  font-weight: 900;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
+/* ---- HERO WORDMARK (main attraction) ---- */
+.hero__wordmark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
   margin-bottom: 32px;
   overflow: hidden;
 }
 
-.hero__title-line {
+.hero__wordmark-line {
   display: block;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  line-height: 0.95;
   opacity: 0;
-  transform: translateY(100%);
+  transform: translateY(60px);
 }
 
-.hero__title-line--accent {
-  background: linear-gradient(135deg, var(--sky) 0%, var(--sky-light) 50%, var(--white) 100%);
+/* "Haynes" — light, very large, wide-tracked */
+.hero__wordmark-line--main {
+  font-size: clamp(80px, 18vw, 200px);
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  color: var(--white);
+  text-transform: uppercase;
+}
+
+/* "Consult" — bold, slightly smaller, fills the contrast */
+.hero__wordmark-line--sub {
+  font-size: clamp(40px, 9vw, 100px);
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, var(--sky) 0%, var(--sky-light) 60%, rgba(255,255,255,0.9) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 0 16px rgba(61, 168, 245, 0.3));
+  margin-top: -4px;
 }
 
-.hero__subtitle {
-  font-size: clamp(16px, 2.2vw, 22px);
-  color: rgba(255,255,255,0.65);
-  max-width: 640px;
-  margin: 0 auto 48px;
-  line-height: 1.7;
+/* Thin decorative rule between wordmark and tagline */
+.hero__rule {
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(61, 168, 245, 0.6), transparent);
+  margin: 0 auto 32px;
   opacity: 0;
-  transform: translateY(30px);
+  transition: none;
+}
+
+/* Tagline — professional secondary headline */
+.hero__tagline {
+  font-family: var(--font-head);
+  font-size: clamp(18px, 3vw, 30px);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 20px;
+  opacity: 0;
+  transform: translateY(20px);
+  line-height: 1.4;
+}
+
+.hero__tagline .text-accent {
+  font-weight: 600;
+  color: var(--sky);
+  -webkit-text-fill-color: var(--sky);
+}
+
+/* Keep old .hero__title class intact so no JS references break */
+.hero__title { display: none; }
+.hero__title-line { display: none; }
+
+.hero__subtitle {
+  font-size: clamp(14px, 1.8vw, 17px);
+  color: rgba(255,255,255,0.5);
+  max-width: 540px;
+  margin: 0 auto 48px;
+  line-height: 1.8;
+  opacity: 0;
+  transform: translateY(20px);
+  font-weight: 300;
+  letter-spacing: 0.01em;
 }
 
 .hero__actions {
@@ -2147,6 +2197,10 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
     font-size: clamp(28px, 8vw, 44px);
   }
   .hero__scroll-indicator { display: none; }
+  /* Wordmark responsive tweaks */
+  .hero__wordmark-line--main { letter-spacing: 0.06em; }
+  .hero__wordmark-line--sub  { letter-spacing: 0.18em; }
+  .hero__tagline { font-size: clamp(16px, 4vw, 22px); }
 
   /* About — switch from absolute float layout to flex column */
   .about__visual {

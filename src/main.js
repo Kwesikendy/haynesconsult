@@ -239,11 +239,23 @@ function initCanvas() {
 ============================================================ */
 function initHeroAnimations() {
   const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
-  tl.to('.hero__badge',      { opacity: 1, y: 0, duration: 0.75 })
-    .to('.hero__title-line', { opacity: 1, y: 0, duration: 0.9, stagger: 0.1 }, '-=0.35')
-    .to('.hero__subtitle',   { opacity: 1, y: 0, duration: 0.75 }, '-=0.4')
-    .to('.hero__actions',    { opacity: 1, y: 0, duration: 0.75 }, '-=0.4')
-    .to('.hero__stats',      { opacity: 1, y: 0, duration: 0.75 }, '-=0.3');
+  tl
+    // 1. Eyebrow badge fades in
+    .to('.hero__badge',              { opacity: 1, y: 0, duration: 0.7 })
+    // 2. "HAYNES" rises up
+    .to('.hero__wordmark-line--main',{ opacity: 1, y: 0, duration: 1.1, ease: 'power3.out' }, '-=0.3')
+    // 3. "CONSULT" follows right after
+    .to('.hero__wordmark-line--sub', { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, '-=0.55')
+    // 4. Rule expands left→right
+    .to('.hero__rule',               { opacity: 1, width: '280px', duration: 0.7, ease: 'power2.inOut' }, '-=0.3')
+    // 5. Tagline
+    .to('.hero__tagline',            { opacity: 1, y: 0, duration: 0.7 }, '-=0.2')
+    // 6. Subtitle
+    .to('.hero__subtitle',           { opacity: 1, y: 0, duration: 0.65 }, '-=0.4')
+    // 7. Buttons
+    .to('.hero__actions',            { opacity: 1, y: 0, duration: 0.65 }, '-=0.35')
+    // 8. Stats
+    .to('.hero__stats',              { opacity: 1, y: 0, duration: 0.65 }, '-=0.3');
 }
 
 /* ============================================================

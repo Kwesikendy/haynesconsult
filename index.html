@@ -15,7 +15,7 @@
   <link rel="icon" type="image/jpeg" href="/logo.jpeg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/src/style.css" />
 </head>
 <body>
@@ -84,19 +84,32 @@
     <div class="hero__grid-overlay"></div>
     <div class="hero__particles" id="heroParticles"></div>
     <div class="hero__container">
+
+      <!-- Eyebrow label -->
       <div class="hero__badge" data-animate="fadeUp">
         <span class="hero__badge-dot"></span>
-        <span>AI · Automation · Clinic Systems</span>
+        <span>Strategy &middot; Technology &middot; Growth</span>
       </div>
-      <h1 class="hero__title" data-animate="heroTitle">
-        <span class="hero__title-line">Built for</span>
-        <span class="hero__title-line hero__title-line--accent">Scale.</span>
-        <span class="hero__title-line">Designed for</span>
-        <span class="hero__title-line hero__title-line--accent">Results.</span>
+
+      <!-- Brand wordmark — the main attraction -->
+      <div class="hero__wordmark" data-animate="heroTitle">
+        <span class="hero__wordmark-line hero__wordmark-line--main">Haynes</span>
+        <span class="hero__wordmark-line hero__wordmark-line--sub">Consult</span>
+      </div>
+
+      <!-- Thin separator -->
+      <div class="hero__rule" data-animate="fadeUp"></div>
+
+      <!-- Tagline — comes after the brand name -->
+      <h1 class="hero__tagline" data-animate="fadeUp">
+        Built for Scale. <span class="text-accent">Designed for Results.</span>
       </h1>
+
       <p class="hero__subtitle" data-animate="fadeUp">
-        We identify inefficiencies, design tailored digital strategies, and implement technology solutions that transform how businesses operate.
+        We identify inefficiencies, design tailored digital strategies,
+        and implement technology solutions that transform how businesses operate.
       </p>
+
       <div class="hero__actions" data-animate="fadeUp">
         <a href="#services" class="btn btn--primary btn--lg btn--glow" id="heroCtaMain">
           <span>Explore Our Services</span>
@@ -106,6 +119,7 @@
           <span>Book a Consultation</span>
         </a>
       </div>
+
       <div class="hero__stats" data-animate="fadeUp">
         <div class="hero__stat">
           <span class="hero__stat-num" data-count="150">0</span><span class="hero__stat-plus">+</span>
