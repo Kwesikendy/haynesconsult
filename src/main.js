@@ -1,15 +1,7 @@
 /**
- * HAYNES CONSULT — MAIN JS (Performance-Optimised Build)
- *
- * ✅ Three.js REMOVED — replaced with 2D Canvas particle system (~2KB vs ~600KB)
- * ✅ All mousemove handlers throttled via rAF flag (not raw event)
- * ✅ Magnetic buttons removed (CPU-heavy, bad UX on trackpads)
- * ✅ Card 3D tilt scoped to SERVICE CARDS only (was on every .glass-card)
- * ✅ Multiple scroll listeners collapsed into ONE passive listener
- * ✅ DOM particles reduced from 40 → 0 (canvas does it instead)
- * ✅ GSAP ScrollTrigger uses 'once:true' everywhere — no per-frame scrubbing except process line
- * ✅ Parallax orb effect throttled with pointer-event flag
- * ✅ All event listeners use { passive: true } where applicable
+ * HAYNES CONSULT — MAIN JS
+ * Premium Light-Theme Rebuild
+ * Typing animation hero · Crystal navbar · Floating blobs
  */
 
 import './style.css';
@@ -19,19 +11,17 @@ import Lenis from 'lenis';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Mobile detection — used to scale down animation magnitudes
 const isMobile = window.matchMedia('(max-width: 768px)').matches;
 const isTouch  = window.matchMedia('(pointer: coarse)').matches;
 
 /* ============================================================
    SMOOTH SCROLL — LENIS
-   Single rAF loop drives both Lenis and ScrollTrigger
 ============================================================ */
 const lenis = new Lenis({
   duration: 1.1,
   easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
   smoothWheel: true,
-  syncTouch: false, // Don't override native mobile scroll
+  syncTouch: false,
 });
 
 function raf(time) {
@@ -41,7 +31,6 @@ function raf(time) {
 }
 requestAnimationFrame(raf);
 
-// Anchor smooth scroll
 document.querySelectorAll('a[href^="#"]').forEach((el) => {
   el.addEventListener('click', (e) => {
     const href = el.getAttribute('href');
@@ -55,7 +44,7 @@ document.querySelectorAll('a[href^="#"]').forEach((el) => {
 });
 
 /* ============================================================
-   LOADER
+   LOADER — Light Theme
 ============================================================ */
 const loader = document.getElementById('loader');
 const loaderProgress = document.getElementById('loaderProgress');
@@ -80,14 +69,14 @@ function hideLoader() {
     ease: 'power2.inOut',
     onComplete: () => {
       loader.style.display = 'none';
-      initHeroAnimations();
-      initCanvas(); // Start canvas AFTER loader hides
+      initHeroTypingAnimation();
+      initCanvas();
     },
   });
 }
 
 /* ============================================================
-   CUSTOM CURSOR — rAF-based (no direct transform on mousemove)
+   CUSTOM CURSOR
 ============================================================ */
 const cursor = document.getElementById('cursor');
 const cursorFollower = document.getElementById('cursorFollower');
@@ -114,7 +103,6 @@ if (cursor && cursorFollower && window.matchMedia('(pointer: fine)').matches && 
     ticking = false;
   }
 
-  // Hover classes (pointer-events make this cheap)
   document.addEventListener('mouseover', (e) => {
     if (e.target.closest('a, button, .services__card, .services__extra-item')) {
       document.body.classList.add('cursor--hover');
@@ -128,8 +116,7 @@ if (cursor && cursorFollower && window.matchMedia('(pointer: fine)').matches && 
 }
 
 /* ============================================================
-   LIGHTWEIGHT HERO CANVAS — Native 2D Canvas API
-   ~2KB logic, GPU-composited, pauses when off-screen
+   HERO CANVAS — updated for light background
 ============================================================ */
 function initCanvas() {
   const canvas = document.getElementById('heroCanvas');
@@ -144,22 +131,26 @@ function initCanvas() {
     buildParticles();
   }
 
-  const COLORS = ['#3DA8F5', '#1565C0', '#0D2B7E', '#EAF4FB', '#FFFFFF'];
+  // Light blue / navy particles for light background
+  const COLORS = [
+    'rgba(21,101,192,0.5)',
+    'rgba(61,168,245,0.5)',
+    'rgba(13,43,126,0.35)',
+    'rgba(61,168,245,0.3)',
+  ];
 
   function buildParticles() {
-    // 120 particles — good visual density, very low CPU
-    particles = Array.from({ length: 120 }, () => ({
+    particles = Array.from({ length: 80 }, () => ({
       x: Math.random() * W,
       y: Math.random() * H,
-      r: Math.random() * 1.8 + 0.4,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.25,
-      alpha: Math.random() * 0.55 + 0.1,
+      r: Math.random() * 2.2 + 0.6,
+      vx: (Math.random() - 0.5) * 0.25,
+      vy: (Math.random() - 0.5) * 0.2,
+      alpha: Math.random() * 0.4 + 0.1,
       color: COLORS[Math.floor(Math.random() * COLORS.length)],
     }));
   }
 
-  // Mouse parallax — throttled, low magnitude
   let pmx = 0, pmy = 0, mouseReady = false;
   document.addEventListener('mousemove', (e) => {
     pmx = (e.clientX / window.innerWidth  - 0.5) * 0.4;
@@ -170,7 +161,6 @@ function initCanvas() {
   let animId;
   let isVisible = true;
 
-  // Pause when hero scrolls out of view — saves CPU when user has scrolled down
   const heroObserver = new IntersectionObserver(([entry]) => {
     isVisible = entry.isIntersecting;
     if (isVisible && !animId) draw();
@@ -184,11 +174,9 @@ function initCanvas() {
     ctx.clearRect(0, 0, W, H);
 
     particles.forEach((p) => {
-      // Drift
-      p.x += p.vx + (mouseReady ? pmx * 0.15 : 0);
-      p.y += p.vy + (mouseReady ? pmy * 0.1  : 0);
+      p.x += p.vx + (mouseReady ? pmx * 0.1 : 0);
+      p.y += p.vy + (mouseReady ? pmy * 0.08 : 0);
 
-      // Wrap around edges
       if (p.x < -5) p.x = W + 5;
       if (p.x > W + 5) p.x = -5;
       if (p.y < -5) p.y = H + 5;
@@ -201,19 +189,19 @@ function initCanvas() {
       ctx.fill();
     });
 
-    // Draw connection lines between nearby particles (max 60 checks)
-    ctx.lineWidth = 0.4;
-    for (let i = 0; i < 60; i++) {
+    // Connection lines — blue on light bg
+    ctx.lineWidth = 0.5;
+    for (let i = 0; i < 50; i++) {
       const a = particles[i];
-      for (let j = i + 1; j < 70; j++) {
+      for (let j = i + 1; j < 60; j++) {
         const b = particles[j];
         const dx = a.x - b.x;
         const dy = a.y - b.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 90) {
+        if (dist < 100) {
           ctx.beginPath();
-          ctx.globalAlpha = (1 - dist / 90) * 0.12;
-          ctx.strokeStyle = '#3DA8F5';
+          ctx.globalAlpha = (1 - dist / 100) * 0.1;
+          ctx.strokeStyle = 'rgba(21,101,192,0.8)';
           ctx.moveTo(a.x, a.y);
           ctx.lineTo(b.x, b.y);
           ctx.stroke();
@@ -224,7 +212,6 @@ function initCanvas() {
     ctx.globalAlpha = 1;
   }
 
-  // Debounced resize
   let resizeTimer;
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
@@ -235,27 +222,127 @@ function initCanvas() {
 }
 
 /* ============================================================
-   HERO ANIMATIONS
+   HERO TYPING ANIMATION
+   Types "Haynes" then "Consult" with cursor, then continues
 ============================================================ */
-function initHeroAnimations() {
+function initHeroTypingAnimation() {
+  const mainLine = document.querySelector('.hero__wordmark-line--main');
+  const subLine  = document.querySelector('.hero__wordmark-line--sub');
+
+  if (!mainLine || !subLine) {
+    initHeroFallback();
+    return;
+  }
+
+  const mainText = 'HAYNES';
+  const subText  = 'CONSULT';
+
+  // Set data-text for shimmer pseudo-element
+  mainLine.dataset.text = mainText;
+
+  // Make lines visible but empty
+  mainLine.style.opacity = '1';
+  mainLine.textContent = '';
+  subLine.style.opacity = '1';
+  subLine.textContent = '';
+
+  // Create blinking cursor
+  const typingCursor = document.createElement('span');
+  typingCursor.className = 'hero__typing-cursor';
+  mainLine.appendChild(typingCursor);
+
+  // Phase 1: Fade badge in
+  gsap.to('.hero__badge', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' });
+
+  // Phase 2: Type "HAYNES" after 0.5s
+  let charIndex = 0;
+  const typeMain = () => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const interval = setInterval(() => {
+          if (charIndex < mainText.length) {
+            mainLine.textContent = mainText.slice(0, charIndex + 1);
+            mainLine.appendChild(typingCursor);
+            charIndex++;
+          } else {
+            clearInterval(interval);
+            resolve();
+          }
+        }, 80); // type speed per character
+      }, 600);
+    });
+  };
+
+  // Phase 3: Move cursor to sub line and type "CONSULT"
+  const typeSub = () => {
+    return new Promise((resolve) => {
+      // Brief pause before typing Consult
+      setTimeout(() => {
+        // Move cursor to sub
+        if (typingCursor.parentNode) typingCursor.parentNode.removeChild(typingCursor);
+        subLine.textContent = '';
+        subLine.appendChild(typingCursor);
+
+        let i = 0;
+        const interval = setInterval(() => {
+          if (i < subText.length) {
+            subLine.textContent = subText.slice(0, i + 1);
+            subLine.appendChild(typingCursor);
+            i++;
+          } else {
+            clearInterval(interval);
+            resolve();
+          }
+        }, 100);
+      }, 300);
+    });
+  };
+
+  // Phase 4: Remove cursor and animate rest of hero
+  const finishHero = () => {
+    setTimeout(() => {
+      // Cursor fades and disappears after a couple more blinks
+      setTimeout(() => {
+        if (typingCursor.parentNode) {
+          gsap.to(typingCursor, {
+            opacity: 0, duration: 0.4,
+            onComplete: () => typingCursor.parentNode?.removeChild(typingCursor),
+          });
+        }
+      }, 1200);
+
+      // Now shimmer effect on mainLine text needs data-text reset
+      mainLine.dataset.text = mainText;
+
+      // Animate rule expands
+      gsap.to('.hero__rule', { opacity: 1, width: '280px', duration: 0.7, ease: 'power2.inOut' });
+
+      // Cascade rest of hero elements
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+      tl
+        .to('.hero__tagline',   { opacity: 1, y: 0, duration: 0.7 })
+        .to('.hero__subtitle',  { opacity: 1, y: 0, duration: 0.65 }, '-=0.4')
+        .to('.hero__actions',   { opacity: 1, y: 0, duration: 0.65 }, '-=0.35')
+        .to('.hero__stats',     { opacity: 1, y: 0, duration: 0.65 }, '-=0.3');
+
+    }, 400);
+  };
+
+  // Run sequence
+  typeMain().then(() => typeSub()).then(finishHero);
+}
+
+function initHeroFallback() {
   const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
   tl
-    // 1. Eyebrow badge fades in
-    .to('.hero__badge',              { opacity: 1, y: 0, duration: 0.7 })
-    // 2. "HAYNES" rises up
-    .to('.hero__wordmark-line--main',{ opacity: 1, y: 0, duration: 1.1, ease: 'power3.out' }, '-=0.3')
-    // 3. "CONSULT" follows right after
-    .to('.hero__wordmark-line--sub', { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, '-=0.55')
-    // 4. Rule expands left→right
-    .to('.hero__rule',               { opacity: 1, width: '280px', duration: 0.7, ease: 'power2.inOut' }, '-=0.3')
-    // 5. Tagline
-    .to('.hero__tagline',            { opacity: 1, y: 0, duration: 0.7 }, '-=0.2')
-    // 6. Subtitle
-    .to('.hero__subtitle',           { opacity: 1, y: 0, duration: 0.65 }, '-=0.4')
-    // 7. Buttons
-    .to('.hero__actions',            { opacity: 1, y: 0, duration: 0.65 }, '-=0.35')
-    // 8. Stats
-    .to('.hero__stats',              { opacity: 1, y: 0, duration: 0.65 }, '-=0.3');
+    .to('.hero__badge',               { opacity: 1, y: 0, duration: 0.7 })
+    .to('.hero__wordmark-line--main', { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out' }, '-=0.3')
+    .to('.hero__wordmark-line--sub',  { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, '-=0.55')
+    .to('.hero__rule',                { opacity: 1, width: '280px', duration: 0.7, ease: 'power2.inOut' }, '-=0.3')
+    .to('.hero__tagline',             { opacity: 1, y: 0, duration: 0.7 }, '-=0.2')
+    .to('.hero__subtitle',            { opacity: 1, y: 0, duration: 0.65 }, '-=0.4')
+    .to('.hero__actions',             { opacity: 1, y: 0, duration: 0.65 }, '-=0.35')
+    .to('.hero__stats',               { opacity: 1, y: 0, duration: 0.65 }, '-=0.3');
 }
 
 /* ============================================================
@@ -280,9 +367,8 @@ ScrollTrigger.create({
 });
 
 /* ============================================================
-   SCROLL ANIMATIONS — all use once:true (no per-frame cost)
+   SCROLL ANIMATIONS
 ============================================================ */
-// Batch all [data-animate] types for efficiency
 const animMap = {
   fadeUp:      { y: 40, opacity: 0 },
   slideLeft:   { x: -60, opacity: 0 },
@@ -302,13 +388,11 @@ Object.keys(animMap).forEach((type) => {
   });
 });
 
-// CTA section
 gsap.to('.cta-section__content', {
   opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
   scrollTrigger: { trigger: '.cta-section', start: 'top 78%', once: true },
 });
 
-// Process line draw (scrub is fine — it's just a CSS transform, no layout)
 gsap.fromTo('.process__line',
   { scaleY: 0 },
   {
@@ -322,11 +406,10 @@ gsap.fromTo('.process__line',
 );
 
 /* ============================================================
-   SCROLL LISTENER — SINGLE unified passive handler
+   SCROLL LISTENER
 ============================================================ */
 const nav = document.getElementById('nav');
 const backToTop = document.getElementById('backToTop');
-let lastScroll = 0;
 let scrollRaf = false;
 
 window.addEventListener('scroll', () => {
@@ -339,15 +422,12 @@ window.addEventListener('scroll', () => {
 function handleScroll() {
   scrollRaf = false;
   const y = window.scrollY;
-  // Nav
   nav?.classList.toggle('nav--scrolled', y > 60);
-  // Back to top
   backToTop?.classList.toggle('visible', y > 400);
-  lastScroll = y;
 }
 
 /* ============================================================
-   ACTIVE NAV LINKS — IntersectionObserver (no scroll math)
+   ACTIVE NAV LINKS
 ============================================================ */
 const navLinks = document.querySelectorAll('.nav__link');
 const sections = document.querySelectorAll('section[id]');
@@ -416,7 +496,9 @@ document.getElementById('contactForm')?.addEventListener('submit', async (e) => 
   }, 3000);
 });
 
-// Mouse parallax — disabled on touch devices
+/* ============================================================
+   BLOB MOUSE PARALLAX (replaces orb parallax)
+============================================================ */
 let pxTick = false;
 if (!isTouch) {
   document.addEventListener('mousemove', (e) => {
@@ -425,36 +507,38 @@ if (!isTouch) {
     requestAnimationFrame(() => {
       const mx = (e.clientX / window.innerWidth  - 0.5);
       const my = (e.clientY / window.innerHeight - 0.5);
-      const o1 = document.querySelector('.hero__orb--1');
-      const o2 = document.querySelector('.hero__orb--2');
-      if (o1) o1.style.transform = `translate(${mx * -25}px, ${my * -18}px)`;
-      if (o2) o2.style.transform = `translate(${mx * 18}px, ${my * 13}px)`;
+      const b1 = document.querySelector('.hero__blob--1');
+      const b2 = document.querySelector('.hero__blob--2');
+      const b3 = document.querySelector('.hero__blob--3');
+      const b4 = document.querySelector('.hero__blob--4');
+      if (b1) b1.style.transform = `translate(${mx * -28}px, ${my * -20}px)`;
+      if (b2) b2.style.transform = `translate(${mx * 22}px, ${my * 16}px)`;
+      if (b3) b3.style.transform = `translate(${mx * -15}px, ${my * -12}px)`;
+      if (b4) b4.style.transform = `translate(${mx * 18}px, ${my * 14}px)`;
       pxTick = false;
     });
   }, { passive: true });
 }
 
 /* ============================================================
-   SERVICE CARD 3D TILT — scoped to service cards ONLY
-   Reduced magnitude on mobile
+   SERVICE CARD 3D TILT
 ============================================================ */
 document.querySelectorAll('.services__card').forEach((card) => {
-  if (isTouch) return; // Skip tilt entirely on touch — use CSS hover instead
-  const tiltAmount = isMobile ? 5 : 10;
+  if (isTouch) return;
+  const tiltAmount = isMobile ? 5 : 8;
   card.addEventListener('mousemove', (e) => {
     const rect = card.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width  - 0.5) * tiltAmount;
     const y = ((e.clientY - rect.top)  / rect.height - 0.5) * tiltAmount;
     card.style.transform = `perspective(700px) rotateX(${-y}deg) rotateY(${x}deg) translateY(-8px)`;
   });
-
   card.addEventListener('mouseleave', () => {
     card.style.transform = '';
   });
 });
 
 /* ============================================================
-   TEXT SCRAMBLE — on-demand, no idle cost
+   TEXT SCRAMBLE — service card titles
 ============================================================ */
 const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -484,8 +568,19 @@ document.querySelectorAll('.services__card-title').forEach((el) => {
   el.addEventListener('mouseenter', () => scramble(el));
 });
 
+/* ============================================================
+   NAVBAR ENTRANCE — slide down on load
+============================================================ */
+gsap.from('.nav', {
+  y: -80,
+  opacity: 0,
+  duration: 1,
+  delay: 0.2,
+  ease: 'power3.out',
+});
+
 console.log(
   '%c🚀 HAYNES CONSULT%c\nBuilt for Scale. Designed for Results.',
-  'color:#3DA8F5;font-size:18px;font-weight:bold;',
-  'color:rgba(255,255,255,0.6);font-size:12px;',
+  'color:#1565C0;font-size:18px;font-weight:bold;',
+  'color:rgba(13,43,126,0.6);font-size:12px;',
 );
