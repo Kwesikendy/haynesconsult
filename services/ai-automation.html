@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Haynes Consult — AI Automation & Chatbots. Streamline operations with intelligent automation solutions and AI-powered workflows." />
+  <title>AI Automation & Chatbots — Haynes Consult</title>
+  <link rel="icon" type="image/jpeg" href="/logo.jpeg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/style.css" />
+  <style>
+    .sp-hero { min-height: 52vh; background: linear-gradient(150deg, #ffffff 0%, #eaf4fb 40%, #d6ecfb 70%, #f0f8ff 100%); display: flex; align-items: center; position: relative; overflow: hidden; padding-top: 140px; padding-bottom: 80px; }
+    .sp-hero__blob-1 { position: absolute; width: 420px; height: 420px; border-radius: 50%; background: radial-gradient(circle, rgba(21,101,192,0.18) 0%, transparent 70%); top: -100px; right: -80px; pointer-events: none; }
+    .sp-hero__blob-2 { position: absolute; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(61,168,245,0.15) 0%, transparent 70%); bottom: -60px; left: -60px; pointer-events: none; }
+    .sp-back-btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-head); font-size: 13px; font-weight: 700; color: var(--royal); margin-bottom: 28px; transition: gap 0.2s; }
+    .sp-back-btn:hover { gap: 14px; }
+    .sp-hero__eyebrow { color: var(--royal); font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; }
+    .sp-hero__title { font-family: var(--font-head); font-size: clamp(36px, 6vw, 72px); font-weight: 900; color: var(--navy); line-height: 1.1; margin-bottom: 20px; }
+    .sp-hero__title span { background: linear-gradient(135deg, var(--royal), var(--sky)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .sp-hero__sub { font-size: 18px; color: rgba(13,43,126,0.6); max-width: 540px; line-height: 1.7; margin-bottom: 36px; }
+    .sp-body { padding: 80px 0; background: var(--white); }
+    .sp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+    .sp-section { padding: 80px 0; }
+    .sp-section--alt { background: linear-gradient(180deg, #f5f9ff, #eaf4fb); }
+    .sp-section-title { font-family: var(--font-head); font-size: clamp(24px, 4vw, 40px); font-weight: 800; color: var(--navy); margin-bottom: 20px; }
+    .sp-section-body { font-size: 16px; color: rgba(13,43,126,0.65); line-height: 1.8; margin-bottom: 20px; }
+    .sp-list { display: flex; flex-direction: column; gap: 14px; margin-top: 24px; }
+    .sp-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: rgba(13,43,126,0.75); line-height: 1.6; }
+    .sp-list li::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--royal); flex-shrink: 0; margin-top: 7px; box-shadow: 0 0 8px rgba(21,101,192,0.4); }
+    .sp-use-cases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .sp-use-case { padding: 28px 24px; }
+    .sp-use-case-icon { font-size: 32px; margin-bottom: 14px; }
+    .sp-use-case-title { font-family: var(--font-head); font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .sp-use-case-body { font-size: 13px; color: rgba(13,43,126,0.6); line-height: 1.6; }
+    .sp-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .sp-stat { text-align: center; padding: 32px 20px; }
+    .sp-stat-num { font-family: var(--font-head); font-size: 48px; font-weight: 900; background: linear-gradient(135deg, var(--navy), var(--royal)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .sp-stat-label { font-size: 13px; color: rgba(13,43,126,0.55); font-weight: 600; margin-top: 6px; }
+    .sp-faq { display: flex; flex-direction: column; gap: 16px; max-width: 720px; margin: 0 auto; }
+    .sp-faq-item { background: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.9); border-radius: 16px; padding: 24px 28px; box-shadow: 0 4px 20px rgba(13,43,126,0.06); }
+    .sp-faq-q { font-family: var(--font-head); font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+    .sp-faq-a { font-size: 14px; color: rgba(13,43,126,0.65); line-height: 1.7; }
+    @media (max-width: 900px) { .sp-grid { grid-template-columns: 1fr; gap: 40px; } .sp-use-cases { grid-template-columns: 1fr 1fr; } .sp-stats { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .sp-use-cases { grid-template-columns: 1fr; } .sp-stats { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <nav class="nav nav--scrolled" id="nav">
+    <div class="nav__container">
+      <a href="/" class="nav__logo">
+        <img src="/logo.jpeg" alt="Haynes Consult" class="nav__logo-img" />
+        <span class="nav__logo-text">Haynes Consult</span>
+      </a>
+      <ul class="nav__links">
+        <li><a href="/#home" class="nav__link">Home</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+        <li><a href="/#services" class="nav__link active">Services</a></li>
+        <li><a href="/#process" class="nav__link">Process</a></li>
+        <li><a href="/#contact" class="nav__link">Contact</a></li>
+      </ul>
+      <a href="/#contact" class="nav__cta btn btn--primary">Get Started</a>
+    </div>
+  </nav>
+
+  <section class="sp-hero">
+    <div class="sp-hero__blob-1"></div>
+    <div class="sp-hero__blob-2"></div>
+    <div class="section-container">
+      <a href="/#services" class="sp-back-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to Services
+      </a>
+      <p class="sp-hero__eyebrow">Service · AI & Automation</p>
+      <h1 class="sp-hero__title">AI Automation &<br /><span>Chatbots</span></h1>
+      <p class="sp-hero__sub">Streamline operations with intelligent automation solutions — let AI handle the repetitive work so your team can focus on what matters.</p>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;">
+        <a href="/#contact" class="btn btn--primary btn--lg btn--glow">Book a Free Demo</a>
+        <a href="#use-cases" class="btn btn--ghost btn--lg">See Use Cases</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT WE DO -->
+  <section class="sp-body">
+    <div class="section-container">
+      <div class="sp-grid">
+        <div>
+          <p class="sp-hero__eyebrow">What We Offer</p>
+          <h2 class="sp-section-title">Intelligent Systems<br/>That Work 24/7</h2>
+          <p class="sp-section-body">We help businesses automate repetitive tasks and integrate intelligent systems into their workflows. Our AI solutions save time, reduce errors, and create better customer experiences.</p>
+          <p class="sp-section-body">From intelligent chatbots to full business process automation — we identify where AI creates the most value for your specific operations.</p>
+          <a href="/#contact" class="btn btn--primary" style="margin-top:8px;">Automate Your Business</a>
+        </div>
+        <div>
+          <ul class="sp-list">
+            <li><strong>AI Chatbots & Virtual Assistants</strong> — Smart bots that handle customer queries, bookings, and support 24/7</li>
+            <li><strong>Workflow Automation</strong> — Connect your apps and automate repetitive multi-step processes</li>
+            <li><strong>Business Process Optimization</strong> — Map and eliminate inefficiencies with AI-driven analysis</li>
+            <li><strong>AI-Powered Analytics</strong> — Turn your data into actionable insights automatically</li>
+            <li><strong>Email & Lead Automation</strong> — Intelligent email sequences and CRM automation</li>
+            <li><strong>Custom AI Integrations</strong> — Connect OpenAI, Gemini, and other LLMs to your existing tools</li>
+            <li><strong>Document Processing</strong> — Automate invoice reading, contract analysis, and data extraction</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPACT STATS -->
+  <section class="sp-section sp-section--alt">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="section-badge">Real Results</div>
+        <h2 class="sp-section-title">What Our Clients Achieve</h2>
+      </div>
+      <div class="sp-stats">
+        <div class="glass-card sp-stat">
+          <div class="sp-stat-num">70%</div>
+          <div class="sp-stat-label">Reduction in manual customer queries (via AI chatbot)</div>
+        </div>
+        <div class="glass-card sp-stat">
+          <div class="sp-stat-num">3×</div>
+          <div class="sp-stat-label">Faster response times to customer enquiries</div>
+        </div>
+        <div class="glass-card sp-stat">
+          <div class="sp-stat-num">40hrs</div>
+          <div class="sp-stat-label">Average hours saved per week through workflow automation</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EHR PROJECT -->
+  <section class="sp-section">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="section-badge">Featured Project</div>
+        <h2 class="sp-section-title">EHR System Launch</h2>
+        <p class="section-subtitle">Implemented an EHR system that streamlined clinic operations and improved patient care.</p>
+      </div>
+      <div class="sp-grid" style="align-items:center;">
+        <div class="glass-card" style="padding:36px;">
+          <h3 style="font-family:var(--font-head);font-size:20px;font-weight:800;color:var(--navy);margin-bottom:16px;">Project Overview</h3>
+          <p class="sp-section-body">A busy dental practice was managing patient records on paper. We built and deployed a full Electronic Health Records system with AI-assisted appointment scheduling and patient reminders.</p>
+          <ul class="sp-list" style="margin-top:12px;">
+            <li>Custom EHR database with patient history tracking</li>
+            <li>Automated appointment reminders via SMS & email</li>
+            <li>AI triage system for booking prioritization</li>
+            <li>Staff dashboard with analytics and reporting</li>
+            <li>HIPAA-grade data protection and encryption</li>
+            <li>Mobile access for clinical staff</li>
+          </ul>
+          <a href="/#contact" id="scheduleDemo" class="btn btn--primary" style="margin-top:24px;">Schedule a Free Demo</a>
+        </div>
+        <div>
+          <div class="glass-card" style="padding:32px;margin-bottom:20px;">
+            <p style="font-family:var(--font-head);font-size:36px;font-weight:900;color:var(--royal);">85%</p>
+            <p style="font-size:14px;color:rgba(13,43,126,0.6);font-weight:600;">Reduction in missed appointments after AI reminders</p>
+          </div>
+          <div class="glass-card" style="padding:32px;margin-bottom:20px;">
+            <p style="font-family:var(--font-head);font-size:36px;font-weight:900;color:var(--royal);">100%</p>
+            <p style="font-size:14px;color:rgba(13,43,126,0.6);font-weight:600;">Paperless within 3 weeks of deployment</p>
+          </div>
+          <div class="glass-card" style="padding:32px;">
+            <p style="font-family:var(--font-head);font-size:36px;font-weight:900;color:var(--royal);">2hrs/day</p>
+            <p style="font-size:14px;color:rgba(13,43,126,0.6);font-weight:600;">Time saved by front desk staff daily</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- USE CASES -->
+  <section class="sp-section sp-section--alt" id="use-cases">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="section-badge">Use Cases</div>
+        <h2 class="sp-section-title">AI For Every Industry</h2>
+        <p class="section-subtitle">We tailor AI solutions to the specific needs of your industry, not generic tools.</p>
+      </div>
+      <div class="sp-use-cases">
+        <div class="glass-card sp-use-case">
+          <div class="sp-use-case-icon">🏥</div>
+          <div class="sp-use-case-title">Healthcare</div>
+          <div class="sp-use-case-body">Patient intake automation, appointment scheduling bots, EHR integrations, and medical record AI assistants.</div>
+        </div>
+        <div class="glass-card sp-use-case">
+          <div class="sp-use-case-icon">🛒</div>
+          <div class="sp-use-case-title">E-Commerce</div>
+          <div class="sp-use-case-body">Order tracking bots, product recommendation engines, abandoned cart automation, and AI customer support.</div>
+        </div>
+        <div class="glass-card sp-use-case">
+          <div class="sp-use-case-icon">🏢</div>
+          <div class="sp-use-case-title">Professional Services</div>
+          <div class="sp-use-case-body">Lead qualification chatbots, contract automation, invoice processing, and client onboarding flows.</div>
+        </div>
+        <div class="glass-card sp-use-case">
+          <div class="sp-use-case-icon">🍽️</div>
+          <div class="sp-use-case-title">Food & Hospitality</div>
+          <div class="sp-use-case-body">Reservation bots, menu Q&A assistants, loyalty automation, and delivery tracking integrations.</div>
+        </div>
+        <div class="glass-card sp-use-case">
+          <div class="sp-use-case-icon">🎓</div>
+          <div class="sp-use-case-title">Education</div>
+          <div class="sp-use-case-body">Student admissions chatbots, automated grading workflows, class scheduling systems, and alumni engagement bots.</div>
+        </div>
+        <div class="glass-card sp-use-case">
+          <div class="sp-use-case-icon">🏗️</div>
+          <div class="sp-use-case-title">Construction & Services</div>
+          <div class="sp-use-case-body">Quote automation, job scheduling systems, field crew communication bots, and document management.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="sp-section">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="section-badge">FAQ</div>
+        <h2 class="sp-section-title">Common Questions</h2>
+      </div>
+      <div class="sp-faq">
+        <div class="sp-faq-item">
+          <div class="sp-faq-q">Will the AI chatbot understand my customers' specific questions?</div>
+          <div class="sp-faq-a">Yes. We train the chatbot on your business data, products, services, and FAQs. The more you share with us, the smarter it gets. We also continuously improve it based on real conversations.</div>
+        </div>
+        <div class="sp-faq-item">
+          <div class="sp-faq-q">Do my team need to be technical to use the automation?</div>
+          <div class="sp-faq-a">Not at all. We build dashboards and interfaces that your team can use without any technical knowledge. We also provide training sessions and documentation.</div>
+        </div>
+        <div class="sp-faq-item">
+          <div class="sp-faq-q">How long does it take to deploy an AI solution?</div>
+          <div class="sp-faq-a">Simple chatbots can be deployed in 1–2 weeks. More complex automation systems typically take 3–8 weeks depending on integrations required.</div>
+        </div>
+        <div class="sp-faq-item">
+          <div class="sp-faq-q">Is my data safe?</div>
+          <div class="sp-faq-a">Security is our priority. All systems are built with encryption, role-based access, and industry-standard data protection. For healthcare clients, we comply with HIPAA requirements.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="cta-section__bg"></div>
+    <div class="cta-section__orbs"><div class="cta-section__orb cta-section__orb--1"></div><div class="cta-section__orb cta-section__orb--2"></div></div>
+    <div class="section-container">
+      <div class="cta-section__content" style="opacity:1;transform:none;">
+        <p class="cta-section__eyebrow">Ready to Automate?</p>
+        <h2 class="cta-section__title">Let AI Work<br/><span class="text-sky">While You Sleep</span></h2>
+        <p class="cta-section__body">Schedule a free demo and we'll show you exactly how AI could save your team hours every week.</p>
+        <div class="cta-section__actions">
+          <a href="/#contact" class="btn btn--white btn--lg">Schedule Free Demo</a>
+          <a href="/" class="btn btn--outline-white btn--lg">← Back to Home</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer__glow"></div>
+    <div class="footer__bottom" style="max-width:var(--container);margin:0 auto;padding:28px clamp(20px,5vw,80px);">
+      <p>© 2026 Haynes Consult · <a href="https://www.haynesconsult.com">www.HaynesConsult.com</a></p>
+      <p>Built with precision. Powered by innovation.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="/src/service-page.js"></script>
+</body>
+</html>

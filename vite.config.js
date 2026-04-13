@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import { resolve } from 'path'
 
 export default defineConfig({
   root: '.',
@@ -6,7 +7,12 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets',
     rollupOptions: {
-      input: './index.html'
+      input: {
+        main: resolve(__dirname, 'index.html'),
+        webDev: resolve(__dirname, 'services/web-development.html'),
+        aiAuto: resolve(__dirname, 'services/ai-automation.html'),
+        digitalMkt: resolve(__dirname, 'services/digital-marketing.html'),
+      }
     }
   },
   server: {
@@ -14,6 +20,7 @@ export default defineConfig({
     open: true
   },
   optimizeDeps: {
-    include: ['gsap', 'three', 'lenis']
+    include: ['gsap', 'lenis']
   }
 })
+

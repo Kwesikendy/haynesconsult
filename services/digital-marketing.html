@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Haynes Consult — Digital Marketing & Graphic Design. Transform your brand with eye-catching visuals and strategic marketing." />
+  <title>Digital Marketing & Graphic Design — Haynes Consult</title>
+  <link rel="icon" type="image/jpeg" href="/logo.jpeg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/style.css" />
+  <style>
+    .sp-hero { min-height: 52vh; background: linear-gradient(150deg, #ffffff 0%, #eaf4fb 40%, #d6ecfb 70%, #f0f8ff 100%); display: flex; align-items: center; position: relative; overflow: hidden; padding-top: 140px; padding-bottom: 80px; }
+    .sp-hero__blob-1 { position: absolute; width: 420px; height: 420px; border-radius: 50%; background: radial-gradient(circle, rgba(21,101,192,0.18) 0%, transparent 70%); top: -100px; right: -80px; pointer-events: none; }
+    .sp-hero__blob-2 { position: absolute; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(61,168,245,0.15) 0%, transparent 70%); bottom: -60px; left: -60px; pointer-events: none; }
+    .sp-back-btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-head); font-size: 13px; font-weight: 700; color: var(--royal); margin-bottom: 28px; transition: gap 0.2s; }
+    .sp-back-btn:hover { gap: 14px; }
+    .sp-hero__eyebrow { color: var(--royal); font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; }
+    .sp-hero__title { font-family: var(--font-head); font-size: clamp(36px, 6vw, 72px); font-weight: 900; color: var(--navy); line-height: 1.1; margin-bottom: 20px; }
+    .sp-hero__title span { background: linear-gradient(135deg, var(--royal), var(--sky)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .sp-hero__sub { font-size: 18px; color: rgba(13,43,126,0.6); max-width: 540px; line-height: 1.7; margin-bottom: 36px; }
+    .sp-body { padding: 80px 0; background: var(--white); }
+    .sp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+    .sp-section { padding: 80px 0; }
+    .sp-section--alt { background: linear-gradient(180deg, #f5f9ff, #eaf4fb); }
+    .sp-section-title { font-family: var(--font-head); font-size: clamp(24px, 4vw, 40px); font-weight: 800; color: var(--navy); margin-bottom: 20px; }
+    .sp-section-body { font-size: 16px; color: rgba(13,43,126,0.65); line-height: 1.8; margin-bottom: 20px; }
+    .sp-list { display: flex; flex-direction: column; gap: 14px; margin-top: 24px; }
+    .sp-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: rgba(13,43,126,0.75); line-height: 1.6; }
+    .sp-list li::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--royal); flex-shrink: 0; margin-top: 7px; box-shadow: 0 0 8px rgba(21,101,192,0.4); }
+    .sp-services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .sp-service-box { padding: 28px 24px; }
+    .sp-service-box-icon { font-size: 30px; margin-bottom: 12px; }  
+    .sp-service-box-title { font-family: var(--font-head); font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .sp-service-box-body { font-size: 13px; color: rgba(13,43,126,0.6); line-height: 1.65; }
+    .sp-clients { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .sp-client-card { padding: 24px 16px; text-align: center; }
+    .sp-client-initial { width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, var(--navy), var(--royal)); color: white; font-family: var(--font-head); font-size: 18px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
+    .sp-client-name { font-size: 13px; font-weight: 600; color: var(--navy); }
+    .sp-faq { display: flex; flex-direction: column; gap: 16px; max-width: 720px; margin: 0 auto; }
+    .sp-faq-item { background: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.9); border-radius: 16px; padding: 24px 28px; box-shadow: 0 4px 20px rgba(13,43,126,0.06); }
+    .sp-faq-q { font-family: var(--font-head); font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+    .sp-faq-a { font-size: 14px; color: rgba(13,43,126,0.65); line-height: 1.7; }
+    @media (max-width: 900px) { .sp-grid { grid-template-columns: 1fr; gap: 40px; } .sp-services-grid { grid-template-columns: 1fr; } .sp-clients { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <nav class="nav nav--scrolled" id="nav">
+    <div class="nav__container">
+      <a href="/" class="nav__logo">
+        <img src="/logo.jpeg" alt="Haynes Consult" class="nav__logo-img" />
+        <span class="nav__logo-text">Haynes Consult</span>
+      </a>
+      <ul class="nav__links">
+        <li><a href="/#home" class="nav__link">Home</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+        <li><a href="/#services" class="nav__link active">Services</a></li>
+        <li><a href="/#process" class="nav__link">Process</a></li>
+        <li><a href="/#contact" class="nav__link">Contact</a></li>
+      </ul>
+      <a href="/#contact" class="nav__cta btn btn--primary">Get Started</a>
+    </div>
+  </nav>
+
+  <section class="sp-hero">
+    <div class="sp-hero__blob-1"></div>
+    <div class="sp-hero__blob-2"></div>
+    <div class="section-container">
+      <a href="/#services" class="sp-back-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to Services
+      </a>
+      <p class="sp-hero__eyebrow">Service · Digital Marketing & Creative</p>
+      <h1 class="sp-hero__title">Digital Marketing &<br /><span>Graphic Design</span></h1>
+      <p class="sp-hero__sub">Transform your brand with eye-catching visuals and strategic digital marketing that drives real visibility, leads, and growth.</p>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;">
+        <a href="/#contact" class="btn btn--primary btn--lg btn--glow">Start Growing Today</a>
+        <a href="#services-offered" class="btn btn--ghost btn--lg">See What We Offer</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT WE DO -->
+  <section class="sp-body">
+    <div class="section-container">
+      <div class="sp-grid">
+        <div>
+          <p class="sp-hero__eyebrow">What We Offer</p>
+          <h2 class="sp-section-title">Your Brand,<br/>Amplified</h2>
+          <p class="sp-section-body">At Haynes Consult, we help businesses grow their visibility and brand presence through strategic digital marketing combined with stunning visual design. We go beyond logos — we build complete brand identities.</p>
+          <p class="sp-section-body">Our tripled-lead campaigns and award-worthy visual work have helped clients across healthcare, food & beverage, professional services, and more.</p>
+          <a href="/#contact" class="btn btn--primary" style="margin-top:8px;">Grow My Brand</a>
+        </div>
+        <div>
+          <ul class="sp-list">
+            <li><strong>Graphic Design & Branding</strong> — Logos, brand guidelines, business cards, flyers, and more</li>
+            <li><strong>Social Media Design</strong> — Posts, reels covers, story templates, and ad creatives</li>
+            <li><strong>Digital Advertising</strong> — Meta Ads, Google Ads, and targeted social campaigns</li>
+            <li><strong>SEO Optimization</strong> — Rank higher on Google and get found by the right people</li>
+            <li><strong>Content Strategy & Copywriting</strong> — Compelling content that converts readers to customers</li>
+            <li><strong>Video Production & Animation</strong> — Promo videos, explainers, and social reels</li>
+            <li><strong>Email Marketing</strong> — Campaigns, newsletters, and automated drip sequences</li>
+            <li><strong>Brand Strategy</strong> — Positioning, messaging, and go-to-market planning</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES DETAIL -->
+  <section class="sp-section sp-section--alt" id="services-offered">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="section-badge">What We Do</div>
+        <h2 class="sp-section-title">Our Creative & Marketing Services</h2>
+      </div>
+      <div class="sp-services-grid">
+        <div class="glass-card sp-service-box">
+          <div class="sp-service-box-icon">🎨</div>
+          <div class="sp-service-box-title">Graphic Design</div>
+          <div class="sp-service-box-body">Full branding packages including logo design, colour palettes, typography, and brand guidelines. We also do print materials: menus, brochures, signage, banners, and packaging.</div>
+        </div>
+        <div class="glass-card sp-service-box">
+          <div class="sp-service-box-icon">📱</div>
+          <div class="sp-service-box-title">Social Media Management</div>
+          <div class="sp-service-box-body">Monthly content calendars, custom-designed posts for Instagram, Facebook, TikTok, and LinkedIn. We handle everything from captions to scheduling and community management.</div>
+        </div>
+        <div class="glass-card sp-service-box">
+          <div class="sp-service-box-icon">🎯</div>
+          <div class="sp-service-box-title">Paid Advertising</div>
+          <div class="sp-service-box-body">We design, run, and optimize paid campaigns on Meta (Facebook/Instagram), Google, and TikTok. Strategy, creative, copy, and reporting — all managed by us.</div>
+        </div>
+        <div class="glass-card sp-service-box">
+          <div class="sp-service-box-icon">🔍</div>
+          <div class="sp-service-box-title">SEO & Content</div>
+          <div class="sp-service-box-body">On-page SEO audits, keyword strategy, blog writing, and technical optimization. We get your website ranking on the first page of Google.</div>
+        </div>
+        <div class="glass-card sp-service-box">
+          <div class="sp-service-box-icon">🎬</div>
+          <div class="sp-service-box-title">Video & Animation</div>
+          <div class="sp-service-box-body">Promotional corporate videos, animated explainers, social media reels, product demos, and motion graphics. Professional production from concept to final cut.</div>
+        </div>
+        <div class="glass-card sp-service-box">
+          <div class="sp-service-box-icon">✍️</div>
+          <div class="sp-service-box-title">Copywriting & Strategy</div>
+          <div class="sp-service-box-body">Brand voice development, website copy, ad copy, email sequences, and content strategy. Words that sell.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLIENTS WE'VE WORKED WITH -->
+  <section class="sp-section">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="section-badge">Our Clients</div>
+        <h2 class="sp-section-title">Brands We've Elevated</h2>
+        <p class="section-subtitle">From dental clinics to whiskey clubs — we've built beautiful visuals for businesses across industries.</p>
+      </div>
+      <div class="sp-clients">
+        <div class="glass-card sp-client-card"><div class="sp-client-initial">S</div><div class="sp-client-name">Silver Dental Clinic</div></div>
+        <div class="glass-card sp-client-card"><div class="sp-client-initial">M</div><div class="sp-client-name">Medarrive Enterprise</div></div>
+        <div class="glass-card sp-client-card"><div class="sp-client-initial">GDA</div><div class="sp-client-name">Ghana Dental Association</div></div>
+        <div class="glass-card sp-client-card"><div class="sp-client-initial">BS</div><div class="sp-client-name">Bright Smile LTD</div></div>
+        <div class="glass-card sp-client-card"><div class="sp-client-initial">SP</div><div class="sp-client-name">Standard Practice Ltd</div></div>
+        <div class="glass-card sp-client-card"><div class="sp-client-initial">SOD</div><div class="sp-client-name">School of Dentistry, KNUST</div></div>
+        <div class="glass-card sp-client-card"><div class="sp-client-initial">DK</div><div class="sp-client-name">Drannancy's Kitchen</div></div>
+        <div class="glass-card sp-client-card"><div class="sp-client-initial">TBT</div><div class="sp-client-name">Touch By Tray</div></div>
+        <div class="glass-card sp-client-card"><div class="sp-client-initial">GSF</div><div class="sp-client-name">Great Smiles Foundation</div></div>
+        <div class="glass-card sp-client-card"><div class="sp-client-initial">SNS</div><div class="sp-client-name">Shaker N Stic</div></div>
+        <div class="glass-card sp-client-card"><div class="sp-client-initial">TWC</div><div class="sp-client-name">The Whiskey Club</div></div>
+        <div class="glass-card sp-client-card"><div class="sp-client-initial">TCD</div><div class="sp-client-name">The Content Developers</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="sp-section sp-section--alt">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="section-badge">FAQ</div>
+        <h2 class="sp-section-title">Common Questions</h2>
+      </div>
+      <div class="sp-faq">
+        <div class="sp-faq-item">
+          <div class="sp-faq-q">How long does it take to design a logo or brand identity?</div>
+          <div class="sp-faq-a">A logo with concept options typically takes 5–7 business days. A full brand identity package (logo, colours, typography, brand guide) takes 2–3 weeks. We present multiple options at each stage for your feedback.</div>
+        </div>
+        <div class="sp-faq-item">
+          <div class="sp-faq-q">Can I see examples of your work?</div>
+          <div class="sp-faq-a">Absolutely. We can share client case studies and portfolio samples during your consultation. Just reach out and we'll put together a relevant showcase for your industry.</div>
+        </div>
+        <div class="sp-faq-item">
+          <div class="sp-faq-q">Do you manage social media on an ongoing basis?</div>
+          <div class="sp-faq-a">Yes! We offer monthly retainer packages for full social media management — including content creation, design, scheduling, and community engagement. Contact us for current packages.</div>
+        </div>
+        <div class="sp-faq-item">
+          <div class="sp-faq-q">How soon will I see results from digital marketing?</div>
+          <div class="sp-faq-a">Paid ads can show results within days. SEO typically takes 3–6 months to build momentum. We set clear expectations and track measurable KPIs from day one.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="cta-section__bg"></div>
+    <div class="cta-section__orbs"><div class="cta-section__orb cta-section__orb--1"></div><div class="cta-section__orb cta-section__orb--2"></div></div>
+    <div class="section-container">
+      <div class="cta-section__content" style="opacity:1;transform:none;">
+        <p class="cta-section__eyebrow">Ready to Stand Out?</p>
+        <h2 class="cta-section__title">Let's Build a Brand<br/><span class="text-sky">That Turns Heads</span></h2>
+        <p class="cta-section__body">Book a free strategy call and we'll map out exactly how to grow your visibility and get more customers.</p>
+        <div class="cta-section__actions">
+          <a href="/#contact" class="btn btn--white btn--lg">Book Free Strategy Call</a>
+          <a href="/" class="btn btn--outline-white btn--lg">← Back to Home</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer__glow"></div>
+    <div class="footer__bottom" style="max-width:var(--container);margin:0 auto;padding:28px clamp(20px,5vw,80px);">
+      <p>© 2026 Haynes Consult · <a href="https://www.haynesconsult.com">www.HaynesConsult.com</a></p>
+      <p>Built with precision. Powered by innovation.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="/src/service-page.js"></script>
+</body>
+</html>
