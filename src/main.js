@@ -222,8 +222,8 @@ function initCanvas() {
 }
 
 /* ============================================================
-   HERO TYPING ANIMATION
-   Types "Haynes" then "Consult" with cursor, then continues
+   HERO TYPING ANIMATION — Loops every 7 seconds
+   Sequence: type HAYNES → type CONSULT → pause → erase → repeat
 ============================================================ */
 function initHeroTypingAnimation() {
   const mainLine = document.querySelector('.hero__wordmark-line--main');
@@ -236,100 +236,107 @@ function initHeroTypingAnimation() {
 
   const mainText = 'HAYNES';
   const subText  = 'CONSULT';
+  const TYPE_SPEED   = 80;   // ms per character while typing
+  const ERASE_SPEED  = 45;   // ms per character while erasing (faster)
+  const PAUSE_AFTER  = 2800; // ms to hold before erasing
+  const LOOP_DELAY   = 7000; // ms total loop period (restart after this)
+  let firstRun = true;
 
-  // Set data-text for shimmer pseudo-element
   mainLine.dataset.text = mainText;
 
   // Make lines visible but empty
   mainLine.style.opacity = '1';
-  mainLine.textContent = '';
-  subLine.style.opacity = '1';
-  subLine.textContent = '';
+  subLine.style.opacity  = '1';
+  mainLine.textContent   = '';
+  subLine.textContent    = '';
 
-  // Create blinking cursor
-  const typingCursor = document.createElement('span');
-  typingCursor.className = 'hero__typing-cursor';
-  mainLine.appendChild(typingCursor);
+  // Persistent blinking cursor element
+  const cur = document.createElement('span');
+  cur.className = 'hero__typing-cursor';
+  mainLine.appendChild(cur);
 
-  // Phase 1: Fade badge in
-  gsap.to('.hero__badge', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' });
+  // ---- helpers ----
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-  // Phase 2: Type "HAYNES" after 0.5s
-  let charIndex = 0;
-  const typeMain = () => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const interval = setInterval(() => {
-          if (charIndex < mainText.length) {
-            mainLine.textContent = mainText.slice(0, charIndex + 1);
-            mainLine.appendChild(typingCursor);
-            charIndex++;
-          } else {
-            clearInterval(interval);
-            resolve();
-          }
-        }, 80); // type speed per character
-      }, 600);
+  const typeText = (el, text, speed) =>
+    new Promise(async (resolve) => {
+      for (let i = 0; i <= text.length; i++) {
+        el.textContent = text.slice(0, i);
+        el.appendChild(cur);
+        await sleep(speed);
+      }
+      resolve();
     });
-  };
 
-  // Phase 3: Move cursor to sub line and type "CONSULT"
-  const typeSub = () => {
-    return new Promise((resolve) => {
-      // Brief pause before typing Consult
-      setTimeout(() => {
-        // Move cursor to sub
-        if (typingCursor.parentNode) typingCursor.parentNode.removeChild(typingCursor);
-        subLine.textContent = '';
-        subLine.appendChild(typingCursor);
-
-        let i = 0;
-        const interval = setInterval(() => {
-          if (i < subText.length) {
-            subLine.textContent = subText.slice(0, i + 1);
-            subLine.appendChild(typingCursor);
-            i++;
-          } else {
-            clearInterval(interval);
-            resolve();
-          }
-        }, 100);
-      }, 300);
+  const eraseText = (el, speed) =>
+    new Promise(async (resolve) => {
+      const text = el.textContent.replace(/./g, (c, i) =>
+        el.textContent[i] // grab cleanly without cursor span
+      );
+      let len = el.textContent.length;
+      // Make sure cursor stays on this element while erasing
+      el.appendChild(cur);
+      while (len > 0) {
+        len--;
+        el.textContent = el.textContent.slice(0, len);
+        el.appendChild(cur);
+        await sleep(speed);
+      }
+      resolve();
     });
-  };
 
-  // Phase 4: Remove cursor and animate rest of hero
-  const finishHero = () => {
-    setTimeout(() => {
-      // Cursor fades and disappears after a couple more blinks
-      setTimeout(() => {
-        if (typingCursor.parentNode) {
-          gsap.to(typingCursor, {
-            opacity: 0, duration: 0.4,
-            onComplete: () => typingCursor.parentNode?.removeChild(typingCursor),
-          });
-        }
-      }, 1200);
+  // ---- one full cycle ----
+  const runCycle = async (isFirst) => {
+    // 1. Type HAYNES
+    await sleep(isFirst ? 600 : 0);
+    await typeText(mainLine, mainText, TYPE_SPEED);
 
-      // Now shimmer effect on mainLine text needs data-text reset
+    // 2. Move cursor to CONSULT line, type it
+    await sleep(300);
+    if (cur.parentNode) cur.parentNode.removeChild(cur);
+    subLine.textContent = '';
+    subLine.appendChild(cur);
+    await typeText(subLine, subText, TYPE_SPEED + 20);
+
+    // 3. On first run, reveal the rest of the hero
+    if (isFirst) {
       mainLine.dataset.text = mainText;
-
-      // Animate rule expands
       gsap.to('.hero__rule', { opacity: 1, width: '280px', duration: 0.7, ease: 'power2.inOut' });
+      gsap.timeline({ defaults: { ease: 'power3.out' } })
+        .to('.hero__tagline',  { opacity: 1, y: 0, duration: 0.7 })
+        .to('.hero__subtitle', { opacity: 1, y: 0, duration: 0.65 }, '-=0.4')
+        .to('.hero__actions',  { opacity: 1, y: 0, duration: 0.65 }, '-=0.35')
+        .to('.hero__stats',    { opacity: 1, y: 0, duration: 0.65 }, '-=0.3');
+    }
 
-      // Cascade rest of hero elements
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-      tl
-        .to('.hero__tagline',   { opacity: 1, y: 0, duration: 0.7 })
-        .to('.hero__subtitle',  { opacity: 1, y: 0, duration: 0.65 }, '-=0.4')
-        .to('.hero__actions',   { opacity: 1, y: 0, duration: 0.65 }, '-=0.35')
-        .to('.hero__stats',     { opacity: 1, y: 0, duration: 0.65 }, '-=0.3');
+    // 4. Hold (show fully typed text)
+    await sleep(PAUSE_AFTER);
 
-    }, 400);
+    // 5. Erase CONSULT first, then HAYNES
+    await eraseText(subLine, ERASE_SPEED);
+    if (cur.parentNode) cur.parentNode.removeChild(cur);
+    mainLine.appendChild(cur);
+    // Restore mainLine content before erasing
+    mainLine.textContent = mainText;
+    mainLine.appendChild(cur);
+    await eraseText(mainLine, ERASE_SPEED);
+
+    // 6. Short pause before next cycle (cursor blinks on empty mainLine)
+    await sleep(500);
   };
 
-  // Run sequence
-  typeMain().then(() => typeSub()).then(finishHero);
+  // ---- kick off first run then loop ----
+  (async () => {
+    // Reveal badge immediately
+    gsap.to('.hero__badge', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' });
+
+    await runCycle(true);
+
+    // Subsequent loops
+    while (true) {
+      await runCycle(false);
+    }
+  })();
 }
 
 function initHeroFallback() {
