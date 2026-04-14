@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Haynes Consult — Digital Services. Graphic design, web development, AI automation, video editing, animations, chatbots and more." />
+  <title>Digital Services — Haynes Consult</title>
+  <link rel="icon" type="image/jpeg" href="/logo.jpeg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/style.css" />
+  <style>
+    /* ---- PAGE HERO ---- */
+    .ds-hero {
+      min-height: 48vh;
+      background: linear-gradient(150deg, #ffffff 0%, #eaf4fb 40%, #d6ecfb 70%, #f0f8ff 100%);
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      padding-top: 150px; padding-bottom: 80px;
+    }
+    .ds-hero__blob {
+      position: absolute; border-radius: 50%; pointer-events: none;
+    }
+    .ds-hero__blob--1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(21,101,192,0.14) 0%, transparent 70%);
+      top: -120px; right: -100px;
+    }
+    .ds-hero__blob--2 {
+      width: 350px; height: 350px;
+      background: radial-gradient(circle, rgba(61,168,245,0.12) 0%, transparent 70%);
+      bottom: -80px; left: -60px;
+    }
+    .ds-back-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-head); font-size: 13px; font-weight: 700;
+      color: var(--royal); margin-bottom: 28px; transition: gap 0.2s;
+    }
+    .ds-back-btn:hover { gap: 14px; }
+    .ds-eyebrow {
+      color: var(--royal); font-size: 12px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .ds-hero__title {
+      font-family: var(--font-head); font-size: clamp(40px, 6vw, 76px);
+      font-weight: 900; color: var(--navy); line-height: 1.08; margin-bottom: 20px;
+    }
+    .ds-hero__title span {
+      background: linear-gradient(135deg, var(--royal), var(--sky));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .ds-hero__sub {
+      font-size: 18px; color: rgba(13,43,126,0.62); max-width: 580px; line-height: 1.75; margin-bottom: 40px;
+    }
+
+    /* ---- SERVICES GRID ---- */
+    .ds-section { padding: 80px 0; }
+    .ds-section--alt { background: linear-gradient(180deg, #f5f9ff 0%, #eaf4fb 100%); }
+    .ds-section-title {
+      font-family: var(--font-head); font-size: clamp(26px, 4vw, 42px);
+      font-weight: 800; color: var(--navy); margin-bottom: 12px;
+    }
+    .ds-section-sub { font-size: 16px; color: rgba(13,43,126,0.6); max-width: 600px; margin-bottom: 52px; line-height: 1.7; }
+
+    .ds-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .ds-card {
+      padding: 36px 28px;
+      position: relative;
+      display: flex; flex-direction: column;
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
+    }
+    .ds-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 48px rgba(13,43,126,0.14);
+    }
+
+    .ds-card__num {
+      font-family: var(--font-head); font-size: 11px; font-weight: 800;
+      letter-spacing: 0.12em; color: rgba(21,101,192,0.35);
+      margin-bottom: 20px;
+    }
+
+    .ds-card__icon {
+      width: 56px; height: 56px; border-radius: 16px;
+      background: linear-gradient(135deg, rgba(21,101,192,0.1), rgba(61,168,245,0.14));
+      border: 1px solid rgba(21,101,192,0.12);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px; color: var(--royal);
+      transition: background 0.3s, transform 0.3s;
+    }
+    .ds-card:hover .ds-card__icon {
+      background: linear-gradient(135deg, rgba(21,101,192,0.2), rgba(61,168,245,0.25));
+      transform: scale(1.08);
+    }
+
+    .ds-card__title {
+      font-family: var(--font-head); font-size: 18px; font-weight: 800;
+      color: var(--navy); margin-bottom: 10px;
+    }
+    .ds-card__body {
+      font-size: 14px; color: rgba(13,43,126,0.65); line-height: 1.75;
+      flex: 1;
+    }
+    .ds-card__cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-head); font-size: 13px; font-weight: 700;
+      color: var(--royal); margin-top: 24px;
+      transition: gap 0.2s;
+    }
+    .ds-card__cta:hover { gap: 12px; }
+    .ds-card__tag {
+      display: inline-block;
+      font-family: var(--font-head); font-size: 10px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--royal); background: rgba(21,101,192,0.07);
+      border: 1px solid rgba(21,101,192,0.15);
+      border-radius: 50px; padding: 3px 12px; margin-bottom: 16px;
+    }
+
+    /* ---- STATS BANNER ---- */
+    .ds-stats {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0; background: var(--navy); border-radius: 24px; overflow: hidden;
+      margin: 64px 0;
+    }
+    .ds-stat {
+      padding: 40px 32px; text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.07);
+      position: relative;
+    }
+    .ds-stat:last-child { border-right: none; }
+    .ds-stat-num {
+      font-family: var(--font-head); font-size: 42px; font-weight: 900;
+      background: linear-gradient(135deg, #fff, rgba(125,203,255,1));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .ds-stat-label { font-size: 13px; color: rgba(255,255,255,0.55); font-weight: 600; margin-top: 6px; }
+
+    /* ---- PROCESS ---- */
+    .ds-process { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .ds-process-step { padding: 28px 24px; }
+    .ds-process-step-num {
+      font-family: var(--font-head); font-size: 36px; font-weight: 900;
+      background: linear-gradient(135deg, var(--navy), var(--royal));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 12px;
+    }
+    .ds-process-step-title { font-family: var(--font-head); font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .ds-process-step-body { font-size: 13px; color: rgba(13,43,126,0.6); line-height: 1.65; }
+
+    @media (max-width: 1024px) { .ds-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 768px) {
+      .ds-grid { grid-template-columns: 1fr; }
+      .ds-stats { grid-template-columns: repeat(2, 1fr); }
+      .ds-process { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .ds-stats { grid-template-columns: 1fr; }
+      .ds-process { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <!-- NAV -->
+  <nav class="nav nav--scrolled" id="nav">
+    <div class="nav__container">
+      <a href="/" class="nav__logo">
+        <img src="/logo.jpeg" alt="Haynes Consult" class="nav__logo-img" />
+        <span class="nav__logo-text">Haynes Consult</span>
+      </a>
+      <ul class="nav__links">
+        <li><a href="/" class="nav__link">Home</a></li>
+        <li><a href="/#about" class="nav__link">About</a></li>
+        <li class="nav__dropdown-wrap">
+          <a href="/#services" class="nav__link active nav__dropdown-trigger">
+            Services <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style="margin-left:4px;vertical-align:middle;"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="nav__dropdown">
+            <a href="/services/digital-services.html" class="nav__dropdown-item nav__dropdown-item--active">
+              <span class="nav__dropdown-icon">💻</span>
+              <span>Digital Services</span>
+            </a>
+            <a href="/services/dental-aesthetic.html" class="nav__dropdown-item">
+              <span class="nav__dropdown-icon">🦷</span>
+              <span>Dental &amp; Aesthetic Medicine</span>
+            </a>
+          </div>
+        </li>
+        <li><a href="/#process" class="nav__link">Process</a></li>
+        <li><a href="/#contact" class="nav__link">Contact</a></li>
+      </ul>
+      <a href="/#contact" class="nav__cta btn btn--primary">Get Started</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="ds-hero">
+    <div class="ds-hero__blob ds-hero__blob--1"></div>
+    <div class="ds-hero__blob ds-hero__blob--2"></div>
+    <div class="section-container">
+      <a href="/" class="ds-back-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to Home
+      </a>
+      <p class="ds-eyebrow">Haynes Consult · Digital Services</p>
+      <h1 class="ds-hero__title">Explore Our<br /><span>Digital Solutions</span></h1>
+      <p class="ds-hero__sub">At Haynes Consult, we offer a diverse range of digital services tailored to meet the unique needs of healthcare and business sectors. Our expertise combines innovative technology with healthcare knowledge to drive success.</p>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;">
+        <a href="/#contact" class="btn btn--primary btn--lg btn--glow">Get a Free Quote</a>
+        <a href="#all-services" class="btn btn--ghost btn--lg">Browse Services ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="section-container">
+    <div class="ds-stats">
+      <div class="ds-stat"><div class="ds-stat-num">10+</div><div class="ds-stat-label">Digital Services</div></div>
+      <div class="ds-stat"><div class="ds-stat-num">150+</div><div class="ds-stat-label">Projects Delivered</div></div>
+      <div class="ds-stat"><div class="ds-stat-num">98%</div><div class="ds-stat-label">Client Satisfaction</div></div>
+      <div class="ds-stat"><div class="ds-stat-num">5+</div><div class="ds-stat-label">Years of Excellence</div></div>
+    </div>
+  </div>
+
+  <!-- ALL SERVICES -->
+  <section class="ds-section" id="all-services">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="section-badge">What We Offer</div>
+        <h2 class="ds-section-title">All Digital Services</h2>
+        <p class="ds-section-sub">Comprehensive digital solutions — from stunning visuals to intelligent automation systems. We have what your business needs.</p>
+      </div>
+
+      <div class="ds-grid">
+
+        <!-- 1. Graphic Design -->
+        <div class="glass-card ds-card">
+          <div class="ds-card__num">01</div>
+          <div class="ds-card__icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.464-1.118a.953.953 0 0 1 .714-1.618h1.46c3.162 0 5.642-2.514 5.642-5.574A7.974 7.974 0 0 0 12 2z"/></svg>
+          </div>
+          <span class="ds-card__tag">Creative</span>
+          <h3 class="ds-card__title">Graphic Design</h3>
+          <p class="ds-card__body">Eye-catching visuals for your brand, from logos to flyers and everything in between. We craft identities that leave a lasting impression and communicate your value instantly.</p>
+          <a href="/services/digital-marketing.html" class="ds-card__cta">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+
+        <!-- 2. Website Design & Development -->
+        <div class="glass-card ds-card">
+          <div class="ds-card__num">02</div>
+          <div class="ds-card__icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <span class="ds-card__tag">Development</span>
+          <h3 class="ds-card__title">Website Design &amp; Development</h3>
+          <p class="ds-card__body">Modern, responsive websites built to impress, convert, and scale with your business. From simple portfolios to complex web applications — we build it all with precision.</p>
+          <a href="/services/web-development.html" class="ds-card__cta">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+
+        <!-- 3. EHR Systems -->
+        <div class="glass-card ds-card">
+          <div class="ds-card__num">03</div>
+          <div class="ds-card__icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>
+          </div>
+          <span class="ds-card__tag">Healthcare IT</span>
+          <h3 class="ds-card__title">Electronic Health Records System</h3>
+          <p class="ds-card__body">Streamline your clinic with a fully custom EHR system — patient records, appointment scheduling, automated reminders, and clinical dashboards. Built to HIPAA-grade security standards.</p>
+          <a href="/services/ai-automation.html" class="ds-card__cta">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+
+        <!-- 4. AI Automations -->
+        <div class="glass-card ds-card">
+          <div class="ds-card__num">04</div>
+          <div class="ds-card__icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <span class="ds-card__tag">Automation</span>
+          <h3 class="ds-card__title">AI Automations</h3>
+          <p class="ds-card__body">Streamline your business with custom AI workflows that save time, cut costs, and increase productivity. Connect your apps, eliminate repetitive tasks, and let your team focus on what matters.</p>
+          <a href="/services/ai-automation.html" class="ds-card__cta">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+
+        <!-- 5. Video Editing -->
+        <div class="glass-card ds-card">
+          <div class="ds-card__num">05</div>
+          <div class="ds-card__icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+          </div>
+          <span class="ds-card__tag">Video</span>
+          <h3 class="ds-card__title">Video Editing</h3>
+          <p class="ds-card__body">From social media clips to full corporate videos — we deliver clean, professional edits that make an impact. Color grading, motion graphics, subtitles, and brand-aligned storytelling.</p>
+          <a href="/#contact" class="ds-card__cta">Get a Quote <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+
+        <!-- 6. 3D Animation -->
+        <div class="glass-card ds-card">
+          <div class="ds-card__num">06</div>
+          <div class="ds-card__icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          </div>
+          <span class="ds-card__tag">Animation</span>
+          <h3 class="ds-card__title">3D Animations</h3>
+          <p class="ds-card__body">Reach your ideal audience with high-impact 3D animated content for ads, product showcases, explainers, and brand campaigns. We create animations that get results on Facebook and Instagram.</p>
+          <a href="/#contact" class="ds-card__cta">Get a Quote <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+
+        <!-- 7. 2D Animation -->
+        <div class="glass-card ds-card">
+          <div class="ds-card__num">07</div>
+          <div class="ds-card__icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+          </div>
+          <span class="ds-card__tag">Animation</span>
+          <h3 class="ds-card__title">2D Animation</h3>
+          <p class="ds-card__body">Bring your ideas to life with stunning 2D animations tailored for ads, education, and storytelling. Perfect for explainer videos, brand stories, and engaging social content that drives action.</p>
+          <a href="/#contact" class="ds-card__cta">Get a Quote <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+
+        <!-- 8. AI Chatbots / AI Agents -->
+        <div class="glass-card ds-card">
+          <div class="ds-card__num">08</div>
+          <div class="ds-card__icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg>
+          </div>
+          <span class="ds-card__tag">AI</span>
+          <h3 class="ds-card__title">AI Chatbots / AI Agents</h3>
+          <p class="ds-card__body">Smart virtual assistants that work 24/7 to handle customer queries, answer questions, process bookings, and boost your operational efficiency — without adding headcount.</p>
+          <a href="/services/ai-automation.html" class="ds-card__cta">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+
+        <!-- 9. Meta Ads Management -->
+        <div class="glass-card ds-card">
+          <div class="ds-card__num">09</div>
+          <div class="ds-card__icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 19-9-9 19-2-8-8-2z"/></svg>
+          </div>
+          <span class="ds-card__tag">Paid Ads</span>
+          <h3 class="ds-card__title">Meta Ads Management</h3>
+          <p class="ds-card__body">High-converting Facebook and Instagram ad campaigns — from creative design to audience targeting, A/B testing, and performance reporting. We manage every detail so you get maximum ROI.</p>
+          <a href="/services/digital-marketing.html" class="ds-card__cta">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+
+        <!-- 10. Google Ads Management -->
+        <div class="glass-card ds-card">
+          <div class="ds-card__num">10</div>
+          <div class="ds-card__icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <span class="ds-card__tag">Paid Ads</span>
+          <h3 class="ds-card__title">Google Ads Management</h3>
+          <p class="ds-card__body">Get found at the top of Google search results. We handle keyword research, ad copywriting, bid optimization, and conversion tracking to drive quality leads to your business every day.</p>
+          <a href="/services/digital-marketing.html" class="ds-card__cta">Learn More <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW WE WORK -->
+  <section class="ds-section ds-section--alt">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="section-badge">Our Process</div>
+        <h2 class="ds-section-title">How We Deliver</h2>
+        <p class="ds-section-sub">Every project follows our proven 4-step framework — delivering on time, on brief, and above expectations.</p>
+      </div>
+      <div class="ds-process">
+        <div class="glass-card ds-process-step">
+          <div class="ds-process-step-num">01</div>
+          <div class="ds-process-step-title">Discovery</div>
+          <div class="ds-process-step-body">We start with a deep dive into your goals, audience, and competition to understand exactly what success looks like for your project.</div>
+        </div>
+        <div class="glass-card ds-process-step">
+          <div class="ds-process-step-num">02</div>
+          <div class="ds-process-step-title">Strategy</div>
+          <div class="ds-process-step-body">A tailored plan is developed outlining the best approach, timeline, deliverables, and technology stack for your specific needs.</div>
+        </div>
+        <div class="glass-card ds-process-step">
+          <div class="ds-process-step-num">03</div>
+          <div class="ds-process-step-title">Execution</div>
+          <div class="ds-process-step-body">Our team builds and delivers with precision — with regular check-ins and progress updates at every stage of production.</div>
+        </div>
+        <div class="glass-card ds-process-step">
+          <div class="ds-process-step-num">04</div>
+          <div class="ds-process-step-title">Optimize</div>
+          <div class="ds-process-step-body">After launch, we review results, gather feedback, and optimize for maximum performance and long-term impact.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-section__bg"></div>
+    <div class="cta-section__orbs"><div class="cta-section__orb cta-section__orb--1"></div><div class="cta-section__orb cta-section__orb--2"></div></div>
+    <div class="section-container">
+      <div class="cta-section__content" style="opacity:1;transform:none;">
+        <p class="cta-section__eyebrow">Ready to Start?</p>
+        <h2 class="cta-section__title">Let's Build Something<br/><span class="text-sky">Extraordinary</span></h2>
+        <p class="cta-section__body">Pick a service and let's get to work. We'll have a plan on the table within 24 hours.</p>
+        <div class="cta-section__actions">
+          <a href="/#contact" class="btn btn--white btn--lg">Contact Us Today</a>
+          <a href="/" class="btn btn--outline-white btn--lg">← Back to Home</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer__glow"></div>
+    <div class="footer__bottom" style="max-width:var(--container);margin:0 auto;padding:28px clamp(20px,5vw,80px);">
+      <p>© 2026 Haynes Consult · <a href="https://www.haynesconsult.com">www.HaynesConsult.com</a></p>
+      <p>Built with precision. Powered by innovation.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="/src/service-page.js"></script>
+</body>
+</html>

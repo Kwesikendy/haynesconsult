@@ -12,6 +12,8 @@ export default defineConfig({
         webDev: resolve(__dirname, 'services/web-development.html'),
         aiAuto: resolve(__dirname, 'services/ai-automation.html'),
         digitalMkt: resolve(__dirname, 'services/digital-marketing.html'),
+        digitalSvc: resolve(__dirname, 'services/digital-services.html'),
+        dental: resolve(__dirname, 'services/dental-aesthetic.html'),
       }
     }
   },
