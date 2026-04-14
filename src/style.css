@@ -722,8 +722,8 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
   right: 0;
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(24px);
-  padding: 24px;
-  border-bottom: 1px solid rgba(61,168,245,0.15);
+  padding: 0 24px;
+  border-bottom: 1px solid rgba(61,168,245,0);
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.4s var(--ease-out);
@@ -731,6 +731,8 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
 
 .nav__mobile.open {
   max-height: 500px;
+  padding: 24px;
+  border-bottom: 1px solid rgba(61,168,245,0.15);
 }
 
 .nav__mobile-links {
@@ -743,7 +745,7 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
   font-family: var(--font-head);
   font-size: 16px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--navy);
   padding: 14px 20px;
   border-radius: 12px;
   transition: all var(--fast);
