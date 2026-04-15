@@ -97,7 +97,7 @@ ul { list-style: none; }
   pointer-events: none;
   z-index: 9999;
   transition: width 0.2s, height 0.2s, background 0.2s;
-  mix-blend-mode: multiply;
+  /* mix-blend-mode: multiply; removed to match logo bg */
   will-change: transform;
 }
 
@@ -458,7 +458,7 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
   gap: 32px;
 
   /* ---- Frosty white bubble glass ---- */
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(242, 250, 252, 0.95);
   backdrop-filter: blur(28px) saturate(160%) brightness(1.08);
   -webkit-backdrop-filter: blur(28px) saturate(160%) brightness(1.08);
 
@@ -506,7 +506,7 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
 
 /* Scrolled: slightly more opaque + stronger shadow */
 .nav--scrolled .nav__container {
-  background: rgba(255, 255, 255, 0.88);
+  background: rgb(242, 250, 252);
   box-shadow:
     0 12px 48px rgba(13, 43, 126, 0.18),
     0 3px  12px rgba(13, 43, 126, 0.1),
@@ -531,7 +531,7 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
   border: 2px solid rgba(255,255,255,0.3);
   transition: box-shadow var(--fast), transform var(--fast);
   box-shadow: 0 2px 12px rgba(0,0,0,0.2);
-  mix-blend-mode: multiply;
+  /* mix-blend-mode: multiply; removed to match logo bg */
 }
 .nav__logo:hover .nav__logo-img {
   box-shadow: 0 4px 20px rgba(21,101,192,0.3);
@@ -618,7 +618,7 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
   left: 50%;
   transform: translateX(-50%) translateY(-8px);
   min-width: 240px;
-  background: rgba(255, 255, 255, 0.88);
+  background: rgb(242, 250, 252);
   backdrop-filter: blur(28px) saturate(160%);
   -webkit-backdrop-filter: blur(28px) saturate(160%);
   border: 1.5px solid rgba(255, 255, 255, 0.95);
@@ -721,7 +721,7 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
   top: 100%;
   left: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(242, 250, 252, 0.95);
   backdrop-filter: blur(24px);
   padding: 0 24px;
   border-bottom: 1px solid rgba(61,168,245,0);
@@ -766,13 +766,45 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
   display: flex;
   align-items: center;
   overflow: hidden;
-  background: linear-gradient(160deg,
-    #ffffff 0%,
-    #eaf4fb 25%,
-    #d6ecfb 50%,
-    #f0f8ff 75%,
-    #ffffff 100%
-  );
+  background: #f0f8ff;
+}
+
+/* ---- HERO BACKGROUND VIDEO ---- */
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  filter: brightness(0.92) saturate(1.1);
+  will-change: transform;
+}
+
+/* Gradient overlay: blends video into the light page below */
+.hero__video-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    /* top fade — softens the very top edge */
+    linear-gradient(to bottom,
+      rgba(240, 248, 255, 0.35) 0%,
+      transparent 20%
+    ),
+    /* bottom fade — key blend into the marquee/about sections */
+    linear-gradient(to top,
+      rgba(240, 248, 255, 1) 0%,
+      rgba(234, 244, 251, 0.85) 8%,
+      rgba(214, 236, 251, 0.5) 16%,
+      transparent 32%
+    ),
+    /* side vignettes — keep text readable */
+    radial-gradient(ellipse at center,
+      transparent 40%,
+      rgba(240, 248, 255, 0.25) 100%
+    );
+  pointer-events: none;
 }
 
 .hero__canvas {
@@ -780,7 +812,8 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
   inset: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.5;
+  opacity: 0.18;
+  z-index: 2;
   will-change: contents;
 }
 
@@ -788,11 +821,13 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
 .hero__grid-overlay {
   position: absolute;
   inset: 0;
+  z-index: 3;
   background-image:
-    linear-gradient(rgba(21, 101, 192, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(21, 101, 192, 0.04) 1px, transparent 1px);
+    linear-gradient(rgba(21, 101, 192, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(21, 101, 192, 0.03) 1px, transparent 1px);
   background-size: 60px 60px;
   mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  pointer-events: none;
 }
 
 .hero__particles { display: none; }
@@ -803,7 +838,8 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
   border-radius: 50%;
   filter: blur(0px);
   pointer-events: none;
-  z-index: 1;
+  z-index: 4;
+  opacity: 0.6;
 }
 
 .hero__blob--1 {
@@ -888,7 +924,7 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
 
 .hero__container {
   position: relative;
-  z-index: 2;
+  z-index: 10;
   max-width: var(--container);
   margin: 0 auto;
   padding: 140px clamp(20px, 5vw, 80px) 80px;
@@ -2422,6 +2458,7 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
   outline: none;
   width: 100%;
   -webkit-appearance: none;
+  appearance: none;
 }
 
 .form-group input::placeholder,
