@@ -2850,3 +2850,196 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
 ::-webkit-scrollbar-track { background: var(--ice); }
 ::-webkit-scrollbar-thumb { background: var(--royal); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--navy); }
+
+/* ============================================================
+   MEET THE TEAM SECTION
+============================================================ */
+.team {
+  position: relative;
+  padding: var(--section-pad) 0;
+  overflow: hidden;
+}
+
+.team__bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.team__bg-orb--1 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(21,101,192,0.07) 0%, transparent 70%);
+  top: -120px; left: -160px;
+}
+.team__bg-orb--2 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(61,168,245,0.07) 0%, transparent 70%);
+  bottom: -80px; right: -100px;
+}
+
+.team__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+/* ---- CARD ---- */
+.team__card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 28px;
+  padding: 0;
+  transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+}
+.team__card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-lift);
+}
+
+/* ---- PHOTO AREA ---- */
+.team__photo-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 24px 24px 0 0;
+  background: #d6ecfb;
+  flex-shrink: 0;
+}
+
+/* Slideshow: all images stacked, crossfade on active */
+.team__slideshow {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.team__slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+}
+.team__slide.active { opacity: 1; }
+
+/* Bottom gradient so name fades naturally over the photo edge */
+.team__photo-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 45%;
+  background: linear-gradient(to top, rgba(255,255,255,0.9) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Glow blob behind the photo for depth */
+.team__photo-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(61,168,245,0.12) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Dot indicators */
+.team__slide-dots {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 3;
+}
+.team__dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(13, 43, 126, 0.25);
+  transition: background 0.3s, transform 0.3s;
+}
+.team__dot.active {
+  background: var(--royal);
+  transform: scale(1.4);
+}
+
+/* ---- INFO AREA ---- */
+.team__info {
+  padding: 24px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.team__name {
+  font-family: var(--font-head);
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--navy);
+  margin: 0;
+}
+
+.team__role {
+  display: inline-block;
+  font-family: var(--font-head);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--royal);
+  background: rgba(21, 101, 192, 0.09);
+  border: 1px solid rgba(21, 101, 192, 0.18);
+  border-radius: 100px;
+  padding: 5px 14px;
+  width: fit-content;
+}
+
+.team__bio {
+  font-size: 14px;
+  color: rgba(13, 43, 126, 0.6);
+  line-height: 1.7;
+  margin: 4px 0 0;
+  flex: 1;
+}
+
+.team__socials {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.team__social-btn {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: rgba(21, 101, 192, 0.08);
+  border: 1px solid rgba(21, 101, 192, 0.15);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--royal);
+  transition: all 0.25s var(--ease-out);
+}
+.team__social-btn:hover {
+  background: var(--royal);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(21, 101, 192, 0.3);
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 900px) {
+  .team__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 580px) {
+  .team__grid {
+    grid-template-columns: 1fr;
+    max-width: 380px;
+    margin: 0 auto;
+  }
+}
+

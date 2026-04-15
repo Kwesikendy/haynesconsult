@@ -599,6 +599,30 @@ if (clientsSlides.length > 0) {
   }, 4000);
 }
 
+/* ============================================================
+   TEAM PHOTO SLIDESHOWS
+============================================================ */
+document.querySelectorAll('.team__slideshow[data-autoplay]').forEach((show) => {
+  const slides = show.querySelectorAll('.team__slide');
+  if (slides.length < 2) return;
+
+  // Dots live in a sibling element of the slideshow's parent
+  const wrap = show.closest('.team__photo-wrap');
+  const dots  = wrap ? wrap.querySelectorAll('.team__dot') : [];
+
+  let idx = 0;
+
+  setInterval(() => {
+    slides[idx].classList.remove('active');
+    if (dots[idx]) dots[idx].classList.remove('active');
+
+    idx = (idx + 1) % slides.length;
+
+    slides[idx].classList.add('active');
+    if (dots[idx]) dots[idx].classList.add('active');
+  }, 3500);
+});
+
 console.log(
   '%c🚀 HAYNES CONSULT%c\nBuilt for Scale. Designed for Results.',
   'color:#1565C0;font-size:18px;font-weight:bold;',
