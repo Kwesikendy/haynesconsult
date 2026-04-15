@@ -586,6 +586,19 @@ gsap.from('.nav', {
   ease: 'power3.out',
 });
 
+/* ============================================================
+   CLIENTS SLIDESHOW (4 seconds interval)
+============================================================ */
+const clientsSlides = document.querySelectorAll('.clients__slide');
+if (clientsSlides.length > 0) {
+  let currentSlide = 0;
+  setInterval(() => {
+    clientsSlides[currentSlide].classList.remove('active');
+    currentSlide = (currentSlide + 1) % clientsSlides.length;
+    clientsSlides[currentSlide].classList.add('active');
+  }, 4000);
+}
+
 console.log(
   '%c🚀 HAYNES CONSULT%c\nBuilt for Scale. Designed for Results.',
   'color:#1565C0;font-size:18px;font-weight:bold;',

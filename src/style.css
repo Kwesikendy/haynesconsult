@@ -531,6 +531,7 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
   border: 2px solid rgba(255,255,255,0.3);
   transition: box-shadow var(--fast), transform var(--fast);
   box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  mix-blend-mode: multiply;
 }
 .nav__logo:hover .nav__logo-img {
   box-shadow: 0 4px 20px rgba(21,101,192,0.3);
@@ -2039,57 +2040,54 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
   background: var(--white);
 }
 
-.clients__grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+.clients__carousel-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  aspect-ratio: 16 / 9;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 12px 36px rgba(13, 43, 126, 0.12);
+  transform: translateZ(0); /* Force hardware acceleration */
 }
 
-.clients__logo-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 12px;
-  padding: 24px 16px;
-  cursor: default;
-  transition: transform var(--fast), box-shadow var(--fast);
+.clients__carousel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--ice);
 }
 
-.clients__logo-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 36px rgba(13,43,126,0.12);
+.clients__slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity 1.2s ease-in-out, transform 4.5s linear;
+  z-index: 1;
 }
 
-.clients__logo-initial {
-  width: 54px;
-  height: 54px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, var(--navy), var(--royal));
-  color: white;
-  font-family: var(--font-head);
-  font-size: clamp(10px, 2vw, 14px);
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  letter-spacing: 0.02em;
-  box-shadow: 0 4px 16px rgba(13,43,126,0.25);
-}
-
-.clients__logo-card span {
-  font-family: var(--font-head);
-  font-size: 11px;
-  font-weight: 700;
-  color: rgba(13,43,126,0.65);
-  line-height: 1.4;
+.clients__slide.active {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 2;
 }
 
 @media (max-width: 768px) {
-  .clients__grid { grid-template-columns: repeat(3, 1fr); }
+  .clients__carousel-wrap {
+    aspect-ratio: 4 / 3;
+    border-radius: 16px;
+  }
 }
 @media (max-width: 480px) {
-  .clients__grid { grid-template-columns: repeat(2, 1fr); }
+  .clients__carousel-wrap {
+    aspect-ratio: 1 / 1;
+  }
 }
 
 /* ---- TESTIMONIALS ---- */
