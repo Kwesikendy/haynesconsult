@@ -530,7 +530,7 @@ if (!isTouch) {
 /* ============================================================
    SERVICE CARD 3D TILT
 ============================================================ */
-document.querySelectorAll('.services__card').forEach((card) => {
+document.querySelectorAll('.hover-swivel').forEach((card) => {
   if (isTouch) return;
   const tiltAmount = isMobile ? 5 : 8;
   card.addEventListener('mousemove', (e) => {
@@ -585,19 +585,6 @@ gsap.from('.nav', {
   delay: 0.2,
   ease: 'power3.out',
 });
-
-/* ============================================================
-   CLIENTS SLIDESHOW (4 seconds interval)
-============================================================ */
-const clientsSlides = document.querySelectorAll('.clients__slide');
-if (clientsSlides.length > 0) {
-  let currentSlide = 0;
-  setInterval(() => {
-    clientsSlides[currentSlide].classList.remove('active');
-    currentSlide = (currentSlide + 1) % clientsSlides.length;
-    clientsSlides[currentSlide].classList.add('active');
-  }, 4000);
-}
 
 /* ============================================================
    TEAM PHOTO SLIDESHOWS

@@ -48,7 +48,10 @@
     <div class="nav__container">
       <a href="#home" class="nav__logo" id="navLogo">
         <img src="/logo.jpeg" alt="Haynes Consult" class="nav__logo-img" />
-        <span class="nav__logo-text">Haynes Consult</span>
+        <span class="nav__logo-text">
+          <span class="nav__logo-name">HAYNES</span>
+          <span class="nav__logo-sub">CONSULT</span>
+        </span>
       </a>
       <ul class="nav__links" id="navLinks">
         <li><a href="#home" class="nav__link" data-nav="home">Home</a></li>
@@ -93,7 +96,7 @@
         <li><a href="#industries" class="nav__mobile-link">Industries</a></li>
         <li><a href="#team" class="nav__mobile-link">Team</a></li>
         <li><a href="#contact" class="nav__mobile-link">Contact</a></li>
-        <li><a href="#contact" class="btn btn--primary">Get Started</a></li>
+        <li><a href="#contact" class="btn btn--primary animate-pulseGlow">Get Started</a></li>
       </ul>
     </div>
   </nav>
@@ -164,8 +167,8 @@
       </div>
     </div>
     <!-- Animated blue blobs -->
-    <div class="hero__blob hero__blob--1"></div>
-    <div class="hero__blob hero__blob--2"></div>
+    <div class="hero__blob hero__blob--1 animate-float"></div>
+    <div class="hero__blob hero__blob--2 animate-pulseGlow"></div>
     <div class="hero__blob hero__blob--3"></div>
     <div class="hero__blob hero__blob--4"></div>
   </section>
@@ -314,10 +317,10 @@
 
       <div class="services__grid">
         <!-- Pillar 1: Tech & Dev -->
-        <div class="services__card glass-card services__card--featured" data-animate="cardReveal" data-delay="0">
+        <div class="services__card glass-card services__card--featured hover-swivel" data-animate="cardReveal" data-delay="0">
           <div class="services__card-glow"></div>
           <div class="services__card-icon-wrapper">
-            <div class="services__card-icon-3d" id="icon3d-tech">
+            <div class="services__card-icon-3d animate-float" id="icon3d-tech">
               <div class="icon3d-cube">
                 <div class="icon3d-face icon3d-face--front"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
                 <div class="icon3d-face icon3d-face--back"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
@@ -344,10 +347,10 @@
         </div>
 
         <!-- Pillar 2: AI & Automation -->
-        <div class="services__card glass-card" data-animate="cardReveal" data-delay="0.15">
+        <div class="services__card glass-card hover-swivel" data-animate="cardReveal" data-delay="0.15">
           <div class="services__card-glow"></div>
           <div class="services__card-icon-wrapper">
-            <div class="services__card-icon-3d" id="icon3d-ai">
+            <div class="services__card-icon-3d animate-float" id="icon3d-ai">
               <div class="icon3d-cube">
                 <div class="icon3d-face icon3d-face--front"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg></div>
                 <div class="icon3d-face icon3d-face--back"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-1.96-3 2.5 2.5 0 0 1-1.32-4.24 3 3 0 0 1 .34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.18-2.46"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 1.96-3 2.5 2.5 0 0 0 1.32-4.24 3 3 0 0 0-.34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.18-2.46"/></svg></div>
@@ -374,10 +377,10 @@
         </div>
 
         <!-- Pillar 3: Digital Marketing -->
-        <div class="services__card glass-card" data-animate="cardReveal" data-delay="0.3">
+        <div class="services__card glass-card hover-swivel" data-animate="cardReveal" data-delay="0.3">
           <div class="services__card-glow"></div>
           <div class="services__card-icon-wrapper">
-            <div class="services__card-icon-3d" id="icon3d-marketing">
+            <div class="services__card-icon-3d animate-float" id="icon3d-marketing">
               <div class="icon3d-cube">
                 <div class="icon3d-face icon3d-face--front"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 19-9-9 19-2-8-8-2z"/></svg></div>
                 <div class="icon3d-face icon3d-face--back"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
@@ -510,7 +513,7 @@
         <p class="section-subtitle">From startups to established healthcare providers - we meet you where you are</p>
       </div>
       <div class="industries__grid">
-        <div class="glass-card industries__card" data-animate="cardReveal" data-delay="0">
+        <div class="glass-card industries__card hover-swivel" data-animate="cardReveal" data-delay="0">
           <div class="industries__card-img">
             <div class="industries__icon-3d">
               <div class="industries__icon-sphere"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg></div>
@@ -525,7 +528,7 @@
             <li>Private Healthcare Groups</li>
           </ul>
         </div>
-        <div class="glass-card industries__card" data-animate="cardReveal" data-delay="0.1">
+        <div class="glass-card industries__card hover-swivel" data-animate="cardReveal" data-delay="0.1">
           <div class="industries__card-img">
             <div class="industries__icon-3d">
               <div class="industries__icon-sphere"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></div>
@@ -540,7 +543,7 @@
             <li>Funded Ventures</li>
           </ul>
         </div>
-        <div class="glass-card industries__card" data-animate="cardReveal" data-delay="0.2">
+        <div class="glass-card industries__card hover-swivel" data-animate="cardReveal" data-delay="0.2">
           <div class="industries__card-img">
             <div class="industries__icon-3d">
               <div class="industries__icon-sphere"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/></svg></div>
@@ -570,7 +573,7 @@
         <p class="section-subtitle">Real results for real businesses - here's what we've built.</p>
       </div>
       <div class="projects__grid">
-        <div class="glass-card projects__card" data-animate="cardReveal" data-delay="0">
+        <div class="glass-card projects__card hover-swivel" data-animate="cardReveal" data-delay="0">
           <div class="projects__card-visual projects__card-visual--clinic">
             <div class="projects__card-icon">
               <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -590,7 +593,7 @@
             </a>
           </div>
         </div>
-        <div class="glass-card projects__card" data-animate="cardReveal" data-delay="0.15">
+        <div class="glass-card projects__card hover-swivel" data-animate="cardReveal" data-delay="0.15">
           <div class="projects__card-visual projects__card-visual--ehr">
             <div class="projects__card-icon">
               <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
@@ -624,25 +627,46 @@
         <h2 class="section-title">Clients We Have <span class="text-accent">Worked With</span></h2>
         <p class="section-subtitle">Real results for real businesses in our community and beyond.</p>
       </div>
-      <div class="clients__carousel-wrap glass-card" data-animate="fadeUp">
-        <div class="clients__carousel" id="clientsCarousel">
-          <img src="/clients/client_01.jpeg" class="clients__slide active" alt="Client 1">
-          <img src="/clients/client_02.jpeg" class="clients__slide" alt="Client 2">
-          <img src="/clients/client_03.jpeg" class="clients__slide" alt="Client 3">
-          <img src="/clients/client_04.jpeg" class="clients__slide" alt="Client 4">
-          <img src="/clients/client_05.jpeg" class="clients__slide" alt="Client 5">
-          <img src="/clients/client_06.jpeg" class="clients__slide" alt="Client 6">
-          <img src="/clients/client_07.jpeg" class="clients__slide" alt="Client 7">
-          <img src="/clients/client_08.jpeg" class="clients__slide" alt="Client 8">
-          <img src="/clients/client_09.jpeg" class="clients__slide" alt="Client 9">
-          <img src="/clients/client_10.jpeg" class="clients__slide" alt="Client 10">
-          <img src="/clients/client_11.jpeg" class="clients__slide" alt="Client 11">
-          <img src="/clients/client_12.jpeg" class="clients__slide" alt="Client 12">
-          <img src="/clients/client_13.jpeg" class="clients__slide" alt="Client 13">
-          <img src="/clients/client_14.jpeg" class="clients__slide" alt="Client 14">
-          <img src="/clients/client_15.jpeg" class="clients__slide" alt="Client 15">
-          <img src="/clients/client_16.jpeg" class="clients__slide" alt="Client 16">
-          <img src="/clients/client_17.jpeg" class="clients__slide" alt="Client 17">
+            <div class="clients__marquee-wrap glass-card" data-animate="fadeUp">
+        <div class="clients__marquee">
+          <div class="clients__marquee-track">
+            <img src="/clients/client_01.jpeg" class="clients__logo" alt="Client 1">
+            <img src="/clients/client_02.jpeg" class="clients__logo" alt="Client 2">
+            <img src="/clients/client_03.jpeg" class="clients__logo" alt="Client 3">
+            <img src="/clients/client_04.jpeg" class="clients__logo" alt="Client 4">
+            <img src="/clients/client_05.jpeg" class="clients__logo" alt="Client 5">
+            <img src="/clients/client_06.jpeg" class="clients__logo" alt="Client 6">
+            <img src="/clients/client_07.jpeg" class="clients__logo" alt="Client 7">
+            <img src="/clients/client_08.jpeg" class="clients__logo" alt="Client 8">
+            <img src="/clients/client_09.jpeg" class="clients__logo" alt="Client 9">
+            <img src="/clients/client_10.jpeg" class="clients__logo" alt="Client 10">
+            <img src="/clients/client_11.jpeg" class="clients__logo" alt="Client 11">
+            <img src="/clients/client_12.jpeg" class="clients__logo" alt="Client 12">
+            <img src="/clients/client_13.jpeg" class="clients__logo" alt="Client 13">
+            <img src="/clients/client_14.jpeg" class="clients__logo" alt="Client 14">
+            <img src="/clients/client_15.jpeg" class="clients__logo" alt="Client 15">
+            <img src="/clients/client_16.jpeg" class="clients__logo" alt="Client 16">
+            <img src="/clients/client_17.jpeg" class="clients__logo" alt="Client 17">
+          </div>
+          <div class="clients__marquee-track" aria-hidden="true">
+            <img src="/clients/client_01.jpeg" class="clients__logo" alt="Client 1">
+            <img src="/clients/client_02.jpeg" class="clients__logo" alt="Client 2">
+            <img src="/clients/client_03.jpeg" class="clients__logo" alt="Client 3">
+            <img src="/clients/client_04.jpeg" class="clients__logo" alt="Client 4">
+            <img src="/clients/client_05.jpeg" class="clients__logo" alt="Client 5">
+            <img src="/clients/client_06.jpeg" class="clients__logo" alt="Client 6">
+            <img src="/clients/client_07.jpeg" class="clients__logo" alt="Client 7">
+            <img src="/clients/client_08.jpeg" class="clients__logo" alt="Client 8">
+            <img src="/clients/client_09.jpeg" class="clients__logo" alt="Client 9">
+            <img src="/clients/client_10.jpeg" class="clients__logo" alt="Client 10">
+            <img src="/clients/client_11.jpeg" class="clients__logo" alt="Client 11">
+            <img src="/clients/client_12.jpeg" class="clients__logo" alt="Client 12">
+            <img src="/clients/client_13.jpeg" class="clients__logo" alt="Client 13">
+            <img src="/clients/client_14.jpeg" class="clients__logo" alt="Client 14">
+            <img src="/clients/client_15.jpeg" class="clients__logo" alt="Client 15">
+            <img src="/clients/client_16.jpeg" class="clients__logo" alt="Client 16">
+            <img src="/clients/client_17.jpeg" class="clients__logo" alt="Client 17">
+          </div>
         </div>
       </div>
     </div>
@@ -660,7 +684,7 @@
       </div>
       <div class="testimonials__track" id="testimonialsTrack">
         <div class="testimonials__grid">
-          <div class="glass-card testimonials__card" data-animate="cardReveal" data-delay="0">
+          <div class="glass-card testimonials__card hover-swivel" data-animate="cardReveal" data-delay="0">
             <div class="testimonials__stars">★★★★★</div>
             <p class="testimonials__quote">"Haynes Consult transformed our clinic's entire digital infrastructure. Our patient management is now completely automated and our staff productivity has doubled."</p>
             <div class="testimonials__author">
@@ -671,7 +695,7 @@
               </div>
             </div>
           </div>
-          <div class="glass-card testimonials__card" data-animate="cardReveal" data-delay="0.1">
+          <div class="glass-card testimonials__card hover-swivel" data-animate="cardReveal" data-delay="0.1">
             <div class="testimonials__stars">★★★★★</div>
             <p class="testimonials__quote">"The AI chatbot they built for our business handles 70% of customer inquiries automatically. We saved thousands of hours in the first 3 months alone."</p>
             <div class="testimonials__author">
@@ -682,7 +706,7 @@
               </div>
             </div>
           </div>
-          <div class="glass-card testimonials__card" data-animate="cardReveal" data-delay="0.2">
+          <div class="glass-card testimonials__card hover-swivel" data-animate="cardReveal" data-delay="0.2">
             <div class="testimonials__stars">★★★★★</div>
             <p class="testimonials__quote">"Their digital marketing strategy tripled our online leads in just 60 days. The team is strategic, creative, and delivers real, measurable returns."</p>
             <div class="testimonials__author">
@@ -713,13 +737,13 @@
 
       <div class="team__grid">
 
-        <!-- Dr. Haynes - Founder & CEO (3 photos slideshow) -->
-        <div class="team__card glass-card" data-animate="cardReveal" data-delay="0">
+        <!-- Dr. Martin Senyah - Founder & CEO (3 photos slideshow) -->
+        <div class="team__card glass-card hover-swivel" data-animate="cardReveal" data-delay="0">
           <div class="team__photo-wrap">
             <div class="team__slideshow" data-autoplay>
-              <img src="/team/Dr. Haynes.jpeg"  class="team__slide active" alt="Dr. Haynes" />
-              <img src="/team/Dr. Haynes2.jpeg" class="team__slide"        alt="Dr. Haynes" />
-              <img src="/team/Dr. haynes3.jpeg" class="team__slide"        alt="Dr. Haynes" />
+              <img src="/team/Dr. Haynes.jpeg"  class="team__slide active" alt="Dr. Martin Senyah" />
+              <img src="/team/Dr. Haynes2.jpeg" class="team__slide"        alt="Dr. Martin Senyah" />
+              <img src="/team/Dr. haynes3.jpeg" class="team__slide"        alt="Dr. Martin Senyah" />
             </div>
             <div class="team__slide-dots" aria-hidden="true">
               <span class="team__dot active"></span>
@@ -729,7 +753,7 @@
             <div class="team__photo-glow"></div>
           </div>
           <div class="team__info">
-            <h3 class="team__name">Dr. Haynes</h3>
+            <h3 class="team__name">Dr. Martin Senyah</h3>
             <span class="team__role">Founder &amp; CEO</span>
             <p class="team__bio">Visionary leader driving Haynes Consult's mission to deliver world-class digital strategy and AI solutions across industries.</p>
             <div class="team__socials">
@@ -741,7 +765,7 @@
         </div>
 
         <!-- Emma - Digital Representative (2 photos slideshow) -->
-        <div class="team__card glass-card" data-animate="cardReveal" data-delay="0.15">
+        <div class="team__card glass-card hover-swivel" data-animate="cardReveal" data-delay="0.15">
           <div class="team__photo-wrap">
             <div class="team__slideshow" data-autoplay>
               <img src="/team/Emma.jpeg"  class="team__slide active" alt="Emma" />
@@ -766,7 +790,7 @@
         </div>
 
         <!-- Nathan - Intern (single photo) -->
-        <div class="team__card glass-card" data-animate="cardReveal" data-delay="0.3">
+        <div class="team__card glass-card hover-swivel" data-animate="cardReveal" data-delay="0.3">
           <div class="team__photo-wrap">
             <div class="team__slideshow">
               <img src="/team/Nathan.jpeg" class="team__slide active" alt="Nathan" />
