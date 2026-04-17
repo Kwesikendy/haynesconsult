@@ -2967,20 +2967,52 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
 /* ============================================================
    RESPONSIVE â€” Hero Slide Carousel
 ============================================================ */
+@media (max-width: 992px) {
+  .hero__col-text {
+    flex: 0 0 70%;
+    max-width: 70%;
+  }
+}
+
 @media (max-width: 768px) {
-  .hero__slide-inner { padding: 120px 24px 80px; }
-  .hero__slide-title--s1 { font-size: min(11vw, 80px); }
-  .hero__slide-title--s2 { font-size: min(9.5vw, 72px); }
-  .hero__slide-sub { font-size: 16px; }
-  .hero__slide-btn { padding: 15px 34px; font-size: 13px; }
+  .hero__slide-inner { padding: 100px 24px 60px; }
+  .hero__col-text {
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding-top: 60px;
+  }
+  .hero__video-overlay {
+    background:
+      linear-gradient(to right,
+        rgba(221, 238, 255, 0.85) 0%,
+        rgba(221, 238, 255, 0.7) 40%,
+        rgba(221, 238, 255, 0.3) 100%
+      ),
+      linear-gradient(to top,
+        rgba(240, 248, 255, 1.00) 0%,
+        rgba(234, 244, 251, 0.80) 6%,
+        rgba(221, 238, 255, 0.25) 15%,
+        transparent 30%
+      );
+  }
+  .hero__title-s1 { font-size: clamp(38px, 9vw, 55px); max-width: 100%; }
+  .hero__title-s2 { font-size: clamp(32px, 8vw, 50px); max-width: 100%; }
+  .hero__sub-s1, .hero__sub-s2 { font-size: 16px; margin-bottom: 24px; }
+  .hero__btn-s1, .hero__btn-s2 { padding: 15px 32px; font-size: 12px; margin-bottom: 32px; }
+  .hero__glass-pill { padding: 14px 24px; font-size: 13px; }
   .hero__dots { bottom: 24px; }
 }
 
 @media (max-width: 480px) {
-  .hero__slide-badge { font-size: 10px; padding: 7px 14px; margin-bottom: 24px; }
-  .hero__slide-inner { padding: 110px 20px 70px; }
-  .hero__slide-inner--center { align-items: flex-start; text-align: left; }
-  .hero__slide-title--s2 { text-align: left; }
-  .hero__slide-sub--s2 { text-align: left; }
-  .hero__slide-badges-row { flex-wrap: wrap; }
+  .hero__slide-inner { padding: 90px 20px 50px; }
+  .hero__title-s1 { font-size: clamp(32px, 11vw, 42px); }
+  .hero__title-s2 { font-size: clamp(28px, 10vw, 38px); }
+  .hero__slide-inner--center { align-items: flex-start; text-align: left; justify-content: center; }
+  .hero__title-s2, .hero__sub-s2, .hero__tags-s2 { text-align: left; }
+  .hw-row--center { justify-content: flex-start; }
+  .hero__glass-pill {
+    font-size: 12px;
+    padding: 12px 18px;
+    white-space: nowrap; /* keep text together on tiny screens or wrap minimally */
+  }
 }
