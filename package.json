@@ -4,7 +4,9 @@
   "description": "Haynes Consult — Official Website",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "concurrently \"vite\" \"node server.js\"",
+    "dev:backend": "node server.js",
+    "dev:frontend": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
@@ -12,7 +14,14 @@
     "vite": "^5.4.0"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "concurrently": "^9.2.1",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
     "gsap": "^3.12.5",
-    "lenis": "^1.1.14"
+    "jsonwebtoken": "^9.0.3",
+    "lenis": "^1.1.14",
+    "sqlite3": "^6.0.1"
   }
 }

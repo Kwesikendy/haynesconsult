@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Haynes Academy - E-Learning</title>
+  <link rel="icon" type="image/jpeg" href="/logo.jpeg" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/style.css" />
+  <style>
+    /* Specific Academy Styles */
+    .academy-hero {
+      padding-top: 150px;
+      padding-bottom: 80px;
+      text-align: center;
+      background: linear-gradient(135deg, var(--ice), var(--white));
+      position: relative;
+      overflow: hidden;
+    }
+    .academy-hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(36px, 6vw, 64px);
+      color: var(--navy);
+      margin-bottom: 20px;
+    }
+    .academy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
+      padding: 40px 0;
+    }
+    .academy-card {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .academy-card-img {
+      height: 180px;
+      background: #ddd;
+      border-radius: 12px 12px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .academy-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .academy-tier-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      backdrop-filter: blur(8px);
+    }
+    .badge-free {
+      background: rgba(61, 168, 245, 0.8);
+      color: #fff;
+    }
+    .badge-premium {
+      background: rgba(13, 43, 126, 0.8);
+      color: #fff;
+    }
+    .academy-card-body {
+      padding: 24px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .academy-card-title {
+      font-family: var(--font-head);
+      font-size: 18px;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+    .academy-card-desc {
+      font-size: 14px;
+      color: var(--caption);
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+    .academy-card-action {
+      margin-top: auto;
+    }
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-content {
+      background: #fff;
+      padding: 40px;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: var(--shadow-lift);
+      text-align: center;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      cursor: pointer;
+      font-size: 24px;
+      color: var(--caption);
+    }
+    .form-group {
+      margin-bottom: 16px;
+      text-align: left;
+    }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-family: var(--font-head);
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-family: var(--font-body);
+    }
+    .auth-tabs {
+      display: flex;
+      margin-bottom: 24px;
+      border-bottom: 1px solid #eee;
+    }
+    .auth-tab {
+      flex: 1;
+      padding: 10px;
+      cursor: pointer;
+      font-family: var(--font-head);
+      font-weight: 600;
+      color: var(--caption);
+    }
+    .auth-tab.active {
+      color: var(--navy);
+      border-bottom: 2px solid var(--royal);
+    }
+    .nav__auth {
+      margin-left: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--royal);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav" id="nav">
+    <div class="nav__container">
+      <a href="/" class="nav__logo" id="navLogo">
+        <img src="/logo.jpeg" alt="Haynes Consult" class="nav__logo-img" />
+        <span class="nav__logo-text">
+          <span class="nav__logo-name">HAYNES</span>
+          <span class="nav__logo-sub">CONSULT</span>
+        </span>
+      </a>
+      <ul class="nav__links" id="navLinks">
+        <li><a href="/" class="nav__link">Home</a></li>
+        <li><a href="/academy.html" class="nav__link active">Academy</a></li>
+        <li class="nav__dropdown-wrap">
+          <a href="#" class="nav__link nav__dropdown-trigger">
+            Services
+          </a>
+          <div class="nav__dropdown">
+            <a href="/services/digital-services.html" class="nav__dropdown-item">Digital Services</a>
+            <a href="/services/digital-marketing.html" class="nav__dropdown-item">Digital Marketing</a>
+            <a href="/services/web-development.html" class="nav__dropdown-item">Web Development</a>
+            <a href="/services/ai-automation.html" class="nav__dropdown-item">AI & Automation</a>
+            <a href="/services/dental-aesthetic.html" class="nav__dropdown-item">Dental & Aesthetic</a>
+          </div>
+        </li>
+        <li><a href="/#contact" class="nav__link">Contact</a></li>
+        <li class="nav__auth" id="navAuthBtn">Login</li>
+      </ul>
+      <a href="/#contact" class="nav__cta btn btn--primary">Get Started</a>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section class="academy-hero">
+    <div class="section-container">
+      <div class="section-badge" style="margin-top: 40px;">Learning & Resources</div>
+      <h1>Haynes <span class="text-accent">Academy</span></h1>
+      <p class="section-subtitle">Master digital transformation, AI integration, and business strategy with our curated eBooks and modules.</p>
+    </div>
+    <div class="hero__blob hero__blob--1 animate-float" style="opacity: 0.3;"></div>
+    <div class="hero__blob hero__blob--2 animate-pulseGlow" style="opacity: 0.2;"></div>
+  </section>
+
+  <!-- CATALOG SECTION -->
+  <section class="section-container" style="min-height: 50vh;">
+    <div class="academy-grid" id="academyGrid">
+      <!-- Items populated by JS -->
+    </div>
+  </section>
+
+  <!-- AUTH MODAL -->
+  <div class="modal-overlay" id="authModal">
+    <div class="modal-content">
+      <span class="modal-close" id="closeAuth">&times;</span>
+      <div class="auth-tabs">
+        <div class="auth-tab active" id="tabLogin">Login</div>
+        <div class="auth-tab" id="tabRegister">Register</div>
+      </div>
+      <form id="authForm">
+        <div class="form-group" id="nameGroup" style="display: none;">
+          <label>Full Name</label>
+          <input type="text" id="authName" placeholder="Your Name" />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="authEmail" placeholder="you@example.com" required />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="authPassword" placeholder="••••••••" required />
+        </div>
+        <button type="submit" class="btn btn--primary btn--full" id="authSubmitBtn">Login</button>
+        <p id="authError" style="color: red; font-size: 12px; margin-top: 10px;"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- CHECKOUT MODAL (Simulated) -->
+  <div class="modal-overlay" id="checkoutModal">
+    <div class="modal-content">
+      <span class="modal-close" id="closeCheckout">&times;</span>
+      <h2 style="font-family: var(--font-head); color: var(--navy); margin-bottom: 20px;">Unlock Content</h2>
+      <p style="font-size: 14px; color: var(--caption); margin-bottom: 24px;">You are about to purchase access to this premium resource via our simulated payment gateway.</p>
+      
+      <div style="background: #f8f9fa; padding: 16px; border-radius: 12px; margin-bottom: 24px;">
+        <h4 id="checkoutItemTitle" style="color: var(--navy);">Item Name</h4>
+      </div>
+
+      <button class="btn btn--primary btn--full" id="confirmPaymentBtn">Simulate Payment (Paystack/Hubtel)</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const token = localStorage.getItem("haynes_token");
+      const user = JSON.parse(localStorage.getItem("haynes_user") || "null");
+      
+      if (user) {
+        document.getElementById("navAuthBtn").textContent = "Logout";
+      }
+
+      document.getElementById("navAuthBtn").addEventListener("click", () => {
+        if (localStorage.getItem("haynes_token")) {
+          // Logout
+          localStorage.removeItem("haynes_token");
+          localStorage.removeItem("haynes_user");
+          window.location.reload();
+        } else {
+          document.getElementById("authModal").classList.add("active");
+        }
+      });
+
+      function fetchContent() {
+        const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+        fetch('/api/academy/content', { headers })
+          .then(res => res.json())
+          .then(data => {
+            const grid = document.getElementById("academyGrid");
+            grid.innerHTML = "";
+            data.forEach(item => {
+              const card = document.createElement("div");
+              card.className = "glass-card academy-card hover-swivel";
+              
+              const badgeClass = item.is_premium ? "badge-premium" : "badge-free";
+              const badgeText = item.is_premium ? "Premium" : "Free";
+              
+              let actionHtml = '';
+              if (item.owned) {
+                actionHtml = `<button class="btn btn--ghost btn--full" onclick="downloadItem(${item.id})">Access Content</button>`;
+              } else {
+                actionHtml = `<button class="btn btn--primary btn--full" onclick="unlockItem(${item.id}, '${item.title}')">Unlock Now</button>`;
+              }
+
+              card.innerHTML = `
+                <div class="academy-card-img">
+                  <div class="academy-tier-badge ${badgeClass}">${badgeText}</div>
+                  <img src="${item.image_url}" alt="Cover" />
+                </div>
+                <div class="academy-card-body">
+                  <h3 class="academy-card-title">${item.title}</h3>
+                  <p class="academy-card-desc">${item.description}</p>
+                  <div style="font-size: 12px; margin-bottom: 16px; color: var(--navy); font-weight: bold;">
+                    Type: ${item.type} &middot; Category: ${item.category}
+                  </div>
+                  <div class="academy-card-action">
+                    ${actionHtml}
+                  </div>
+                </div>
+              `;
+              grid.appendChild(card);
+            });
+          })
+          .catch(err => console.error("Error fetching content:", err));
+      }
+
+      fetchContent();
+
+      // Auth Logic
+      let isRegistering = false;
+      document.getElementById("tabLogin").addEventListener("click", (e) => {
+        isRegistering = false;
+        e.target.classList.add("active");
+        document.getElementById("tabRegister").classList.remove("active");
+        document.getElementById("nameGroup").style.display = "none";
+        document.getElementById("authSubmitBtn").textContent = "Login";
+      });
+      document.getElementById("tabRegister").addEventListener("click", (e) => {
+        isRegistering = true;
+        e.target.classList.add("active");
+        document.getElementById("tabLogin").classList.remove("active");
+        document.getElementById("nameGroup").style.display = "block";
+        document.getElementById("authSubmitBtn").textContent = "Register";
+      });
+
+      document.getElementById("authForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const url = isRegistering ? '/api/auth/register' : '/api/auth/login';
+        const body = {
+          email: document.getElementById("authEmail").value,
+          password: document.getElementById("authPassword").value
+        };
+        if (isRegistering) body.name = document.getElementById("authName").value;
+
+        fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.error) {
+            document.getElementById("authError").textContent = data.error;
+          } else {
+            localStorage.setItem("haynes_token", data.token);
+            localStorage.setItem("haynes_user", JSON.stringify(data.user));
+            window.location.reload();
+          }
+        })
+        .catch(err => console.error(err));
+      });
+
+      document.getElementById("closeAuth").addEventListener("click", () => {
+        document.getElementById("authModal").classList.remove("active");
+      });
+
+      // Checkout Logic
+      let currentCheckoutItemId = null;
+
+      window.unlockItem = function(id, title) {
+        if (!localStorage.getItem("haynes_token")) {
+          document.getElementById("authModal").classList.add("active");
+          return;
+        }
+        currentCheckoutItemId = id;
+        document.getElementById("checkoutItemTitle").textContent = title;
+        document.getElementById("checkoutModal").classList.add("active");
+      };
+
+      document.getElementById("closeCheckout").addEventListener("click", () => {
+        document.getElementById("checkoutModal").classList.remove("active");
+      });
+
+      document.getElementById("confirmPaymentBtn").addEventListener("click", () => {
+        const btn = document.getElementById("confirmPaymentBtn");
+        btn.textContent = "Processing...";
+        btn.disabled = true;
+
+        fetch('/api/checkout/simulate', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem("haynes_token")}`
+          },
+          body: JSON.stringify({ itemId: currentCheckoutItemId })
+        })
+        .then(res => res.json())
+        .then(data => {
+          btn.textContent = "Simulate Payment (Paystack/Hubtel)";
+          btn.disabled = false;
+          if (data.success) {
+            alert("Payment simulated successfully! Content unlocked.");
+            document.getElementById("checkoutModal").classList.remove("active");
+            fetchContent(); // Refresh grid to show unlock state
+          } else {
+            alert("Error: " + data.error);
+          }
+        });
+      });
+
+      window.downloadItem = function(id) {
+        alert("Downloading/viewing content for item " + id + "...");
+      }
+
+    });
+  </script>
+</body>
+</html>
