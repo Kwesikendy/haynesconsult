@@ -10,6 +10,9 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         academy: resolve(__dirname, 'academy.html'),
+        about: resolve(__dirname, 'about.html'),
+        senyah: resolve(__dirname, 'dr-senyah.html'),
+        cases: resolve(__dirname, 'case-studies.html'),
         webDev: resolve(__dirname, 'services/web-development.html'),
         aiAuto: resolve(__dirname, 'services/ai-automation.html'),
         digitalMkt: resolve(__dirname, 'services/digital-marketing.html'),

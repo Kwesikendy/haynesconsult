@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -11,7 +11,7 @@
     /* Specific Academy Styles */
     .academy-hero {
       padding-top: 150px;
-      padding-bottom: 80px;
+      padding-bottom: 120px;
       text-align: center;
       background: linear-gradient(135deg, var(--ice), var(--white));
       position: relative;
@@ -168,6 +168,9 @@
   </style>
 </head>
 <body>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
 
   <!-- NAVIGATION -->
   <nav class="nav" id="nav">
@@ -179,30 +182,37 @@
           <span class="nav__logo-sub">CONSULT</span>
         </span>
       </a>
-      <ul class="nav__links" id="navLinks">
+            <ul class="nav__links" id="navLinks">
         <li><a href="/" class="nav__link">Home</a></li>
-        <li><a href="/academy.html" class="nav__link active">Academy</a></li>
+        <li><a href="/about.html" class="nav__link">About</a></li>
         <li class="nav__dropdown-wrap">
           <a href="#" class="nav__link nav__dropdown-trigger">
-            Services
+            Services <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style="margin-left:4px;vertical-align:middle;"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
           <div class="nav__dropdown">
-            <a href="/services/digital-services.html" class="nav__dropdown-item">Digital Services</a>
-            <a href="/services/digital-marketing.html" class="nav__dropdown-item">Digital Marketing</a>
-            <a href="/services/web-development.html" class="nav__dropdown-item">Web Development</a>
-            <a href="/services/ai-automation.html" class="nav__dropdown-item">AI & Automation</a>
-            <a href="/services/dental-aesthetic.html" class="nav__dropdown-item">Dental & Aesthetic</a>
+            <a href="/services/digital-services.html" class="nav__dropdown-item">
+              <span>Digital Services</span>
+            </a>
+            <a href="/services/digital-marketing.html" class="nav__dropdown-item">
+              <span>Digital Marketing</span>
+            </a>
+            <a href="/services/web-development.html" class="nav__dropdown-item">
+              <span>Web Development</span>
+            </a>
+            <a href="/services/ai-automation.html" class="nav__dropdown-item">
+              <span>AI &amp; Automation</span>
+            </a>
           </div>
         </li>
+        <li><a href="/academy.html" class="nav__link">Academy</a></li>
+        <li><a href="/case-studies.html" class="nav__link">Case Studies</a></li>
         <li><a href="/#contact" class="nav__link">Contact</a></li>
-        <li class="nav__auth" id="navAuthBtn">Login</li>
-      </ul>
-      <a href="/#contact" class="nav__cta btn btn--primary">Get Started</a>
+      </ul><a class="nav__auth" id="navAuthBtn" style="margin-right: 15px; font-weight: 600; cursor: pointer; color: var(--royal);">Login / Register</a><a href="/#contact" class="nav__cta btn btn--primary">Get Started</a>
     </div>
   </nav>
 
   <!-- HERO SECTION -->
-  <section class="academy-hero" style="background: url('/hero1.jpeg') no-repeat center center/cover; position: relative;">
+  <section class="academy-hero" style="background-image: url('/hero1.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat; position: relative;">
     <div style="position: absolute; inset: 0; background: rgba(240, 248, 255, 0.85); backdrop-filter: blur(4px); z-index: 0;"></div>
     <div class="section-container" style="position: relative; z-index: 1;">
       <div class="section-badge" style="margin-top: 40px; background: rgba(255,255,255,0.8); backdrop-filter: blur(8px);">Learning & Resources</div>
@@ -214,7 +224,7 @@
   </section>
 
   <!-- CATALOG SECTION -->
-  <section class="section-container" style="min-height: 50vh;">
+  <section class="section-container" style="min-height: 100vh;">
     <div class="academy-grid" id="academyGrid">
       <!-- Items populated by JS -->
     </div>
@@ -239,7 +249,7 @@
         </div>
         <div class="form-group">
           <label>Password</label>
-          <input type="password" id="authPassword" placeholder="••••••••" required />
+          <input type="password" id="authPassword" placeholder="��������" required />
         </div>
         <button type="submit" class="btn btn--primary btn--full" id="authSubmitBtn">Login</button>
         <p id="authError" style="color: red; font-size: 12px; margin-top: 10px;"></p>
@@ -425,5 +435,52 @@
 
     });
   </script>
+  <!-- FOOTER -->
+  <footer class="footer" style="background: var(--navy); color: white;">
+    <div class="footer__glow"></div>
+    <div class="section-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; padding-top: 60px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+      <div>
+        <a href="/" class="nav__logo" style="margin-bottom: 16px; display: inline-flex;">
+          <img src="/logo.jpeg" alt="Haynes Consult" class="nav__logo-img" />
+          <span class="nav__logo-text">
+            <span class="nav__logo-name" style="color: white;">HAYNES</span>
+            <span class="nav__logo-sub" style="color: rgba(255,255,255,0.7);">CONSULT</span>
+          </span>
+        </a>
+        <p style="color: rgba(255,255,255,0.5); font-size: 14px;">Let's Digitize. We design tailored strategies and solutions that drive real results.</p>
+      </div>
+      <div>
+        <h4 style="margin-bottom: 16px;">Quick Links</h4>
+        <ul style="list-style: none; font-size: 14px; gap: 10px; display: grid;">
+          <li><a href="/about.html" style="color: rgba(255,255,255,0.5); text-decoration: none;">About Us</a></li>
+          <li><a href="/dr-senyah.html" style="color: rgba(255,255,255,0.5); text-decoration: none;">Meet Dr. Senyah</a></li>
+          <li><a href="/academy.html" style="color: rgba(255,255,255,0.5); text-decoration: none;">Academy</a></li>
+          <li><a href="/case-studies.html" style="color: rgba(255,255,255,0.5); text-decoration: none;">Case Studies</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="margin-bottom: 16px;">Contact Detail</h4>
+        <ul style="list-style: none; font-size: 14px; gap: 10px; display: grid; color: rgba(255,255,255,0.5);">
+          <li><strong>Location:</strong> Accra, Ghana</li>
+          <li><strong>Email:</strong> info@haynesconsult.com</li>
+          <li><strong>Phone:</strong> +233 123 456 789</li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="margin-bottom: 16px;">Social Links</h4>
+        <div style="display: flex; gap: 12px; font-size: 14px;">
+          <a href="#" style="color: rgba(255,255,255,0.5); text-decoration: none;">Twitter</a>
+          <a href="#" style="color: rgba(255,255,255,0.5); text-decoration: none;">LinkedIn</a>
+          <a href="#" style="color: rgba(255,255,255,0.5); text-decoration: none;">YouTube</a>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:var(--container);margin:0 auto;padding:28px clamp(20px,5vw,80px); display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: rgba(255,255,255,0.5);">
+      <p>? 2026 Haynes Consult. All rights reserved.</p>
+      <p>Built with precision. Powered by innovation.</p>
+    </div>
+  </footer>
+<script type="module" src="/src/main.js"></script>
 </body>
 </html>
+

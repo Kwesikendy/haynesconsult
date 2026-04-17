@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us - Haynes Consult</title>
+  <link rel="icon" type="image/jpeg" href="/logo.jpeg" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/style.css" />
+  <style>
+    /* Hero */
+    .about-hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex; align-items: center;
+      background: linear-gradient(135deg, #f8f9fc 0%, #e8f4fc 100%);
+      padding-top: 150px; padding-bottom: 120px;
+      overflow: hidden;
+    }
+    .about-title {
+      font-family: var(--font-head);
+      font-size: clamp(40px, 6vw, 64px);
+      color: var(--navy);
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+    /* Cards */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+    .val-card {
+      padding: 40px 30px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      box-shadow: var(--shadow-soft);
+    }
+    .val-card h3 {
+      font-family: var(--font-head);
+      font-size: 22px;
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+    .val-card p {
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .mission-vision-wrapper {
+      display: flex; 
+      gap: 40px; 
+      flex-wrap: wrap; 
+      margin-bottom: 80px;
+    }
+    .mv-box {
+      flex: 1;
+      min-width: 300px;
+      background: #fff;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: var(--shadow-lift);
+      border-top: 4px solid var(--royal);
+    }
+    .mv-box.vision { border-top-color: var(--sky); }
+  </style>
+</head>
+<body>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+
+  <!-- NAVIGATION -->
+  <nav class="nav" id="nav">
+    <div class="nav__container">
+      <a href="/" class="nav__logo" id="navLogo">
+        <img src="/logo.jpeg" alt="Haynes Consult" class="nav__logo-img" />
+        <span class="nav__logo-text">
+          <span class="nav__logo-name">HAYNES</span>
+          <span class="nav__logo-sub">CONSULT</span>
+        </span>
+      </a>
+      <ul class="nav__links" id="navLinks">
+        <li><a href="/" class="nav__link">Home</a></li>
+        <li><a href="/about.html" class="nav__link active">About</a></li>
+        <li class="nav__dropdown-wrap">
+          <a href="#" class="nav__link nav__dropdown-trigger">
+            Services <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style="margin-left:4px;vertical-align:middle;"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="nav__dropdown">
+            <a href="/services/digital-services.html" class="nav__dropdown-item">
+              <span>Digital Services</span>
+            </a>
+            <a href="/services/digital-marketing.html" class="nav__dropdown-item">
+              <span>Digital Marketing</span>
+            </a>
+            <a href="/services/web-development.html" class="nav__dropdown-item">
+              <span>Web Development</span>
+            </a>
+            <a href="/services/ai-automation.html" class="nav__dropdown-item">
+              <span>AI &amp; Automation</span>
+            </a>
+          </div>
+        </li>
+        <li><a href="/academy.html" class="nav__link">Academy</a></li>
+        <li><a href="/case-studies.html" class="nav__link">Case Studies</a></li>
+        <li><a href="/#contact" class="nav__link">Contact</a></li>
+      </ul>
+      <a href="/#contact" class="nav__cta btn btn--primary">Get Started</a>
+    </div>
+  </nav>
+
+  <section class="about-hero">
+    <div class="hero__blob hero__blob--1 animate-float" style="opacity:0.3;"></div>
+    <div class="section-container" style="position: relative; z-index: 2;">
+      <div class="section-badge" style="margin-top: 40px;">Who We Are</div>
+      <h1 class="about-title">Let's <span class="text-accent">Digitize.</span></h1>
+      <p class="section-subtitle" style="max-width: 600px;">We simplify the complex. Haynes Consult is a premier digital strategy and technology execution firm dedicated to helping businesses scale through innovation.</p>
+    </div>
+  </section>
+
+  <section class="section-container" style="padding: 80px 20px;">
+    
+    <div class="mission-vision-wrapper">
+      <div class="mv-box mission">
+        <h3 style="font-family: var(--font-head); font-size: 28px; color: var(--navy); margin-bottom: 16px;">Our Mission</h3>
+        <p style="color: var(--text); line-height: 1.7; font-size: 16px;">
+          To empower businesses with actionable intelligence, seamless technology integration, and powerful automated workflows that eliminate friction and rapidly accelerate long-term growth.
+        </p>
+      </div>
+      <div class="mv-box vision">
+        <h3 style="font-family: var(--font-head); font-size: 28px; color: var(--navy); margin-bottom: 16px;">Our Vision</h3>
+        <p style="color: var(--text); line-height: 1.7; font-size: 16px;">
+          To become the leading digital transformation partner across emerging markets, acting as the catalyst that bridges the gap between traditional operations and the limitless potential of AI.
+        </p>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-bottom: 60px;">
+      <h2 style="font-family: var(--font-head); font-size: 36px; color: var(--navy);">Our Core Values</h2>
+      <p style="color: var(--caption); max-width: 600px; margin: 16px auto;">What drives us everyday to deliver excellence.</p>
+    </div>
+    
+    <div class="values-grid">
+      <div class="val-card">
+        <h3>Precision</h3>
+        <p>We believe in data-backed decisions. Every piece of code, every marketing campaign, and every automation pipeline is engineered deliberately without guesswork.</p>
+      </div>
+      <div class="val-card">
+        <h3>Innovation</h3>
+        <p>The digital landscape evolves daily. We stay ahead of the curve, integrating state-of-the-art AI so our clients have unshakeable competitive advantages.</p>
+      </div>
+      <div class="val-card">
+        <h3>Transparency</h3>
+        <p>No jargon. No hidden complexities. We act as true partners, explaining our transformative processes in ways that empower our clients to own their success.</p>
+      </div>
+    </div>
+
+    <div style="margin-top: 100px; padding: 60px; background: var(--navy); border-radius: 30px; text-align: center; color: white;">
+      <h2 style="font-family: var(--font-head); font-size: 32px; margin-bottom: 20px;">Led by Authority</h2>
+      <p style="opacity: 0.9; max-width: 600px; margin: 0 auto 30px;">Discover the philosophical backbone and strategic insight that powers Haynes Consult's innovative approach.</p>
+      <a href="/dr-senyah.html" class="btn btn--primary" style="background: white; color: var(--navy);">Meet Dr. Senyah</a>
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer" style="background: var(--navy); color: white;">
+    <div class="footer__glow"></div>
+    <div class="section-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; padding-top: 60px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+      <div>
+        <a href="/" class="nav__logo" style="margin-bottom: 16px; display: inline-flex;">
+          <img src="/logo.jpeg" alt="Haynes Consult" class="nav__logo-img" />
+          <span class="nav__logo-text">
+            <span class="nav__logo-name" style="color: white;">HAYNES</span>
+            <span class="nav__logo-sub" style="color: rgba(255,255,255,0.7);">CONSULT</span>
+          </span>
+        </a>
+        <p style="color: rgba(255,255,255,0.5); font-size: 14px;">Let's Digitize. We design tailored strategies and solutions that drive real results.</p>
+      </div>
+      <div>
+        <h4 style="margin-bottom: 16px;">Quick Links</h4>
+        <ul style="list-style: none; font-size: 14px; gap: 10px; display: grid;">
+          <li><a href="/about.html" style="color: rgba(255,255,255,0.5); text-decoration: none;">About Us</a></li>
+          <li><a href="/dr-senyah.html" style="color: rgba(255,255,255,0.5); text-decoration: none;">Meet Dr. Senyah</a></li>
+          <li><a href="/academy.html" style="color: rgba(255,255,255,0.5); text-decoration: none;">Academy</a></li>
+          <li><a href="/case-studies.html" style="color: rgba(255,255,255,0.5); text-decoration: none;">Case Studies</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="margin-bottom: 16px;">Contact Detail</h4>
+        <ul style="list-style: none; font-size: 14px; gap: 10px; display: grid; color: rgba(255,255,255,0.5);">
+          <li><strong>Location:</strong> Accra, Ghana</li>
+          <li><strong>Email:</strong> info@haynesconsult.com</li>
+          <li><strong>Phone:</strong> +233 123 456 789</li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="margin-bottom: 16px;">Social Links</h4>
+        <div style="display: flex; gap: 12px; font-size: 14px;">
+          <a href="#" style="color: rgba(255,255,255,0.5); text-decoration: none;">Twitter</a>
+          <a href="#" style="color: rgba(255,255,255,0.5); text-decoration: none;">LinkedIn</a>
+          <a href="#" style="color: rgba(255,255,255,0.5); text-decoration: none;">YouTube</a>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:var(--container);margin:0 auto;padding:28px clamp(20px,5vw,80px); display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: rgba(255,255,255,0.5);">
+      <p>© 2026 Haynes Consult. All rights reserved.</p>
+      <p>Built with precision. Powered by innovation.</p>
+    </div>
+  </footer>
+
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
