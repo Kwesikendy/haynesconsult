@@ -803,7 +803,7 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
   position: relative;
   min-height: 100vh;
   overflow: hidden;
-  background: #ddeeff; /* fallback ice-blue while video loads */
+  background: #d6eaf8; /* fallback ice-blue while video loads */
 }
 
 /* â”€â”€ VIDEOS â”€â”€ */
@@ -818,15 +818,16 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
   transition: opacity 1.5s ease;
 }
 
-/* Slide-1 video: positioned to the RIGHT */
+/* Slide-1 video: positioned so robot sits on right half */
 .hero__video--s1 {
-  object-position: right center;
+  object-position: 68% center;
   opacity: 1; /* start visible */
 }
 
-/* Slide-2 video: fully centred */
+/* Slide-2 video: centred, show lightbulb at top half */
 .hero__video--s2 {
-  object-position: center center;
+  object-position: center 35%;
+  opacity: 0; /* hidden until slide 2 activates */
 }
 
 /* Semi-transparent left veil so text stays readable over video */
@@ -856,13 +857,10 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
 .hero__slide--2.active ~ .hero__video-overlay,
 .hero--slide2 .hero__video-overlay {
   background:
-    radial-gradient(ellipse at 50% 60%,
-      rgba(221, 238, 255, 0.5) 20%,
-      transparent 70%),
     linear-gradient(to top,
       rgba(240, 248, 255, 1) 0%,
-      rgba(234, 244, 251, 0.7) 6%,
-      transparent 25%
+      rgba(234, 244, 251, 0.4) 15%,
+      transparent 35%
     );
 }
 
@@ -972,19 +970,20 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
 /* â”€â”€ Slide 1 Title â”€â”€ */
 .hero__title-s1 {
   font-family: var(--font-head);
-  font-size: clamp(48px, 7vw, 82px);
+  font-size: clamp(38px, 5vw, 68px);
   font-weight: 900;
   line-height: 1.0;
   letter-spacing: -0.01em;
   color: var(--navy);     /* #0D2B7E â€” deep dark navy exactly like cor1 */
-  margin: 0 0 24px;
+  margin: 0 0 20px;
+  max-width: 540px; /* Constrain text width so it clearly bypasses the robot on right */
 }
 
 /* Word rows */
 .hw-row {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0 16px;
+  flex-wrap: nowrap;
+  gap: 0 14px;
   align-items: baseline;
 }
 .hw-row--center { justify-content: center; }
@@ -1066,17 +1065,17 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
   align-items: center;
   text-align: center;
   padding-top: 0;
-  padding-bottom: 80px;
+  padding-bottom: 72px;
 }
 
 .hero__title-s2 {
   font-family: var(--font-head);
-  font-size: clamp(40px, 6.5vw, 76px);
+  font-size: clamp(32px, 5vw, 64px);
   font-weight: 900;
   line-height: 1.05;
   letter-spacing: -0.01em;
   color: var(--navy);
-  margin: 0 0 18px;
+  margin: 0 0 14px;
 }
 
 .hero__sub-s2 {

@@ -227,6 +227,7 @@ function initCanvas() {
    Slide 2 → video centred (heroo2.mp4)
 ============================================================ */
 function initHeroSlider() {
+  const heroSection = document.querySelector('.hero');
   const slides  = document.querySelectorAll('.hero__slide');
   const dots    = document.querySelectorAll('.hero__dot');
   const video1  = document.getElementById('heroVideo1');
@@ -262,6 +263,7 @@ function initHeroSlider() {
   function activateSlide(idx) {
     const slide = slides[idx];
     slide.classList.add('active');
+    if (heroSection) heroSection.setAttribute('data-slide', idx + 1);
 
     // Sync video
     if (idx === 0) {
