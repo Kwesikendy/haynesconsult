@@ -107,8 +107,11 @@
   <!-- HERO SECTION -->
   <!-- ============================================================ -->
   <section class="hero" id="home">
-    <video class="hero__video" autoplay muted loop playsinline>
-      <source src="/hero.mp4" type="video/mp4" />
+    <video class="hero__video" autoplay muted playsinline poster="/hero1.jpeg" id="heroVideo1" style="transition: opacity 1.5s ease;">
+      <source src="/heroo.mp4" type="video/mp4" />
+    </video>
+    <video class="hero__video" muted playsinline poster="/hero2.jpeg" id="heroVideo2" style="opacity: 0; transition: opacity 1.5s ease;">
+      <source src="/heroo2.mp4" type="video/mp4" />
     </video>
     <div class="hero__video-overlay"></div>
     <canvas class="hero__canvas" id="heroCanvas"></canvas>
@@ -959,5 +962,26 @@
   </button>
 
   <script type="module" src="/src/main.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const v1 = document.getElementById('heroVideo1');
+      const v2 = document.getElementById('heroVideo2');
+      if(!v1 || !v2) return;
+      
+      v1.addEventListener('ended', () => {
+        v2.style.opacity = '1';
+        v1.style.opacity = '0';
+        v2.currentTime = 0;
+        v2.play();
+      });
+      
+      v2.addEventListener('ended', () => {
+        v1.style.opacity = '1';
+        v2.style.opacity = '0';
+        v1.currentTime = 0;
+        v1.play();
+      });
+    });
+  </script>
 </body>
 </html>

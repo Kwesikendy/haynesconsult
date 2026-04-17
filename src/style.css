@@ -521,22 +521,25 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
   margin-right: 8px;
 }
 
-/* Logo image blends flush — no box, no border, pure blend */
+/* Logo image */
 .nav__logo-img {
-  height: 54px;
-  width: 54px;
+  width: 100px;
+  height: 100px;
+  max-width: none;
   object-fit: cover;
-  object-position: 0% 50%; /* Crop perfectly to the left side */
-  transform: scale(1.35); /* Make the icon larger within its space */
-  margin-right: 4px; /* Pull text closer */
+  clip-path: inset(26px 26px 26px 26px round 8px);
+  margin-top: -26px;
+  margin-bottom: -26px;
+  margin-left: -26px;
+  margin-right: -20px;
   border: none;
-  box-shadow: none;
-  mix-blend-mode: multiply;
-  transition: transform var(--fast), opacity var(--fast);
+  /* Force the white background to pure white and safely multiply/darken it into the navbar */
+  filter: contrast(1.2) brightness(1.05);
+  mix-blend-mode: darken;
+  transition: opacity var(--fast);
 }
 .nav__logo:hover .nav__logo-img {
-  transform: scale(1.45);
-  opacity: 0.9;
+  opacity: 0.8;
 }
 
 /* Two-line logo text matching reference */
