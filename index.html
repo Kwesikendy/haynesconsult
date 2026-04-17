@@ -114,76 +114,85 @@
   </nav>
 
   <!-- ============================================================ -->
-  <!-- HERO SECTION -->
+  <!-- HERO SECTION — Dual-Slide Video Carousel                    -->
   <!-- ============================================================ -->
   <section class="hero" id="home">
-    <video class="hero__video" autoplay muted playsinline poster="/hero1.jpeg" id="heroVideo1" style="transition: opacity 1.5s ease;">
+
+    <!-- ── SLIDE 1 background video (right-positioned) ── -->
+    <video class="hero__video hero__video--s1" id="heroVideo1" autoplay muted loop playsinline>
       <source src="/heroo.mp4" type="video/mp4" />
     </video>
-    <video class="hero__video" muted playsinline poster="/hero2.jpeg" id="heroVideo2" style="opacity: 0; transition: opacity 1.5s ease;">
+    <!-- ── SLIDE 2 background video (centred) ── -->
+    <video class="hero__video hero__video--s2" id="heroVideo2" muted loop playsinline>
       <source src="/heroo2.mp4" type="video/mp4" />
     </video>
+
+    <!-- Light overlay so light bg peeks through -->
     <div class="hero__video-overlay"></div>
-    <canvas class="hero__canvas" id="heroCanvas"></canvas>
-    <div class="hero__grid-overlay"></div>
-    <div class="hero__particles" id="heroParticles"></div>
-    <div class="hero__container">
 
-      <!-- Eyebrow label -->
-      <div class="hero__badge" data-animate="fadeUp">
-        <span class="hero__badge-dot"></span>
-        <span>Strategy &middot; Technology &middot; Growth</span>
-      </div>
+    <!-- ====================================================== -->
+    <!-- SLIDE 1 — WELCOME TO THE FUTURE                        -->
+    <!-- ====================================================== -->
+    <div class="hero__slide hero__slide--1 active" id="heroSlide1">
+      <div class="hero__slide-inner">
 
-      <!-- Brand wordmark - the main attraction -->
-      <div class="hero__wordmark" data-animate="heroTitle">
-        <span class="hero__wordmark-line hero__wordmark-line--main">Haynes</span>
-        <span class="hero__wordmark-line hero__wordmark-line--sub">Consult</span>
-      </div>
+        <!-- LEFT COLUMN — text -->
+        <div class="hero__col-text">
+          <h1 class="hero__title-s1">
+            <div class="hw-row">
+              <span class="hw">WELCOME</span>
+              <span class="hw">TO</span>
+            </div>
+            <div class="hw-row">
+              <span class="hw">THE</span>
+              <span class="hw">FUTURE</span>
+            </div>
+          </h1>
+          <p class="hero__sub-s1">Let Haynes Consult build it.</p>
+          <a href="#contact" class="hero__btn-s1" id="heroSlide1Btn">BOOK A CONSULT</a>
 
-      <!-- Thin separator -->
-      <div class="hero__rule" data-animate="fadeUp"></div>
-
-      <!-- Tagline - comes after the brand name -->
-      <h1 class="hero__tagline" data-animate="fadeUp" style="font-size: clamp(32px, 5vw, 56px); margin-top: 10px;">
-        <span style="color: #ffffff; text-shadow: 0 4px 15px rgba(0,0,0,0.5), 0 0 30px rgba(13,43,126,0.8);">Let's Digitize.</span>
-      </h1>
-
-      <p class="hero__subtitle" data-animate="fadeUp" style="color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.6); font-weight: 500;">
-        We identify inefficiencies, design tailored digital strategies,
-        and implement technology solutions that transform how businesses operate.
-      </p>
-
-      <div class="hero__actions" data-animate="fadeUp">
-        <a href="#services" class="btn btn--primary btn--lg btn--glow" id="heroCtaMain">
-          <span>Explore Our Services</span>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="#contact" class="btn btn--ghost btn--lg" id="heroCtaSec">
-          <span>Book a Consultation</span>
-        </a>
-      </div>
-
-      <div class="hero__stats" data-animate="fadeUp">
-        <div class="hero__stat">
-          <span class="hero__stat-num" data-count="150">0</span><span class="hero__stat-plus">+</span>
-          <span class="hero__stat-label">Projects Delivered</span>
+          <!-- Glass pill badge -->
+          <div class="hero__glass-pill">
+            AI &nbsp;·&nbsp; Automation &nbsp;·&nbsp; Clinic Systems
+          </div>
         </div>
-        <div class="hero__stat-divider"></div>
-        <div class="hero__stat">
-          <span class="hero__stat-num" data-count="98">0</span><span class="hero__stat-plus">%</span>
-          <span class="hero__stat-label">Client Satisfaction</span>
-        </div>
-        <div class="hero__stat-divider"></div>
-        <div class="hero__stat">
-          <span class="hero__stat-num" data-count="5">0</span><span class="hero__stat-plus">+</span>
-          <span class="hero__stat-label">Years of Excellence</span>
-        </div>
+
+        <!-- RIGHT COLUMN — intentionally empty; video fills this area -->
+        <div class="hero__col-visual" aria-hidden="true"></div>
       </div>
     </div>
-    <!-- Animated blue blobs -->
-    <div class="hero__blob hero__blob--1 animate-float"></div>
-    <div class="hero__blob hero__blob--2 animate-pulseGlow"></div>
+
+    <!-- ====================================================== -->
+    <!-- SLIDE 2 — CREATIVITY WITHOUT SYSTEMS IS CHAOS          -->
+    <!-- ====================================================== -->
+    <div class="hero__slide hero__slide--2" id="heroSlide2">
+      <div class="hero__slide-inner hero__slide-inner--center">
+        <h1 class="hero__title-s2">
+          <div class="hw-row hw-row--center">
+            <span class="hw">CREATIVITY</span>
+            <span class="hw">WITHOUT</span>
+          </div>
+          <div class="hw-row hw-row--center">
+            <span class="hw">SYSTEMS</span>
+            <span class="hw">IS</span>
+            <span class="hw">CHAOS</span>
+          </div>
+        </h1>
+        <p class="hero__sub-s2">We turn ideas into automated systems that grow your clinic.</p>
+        <p class="hero__tags-s2">AI &nbsp;·&nbsp; Automation &nbsp;·&nbsp; Clinic Systems</p>
+        <a href="#services" class="hero__btn-s2" id="heroSlide2Btn">BUILD YOUR SYSTEM</a>
+      </div>
+    </div>
+
+    <!-- Navigation dots -->
+    <div class="hero__dots" id="heroDots">
+      <button class="hero__dot hero__dot--active" data-slide="0" aria-label="Slide 1"></button>
+      <button class="hero__dot" data-slide="1" aria-label="Slide 2"></button>
+    </div>
+
+    <!-- Blobs -->
+    <div class="hero__blob hero__blob--1"></div>
+    <div class="hero__blob hero__blob--2"></div>
     <div class="hero__blob hero__blob--3"></div>
     <div class="hero__blob hero__blob--4"></div>
   </section>

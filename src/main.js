@@ -69,7 +69,7 @@ function hideLoader() {
     ease: 'power2.inOut',
     onComplete: () => {
       loader.style.display = 'none';
-      initHeroTypingAnimation();
+      initHeroSlider();
       initCanvas();
     },
   });
@@ -222,135 +222,94 @@ function initCanvas() {
 }
 
 /* ============================================================
-   HERO TYPING ANIMATION — Loops every 7 seconds
-   Sequence: type HAYNES → type CONSULT → pause → erase → repeat
+   HERO SLIDER — Word-bounce animation + video crossfade
+   Slide 1 → video right-positioned (heroo.mp4)
+   Slide 2 → video centred (heroo2.mp4)
 ============================================================ */
-function initHeroTypingAnimation() {
-  const mainLine = document.querySelector('.hero__wordmark-line--main');
-  const subLine  = document.querySelector('.hero__wordmark-line--sub');
+function initHeroSlider() {
+  const slides  = document.querySelectorAll('.hero__slide');
+  const dots    = document.querySelectorAll('.hero__dot');
+  const video1  = document.getElementById('heroVideo1');
+  const video2  = document.getElementById('heroVideo2');
 
-  if (!mainLine || !subLine) {
-    initHeroFallback();
-    return;
+  if (!slides.length) return;
+
+  let current         = 0;
+  let isTransitioning = false;
+  const INTERVAL      = 9000; // ms per slide
+
+  // Start both video but only show the active one
+  [video1, video2].forEach(v => { if (v) { v.load(); v.play().catch(() => {}); } });
+
+  // ── Word-bounce animation ──────────────────────────────────
+  function animateWords(slideEl, delayOffset = 0) {
+    const words = slideEl.querySelectorAll('.hw');
+    // Reset first
+    gsap.set(words, { y: -90, opacity: 0, scale: 0.85 });
+    // Then animate each word with a staggered elastic bounce
+    gsap.to(words, {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      stagger: 0.1,
+      delay: delayOffset + 0.35,
+      duration: 1.1,
+      ease: 'bounce.out',
+    });
   }
 
-  const mainText = 'HAYNES';
-  const subText  = 'CONSULT';
-  const TYPE_SPEED   = 80;   // ms per character while typing
-  const ERASE_SPEED  = 45;   // ms per character while erasing (faster)
-  const PAUSE_AFTER  = 2800; // ms to hold before erasing
-  const LOOP_DELAY   = 7000; // ms total loop period (restart after this)
-  let firstRun = true;
+  // ── Activate a slide ───────────────────────────────────────
+  function activateSlide(idx) {
+    const slide = slides[idx];
+    slide.classList.add('active');
 
-  mainLine.dataset.text = mainText;
-
-  // Make lines visible but empty
-  mainLine.style.opacity = '1';
-  subLine.style.opacity  = '1';
-  mainLine.textContent   = '';
-  subLine.textContent    = '';
-
-  // Persistent blinking cursor element
-  const cur = document.createElement('span');
-  cur.className = 'hero__typing-cursor';
-  mainLine.appendChild(cur);
-
-  // ---- helpers ----
-  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-
-  const typeText = (el, text, speed) =>
-    new Promise(async (resolve) => {
-      for (let i = 0; i <= text.length; i++) {
-        el.textContent = text.slice(0, i);
-        el.appendChild(cur);
-        await sleep(speed);
-      }
-      resolve();
-    });
-
-  const eraseText = (el, speed) =>
-    new Promise(async (resolve) => {
-      const text = el.textContent.replace(/./g, (c, i) =>
-        el.textContent[i] // grab cleanly without cursor span
-      );
-      let len = el.textContent.length;
-      // Make sure cursor stays on this element while erasing
-      el.appendChild(cur);
-      while (len > 0) {
-        len--;
-        el.textContent = el.textContent.slice(0, len);
-        el.appendChild(cur);
-        await sleep(speed);
-      }
-      resolve();
-    });
-
-  // ---- one full cycle ----
-  const runCycle = async (isFirst) => {
-    // 1. Type HAYNES
-    await sleep(isFirst ? 600 : 0);
-    await typeText(mainLine, mainText, TYPE_SPEED);
-
-    // 2. Move cursor to CONSULT line, type it
-    await sleep(300);
-    if (cur.parentNode) cur.parentNode.removeChild(cur);
-    subLine.textContent = '';
-    subLine.appendChild(cur);
-    await typeText(subLine, subText, TYPE_SPEED + 20);
-
-    // 3. On first run, reveal the rest of the hero
-    if (isFirst) {
-      mainLine.dataset.text = mainText;
-      gsap.to('.hero__rule', { opacity: 1, width: '280px', duration: 0.7, ease: 'power2.inOut' });
-      gsap.timeline({ defaults: { ease: 'power3.out' } })
-        .to('.hero__tagline',  { opacity: 1, y: 0, duration: 0.7 })
-        .to('.hero__subtitle', { opacity: 1, y: 0, duration: 0.65 }, '-=0.4')
-        .to('.hero__actions',  { opacity: 1, y: 0, duration: 0.65 }, '-=0.35')
-        .to('.hero__stats',    { opacity: 1, y: 0, duration: 0.65 }, '-=0.3');
+    // Sync video
+    if (idx === 0) {
+      if (video1) video1.style.opacity = '1';
+      if (video2) video2.style.opacity = '0';
+    } else {
+      if (video1) video1.style.opacity = '0';
+      if (video2) video2.style.opacity = '1';
     }
 
-    // 4. Hold (show fully typed text)
-    await sleep(PAUSE_AFTER);
+    // Animate words for this slide
+    animateWords(slide, 0);
 
-    // 5. Erase CONSULT first, then HAYNES
-    await eraseText(subLine, ERASE_SPEED);
-    if (cur.parentNode) cur.parentNode.removeChild(cur);
-    mainLine.appendChild(cur);
-    // Restore mainLine content before erasing
-    mainLine.textContent = mainText;
-    mainLine.appendChild(cur);
-    await eraseText(mainLine, ERASE_SPEED);
+    // Dot
+    dots.forEach((d, i) => {
+      d.classList.toggle('hero__dot--active', i === idx);
+    });
+  }
 
-    // 6. Short pause before next cycle (cursor blinks on empty mainLine)
-    await sleep(500);
-  };
+  // ── Transition to new slide ────────────────────────────────
+  function goTo(idx) {
+    if (isTransitioning || idx === current) return;
+    isTransitioning = true;
 
-  // ---- kick off first run then loop ----
-  (async () => {
-    // Reveal badge immediately
-    gsap.to('.hero__badge', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' });
+    slides[current].classList.remove('active');
+    setTimeout(() => {
+      current = idx;
+      activateSlide(idx);
+      setTimeout(() => { isTransitioning = false; }, 1300);
+    }, 200);
+  }
 
-    await runCycle(true);
+  // ── Init first slide ───────────────────────────────────────
+  activateSlide(0);
 
-    // Subsequent loops
-    while (true) {
-      await runCycle(false);
-    }
-  })();
+  // ── Auto-advance ───────────────────────────────────────────
+  let timer = setInterval(() => goTo((current + 1) % slides.length), INTERVAL);
+
+  // ── Dot clicks ─────────────────────────────────────────────
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      clearInterval(timer);
+      goTo(i);
+      timer = setInterval(() => goTo((current + 1) % slides.length), INTERVAL);
+    });
+  });
 }
 
-function initHeroFallback() {
-  const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
-  tl
-    .to('.hero__badge',               { opacity: 1, y: 0, duration: 0.7 })
-    .to('.hero__wordmark-line--main', { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out' }, '-=0.3')
-    .to('.hero__wordmark-line--sub',  { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, '-=0.55')
-    .to('.hero__rule',                { opacity: 1, width: '280px', duration: 0.7, ease: 'power2.inOut' }, '-=0.3')
-    .to('.hero__tagline',             { opacity: 1, y: 0, duration: 0.7 }, '-=0.2')
-    .to('.hero__subtitle',            { opacity: 1, y: 0, duration: 0.65 }, '-=0.4')
-    .to('.hero__actions',             { opacity: 1, y: 0, duration: 0.65 }, '-=0.35')
-    .to('.hero__stats',               { opacity: 1, y: 0, duration: 0.65 }, '-=0.3');
-}
 
 /* ============================================================
    COUNTER ANIMATION
