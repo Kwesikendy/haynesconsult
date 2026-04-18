@@ -2116,7 +2116,7 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
 
 .testimonials__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 24px;
 }
 
