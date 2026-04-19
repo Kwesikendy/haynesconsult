@@ -1,5 +1,30 @@
+# Dependencies
 node_modules/
+
+# Build artifacts
 dist/
+
+# Env files
 .env
 .env.local
 *.local
+
+# Database
+database.sqlite
+
+# Raw Course Assets (Copies exist in public/courses/)
+affiliate/
+digital\ product/
+social\ media/
+
+# Maintenance/Fix Scripts
+*.cjs
+
+# Local raw assets & media that shouldn't be in the repo
+Dr\ Senyah\ updated\ CV\ .pdf
+haynes_consult_brand_guide.pdf
+WhatsApp\ Image*
+
+# Backend scripts (unless you want them in the repo)
+# server.js
+# db.js

@@ -1,176 +1,364 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Haynes Academy - E-Learning</title>
+  <meta name="description" content="Haynes Academy - Learn affiliate marketing, digital products, and social media marketing with our expert-curated ebooks and resources." />
+  <title>Haynes Academy - Courses & Resources</title>
   <link rel="icon" type="image/jpeg" href="/logo.jpeg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/src/style.css" />
   <style>
-    /* Specific Academy Styles */
+    /* ── Academy Page Styles ── */
     .academy-hero {
-      padding-top: 150px;
-      padding-bottom: 120px;
+      padding-top: 160px;
+      padding-bottom: 100px;
       text-align: center;
-      background: linear-gradient(135deg, var(--ice), var(--white));
+      background: linear-gradient(160deg, #f0f8ff 0%, #e8f4fd 40%, #dceefb 100%);
       position: relative;
       overflow: hidden;
+    }
+    .academy-hero::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(21,101,192,0.1) 0%, transparent 70%);
+      top: -200px; right: -100px;
+      pointer-events: none;
     }
     .academy-hero h1 {
       font-family: var(--font-head);
-      font-size: clamp(36px, 6vw, 64px);
+      font-size: clamp(36px, 6vw, 72px);
       color: var(--navy);
       margin-bottom: 20px;
+      font-weight: 900;
     }
-    .academy-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 30px;
-      padding: 40px 0;
+    .academy-hero p {
+      font-size: clamp(16px, 2vw, 20px);
+      color: rgba(13,43,126,0.65);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.7;
     }
-    .academy-card {
-      display: flex;
-      flex-direction: column;
-      position: relative;
+
+    /* ── Course section ── */
+    .academy-section {
+      padding: 80px 0;
     }
-    .academy-card-img {
-      height: 180px;
-      background: #ddd;
-      border-radius: 12px 12px 0 0;
-      position: relative;
-      overflow: hidden;
+    .academy-section + .academy-section {
+      border-top: 1px solid rgba(13,43,126,0.06);
     }
-    .academy-card-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .academy-section--alt {
+      background: linear-gradient(180deg, #f8fbff, #eef5fc);
     }
-    .academy-tier-badge {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      padding: 4px 12px;
-      border-radius: 20px;
+    .academy-section__header {
+      margin-bottom: 48px;
+    }
+    .academy-section__eyebrow {
+      font-family: var(--font-head);
       font-size: 12px;
       font-weight: 700;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      backdrop-filter: blur(8px);
-    }
-    .badge-free {
-      background: rgba(61, 168, 245, 0.8);
-      color: #fff;
-    }
-    .badge-premium {
-      background: rgba(13, 43, 126, 0.8);
-      color: #fff;
-    }
-    .academy-card-body {
-      padding: 24px;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    .academy-card-title {
-      font-family: var(--font-head);
-      font-size: 18px;
-      color: var(--navy);
+      color: var(--royal);
       margin-bottom: 10px;
     }
-    .academy-card-desc {
-      font-size: 14px;
-      color: var(--caption);
-      margin-bottom: 20px;
-      flex-grow: 1;
+    .academy-section__title {
+      font-family: var(--font-head);
+      font-size: clamp(26px, 4vw, 42px);
+      font-weight: 900;
+      color: var(--navy);
+      margin-bottom: 12px;
     }
-    .academy-card-action {
-      margin-top: auto;
+    .academy-section__desc {
+      font-size: 16px;
+      color: rgba(13,43,126,0.6);
+      max-width: 560px;
+      line-height: 1.7;
     }
-    /* Modal Styles */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(4px);
+
+    /* ── Course cover card ── */
+    .course-cover-wrap {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+    .course-cover-wrap--reverse {
+      grid-template-columns: 1fr 340px;
+    }
+    .course-cover-wrap--reverse .course-cover-img-col {
+      order: 2;
+    }
+    .course-cover-wrap--reverse .course-cover-info-col {
+      order: 1;
+    }
+
+    .course-cover-img-col {
+      position: relative;
+    }
+    .course-cover-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0 24px 60px rgba(13,43,126,0.18);
+      cursor: pointer;
+      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s;
+      display: block;
+    }
+    .course-cover-img:hover {
+      transform: translateY(-8px) rotate(-1deg);
+      box-shadow: 0 36px 80px rgba(13,43,126,0.28);
+    }
+    .course-cover-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: var(--royal);
+      color: #fff;
+      font-family: var(--font-head);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 20px;
+      box-shadow: 0 4px 14px rgba(21,101,192,0.4);
+    }
+    .course-cover-click-hint {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--royal);
+      font-weight: 600;
+      text-align: center;
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 10000;
+      gap: 6px;
+    }
+
+    /* ── Course info col ── */
+    .course-cover-info-col {
+      padding-top: 12px;
+    }
+    .course-tag {
+      display: inline-block;
+      background: rgba(21,101,192,0.1);
+      color: var(--royal);
+      font-family: var(--font-head);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 18px;
+    }
+    .course-info-title {
+      font-family: var(--font-head);
+      font-size: clamp(28px, 4vw, 46px);
+      font-weight: 900;
+      color: var(--navy);
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+    .course-info-desc {
+      font-size: 16px;
+      color: rgba(13,43,126,0.65);
+      line-height: 1.8;
+      margin-bottom: 28px;
+      max-width: 480px;
+    }
+    .course-includes {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .course-includes li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      color: rgba(13,43,126,0.75);
+      font-weight: 500;
+    }
+    .course-includes li::before {
+      content: '';
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--royal), var(--sky));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+      background-size: 60%;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .course-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--navy);
+      color: #fff;
+      font-family: var(--font-head);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 18px 36px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 8px 28px rgba(13,43,126,0.3);
+      transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+    }
+    .course-cta-btn:hover {
+      background: var(--royal);
+      transform: translateY(-3px);
+      box-shadow: 0 14px 40px rgba(21,101,192,0.45);
+    }
+
+    /* ── Books modal / drawer ── */
+    .books-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(7,20,60,0.65);
+      backdrop-filter: blur(8px);
+      z-index: 9000;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s;
+      transition: opacity 0.35s;
     }
-    .modal-overlay.active {
+    .books-overlay.active {
       opacity: 1;
       pointer-events: auto;
     }
-    .modal-content {
+    .books-drawer {
       background: #fff;
+      border-radius: 28px 28px 0 0;
+      width: 100%;
+      max-width: 900px;
+      max-height: 88vh;
       padding: 40px;
-      border-radius: 20px;
-      width: 100%;
-      max-width: 400px;
-      box-shadow: var(--shadow-lift);
-      text-align: center;
-      position: relative;
+      overflow-y: auto;
+      transform: translateY(60px);
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
     }
-    .modal-close {
-      position: absolute;
-      top: 16px;
-      right: 20px;
-      cursor: pointer;
-      font-size: 24px;
-      color: var(--caption);
+    .books-overlay.active .books-drawer {
+      transform: translateY(0);
     }
-    .form-group {
-      margin-bottom: 16px;
-      text-align: left;
-    }
-    .form-group label {
-      display: block;
-      font-size: 13px;
-      font-family: var(--font-head);
-      font-weight: 600;
-      color: var(--navy);
-      margin-bottom: 6px;
-    }
-    .form-group input {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-family: var(--font-body);
-    }
-    .auth-tabs {
+    .books-drawer__header {
       display: flex;
-      margin-bottom: 24px;
-      border-bottom: 1px solid #eee;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      gap: 16px;
     }
-    .auth-tab {
-      flex: 1;
-      padding: 10px;
-      cursor: pointer;
+    .books-drawer__title {
       font-family: var(--font-head);
-      font-weight: 600;
-      color: var(--caption);
-    }
-    .auth-tab.active {
+      font-size: clamp(20px, 3vw, 32px);
+      font-weight: 900;
       color: var(--navy);
-      border-bottom: 2px solid var(--royal);
     }
-    .nav__auth {
-      margin-left: 20px;
-      font-size: 14px;
-      font-weight: 600;
+    .books-drawer__close {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: #f0f4f8;
       cursor: pointer;
-      color: var(--royal);
+      font-size: 20px;
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .books-drawer__close:hover { background: #dde8f4; }
+
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 24px;
+    }
+    .book-card {
+      background: linear-gradient(160deg, #f5f9ff, #edf3fc);
+      border: 1px solid rgba(21,101,192,0.1);
+      border-radius: 16px;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .book-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(13,43,126,0.12);
+    }
+    .book-card__icon {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, var(--navy), var(--royal));
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .book-card__name {
+      font-family: var(--font-head);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.4;
+    }
+    .book-card__get-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--royal);
+      color: #fff;
+      font-family: var(--font-head);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 10px 20px;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      margin-top: auto;
+    }
+    .book-card__get-btn:hover {
+      background: var(--navy);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 900px) {
+      .course-cover-wrap,
+      .course-cover-wrap--reverse {
+        grid-template-columns: 1fr;
+      }
+      .course-cover-wrap--reverse .course-cover-img-col,
+      .course-cover-wrap--reverse .course-cover-info-col { order: unset; }
+      .course-cover-img { max-width: 280px; margin: 0 auto; }
+      .books-drawer { padding: 28px 20px; }
     }
   </style>
 </head>
 <body>
   <div class="cursor" id="cursor"></div>
   <div class="cursor-follower" id="cursorFollower"></div>
-
 
   <!-- NAVIGATION -->
   <nav class="nav" id="nav">
@@ -191,27 +379,19 @@
           </a>
           <div class="nav__dropdown">
             <a href="/services/digital-services.html" class="nav__dropdown-item">
-              <span class="nav__dropdown-icon">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-              </span>
+              <span class="nav__dropdown-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></span>
               <span>Digital Services</span>
             </a>
             <a href="/services/digital-marketing.html" class="nav__dropdown-item">
-              <span class="nav__dropdown-icon">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-              </span>
+              <span class="nav__dropdown-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>
               <span>Digital Marketing</span>
             </a>
             <a href="/services/web-development.html" class="nav__dropdown-item">
-              <span class="nav__dropdown-icon">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-              </span>
+              <span class="nav__dropdown-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
               <span>Web Development</span>
             </a>
             <a href="/services/ai-automation.html" class="nav__dropdown-item">
-              <span class="nav__dropdown-icon">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-              </span>
+              <span class="nav__dropdown-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></span>
               <span>AI &amp; Automation</span>
             </a>
           </div>
@@ -229,243 +409,183 @@
       <ul class="nav__mobile-links">
         <li><a href="/" class="nav__mobile-link">Home</a></li>
         <li><a href="/academy.html" class="nav__mobile-link">Academy</a></li>
-        <li><a href="/#about" class="nav__mobile-link">About</a></li>
+        <li><a href="/about.html" class="nav__mobile-link">About</a></li>
         <li><a href="/#services" class="nav__mobile-link">Services</a></li>
-        <li><a href="/services/digital-services.html" class="nav__mobile-link" style="padding-left:36px;font-size:13px;display:flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg> Digital Services</a></li>
-        <li><a href="/services/dental-aesthetic.html" class="nav__mobile-link" style="padding-left:36px;font-size:13px;display:flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg> Dental &amp; Aesthetic Medicine</a></li>
-        <li><a href="/#process" class="nav__mobile-link">Process</a></li>
-        <li><a href="/#industries" class="nav__mobile-link">Industries</a></li>
-        <li><a href="/#team" class="nav__mobile-link">Team</a></li>
         <li><a href="/#contact" class="nav__mobile-link">Contact</a></li>
         <li><a href="/#contact" class="btn btn--primary animate-pulseGlow">Get Started</a></li>
       </ul>
     </div>
   </nav>
 
-  <!-- HERO SECTION -->
-  <section class="academy-hero" style="background-image: url('/hero1.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat; position: relative;">
-    <div style="position: absolute; inset: 0; background: rgba(240, 248, 255, 0.85); backdrop-filter: blur(4px); z-index: 0;"></div>
-    <div class="section-container" style="position: relative; z-index: 1;">
-      <div class="section-badge" style="margin-top: 40px; background: rgba(255,255,255,0.8); backdrop-filter: blur(8px);">Learning & Resources</div>
+  <!-- HERO -->
+  <section class="academy-hero">
+    <div class="section-container" style="position:relative;z-index:1;">
+      <div class="section-badge" style="margin-bottom:24px;">Learning &amp; Resources</div>
       <h1>Haynes <span class="text-accent">Academy</span></h1>
-      <p class="section-subtitle" style="color: var(--navy); font-weight: 500;">Master digital transformation, AI integration, and business strategy with our curated eBooks and modules.</p>
+      <p>Master affiliate marketing, digital products, and social media strategy with our expert-curated ebooks, checklists, and launch toolkits.</p>
     </div>
-    <div class="hero__blob hero__blob--1 animate-float" style="opacity: 0.3;"></div>
-    <div class="hero__blob hero__blob--2 animate-pulseGlow" style="opacity: 0.2;"></div>
+    <div class="hero__blob hero__blob--1" style="opacity:0.25;"></div>
+    <div class="hero__blob hero__blob--2" style="opacity:0.15;"></div>
   </section>
 
-  <!-- CATALOG SECTION -->
-  <section class="section-container" style="min-height: 100vh;">
-    <div class="academy-grid" id="academyGrid">
-      <!-- Items populated by JS -->
-    </div>
-  </section>
-
-  <!-- AUTH MODAL -->
-  <div class="modal-overlay" id="authModal">
-    <div class="modal-content">
-      <span class="modal-close" id="closeAuth">&times;</span>
-      <div class="auth-tabs">
-        <div class="auth-tab active" id="tabLogin">Login</div>
-        <div class="auth-tab" id="tabRegister">Register</div>
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- COURSE 1 — AFFILIATE MARKETING                    -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <section class="academy-section">
+    <div class="section-container">
+      <div class="course-cover-wrap">
+        <!-- Cover image -->
+        <div class="course-cover-img-col">
+          <div class="course-cover-badge">Course 01</div>
+          <img
+            src="/courses/affiliate/affiliate image.jpeg"
+            alt="Affiliate Marketing School"
+            class="course-cover-img"
+            id="affiliateCover"
+            onclick="openBooks('affiliate')"
+          />
+          <p class="course-cover-click-hint">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            Click cover to browse books
+          </p>
+        </div>
+        <!-- Info -->
+        <div class="course-cover-info-col">
+          <span class="course-tag">Affiliate Marketing</span>
+          <h2 class="course-info-title">Build a Passive Income<br/>Stream from Scratch</h2>
+          <p class="course-info-desc">Learn how to monetise your audience and digital platforms through strategic affiliate marketing. From choosing the right programmes to scaling your commissions — this course gives you the complete playbook.</p>
+          <ul class="course-includes">
+            <li>Affiliate Marketing School (Full eBook)</li>
+            <li>Condensed Quick-Reference Guide</li>
+            <li>Step-by-Step Launch Checklist</li>
+            <li>Curated Resources &amp; Tool Directory</li>
+          </ul>
+          <button class="course-cta-btn" onclick="openBooks('affiliate')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            Get This Course
+          </button>
+        </div>
       </div>
-      <form id="authForm">
-        <div class="form-group" id="nameGroup" style="display: none;">
-          <label>Full Name</label>
-          <input type="text" id="authName" placeholder="Your Name" />
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- COURSE 2 — DIGITAL PRODUCTS                       -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <section class="academy-section academy-section--alt">
+    <div class="section-container">
+      <div class="course-cover-wrap course-cover-wrap--reverse">
+        <!-- Info -->
+        <div class="course-cover-info-col">
+          <span class="course-tag">Digital Products</span>
+          <h2 class="course-info-title">Create &amp; Sell Your Own<br/>Digital Products</h2>
+          <p class="course-info-desc">Turn your knowledge and expertise into scalable digital products. This comprehensive programme walks you through ideation, creation, launch strategy, and long-term monetisation of ebooks, templates, and online tools.</p>
+          <ul class="course-includes">
+            <li>Digital Product School (Full eBook)</li>
+            <li>Condensed Edition for Quick Wins</li>
+            <li>Product Launch School (Complete Guide)</li>
+            <li>Launch Strategy Mind Map</li>
+            <li>Resources &amp; Platform Directory</li>
+            <li>Launch Checklist</li>
+          </ul>
+          <button class="course-cta-btn" onclick="openBooks('digital-product')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            Get This Course
+          </button>
         </div>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" id="authEmail" placeholder="you@example.com" required />
+        <!-- Cover image -->
+        <div class="course-cover-img-col">
+          <div class="course-cover-badge">Course 02</div>
+          <img
+            src="/courses/digital-product/digitalproduct.jpeg"
+            alt="Digital Product School"
+            class="course-cover-img"
+            id="digitalCover"
+            onclick="openBooks('digital-product')"
+          />
+          <p class="course-cover-click-hint">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            Click cover to browse books
+          </p>
         </div>
-        <div class="form-group">
-          <label>Password</label>
-          <input type="password" id="authPassword" placeholder="��������" required />
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- COURSE 3 — SOCIAL MEDIA MARKETING                 -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <section class="academy-section">
+    <div class="section-container">
+      <div class="course-cover-wrap">
+        <!-- Cover image -->
+        <div class="course-cover-img-col">
+          <div class="course-cover-badge">Course 03</div>
+          <img
+            src="/courses/social-media/social media.jpeg"
+            alt="Social Media Marketing School"
+            class="course-cover-img"
+            id="socialCover"
+            onclick="openBooks('social-media')"
+          />
+          <p class="course-cover-click-hint">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            Click cover to browse books
+          </p>
         </div>
-        <button type="submit" class="btn btn--primary btn--full" id="authSubmitBtn">Login</button>
-        <p id="authError" style="color: red; font-size: 12px; margin-top: 10px;"></p>
-      </form>
+        <!-- Info -->
+        <div class="course-cover-info-col">
+          <span class="course-tag">Social Media Marketing</span>
+          <h2 class="course-info-title">Dominate Social Media<br/>&amp; Grow Your Brand</h2>
+          <p class="course-info-desc">Unlock the strategies behind viral growth, high-engagement content, and converting followers into paying customers. This course is your complete social media growth engine — from strategy to execution.</p>
+          <ul class="course-includes">
+            <li>Social Marketing School (Full eBook)</li>
+            <li>Platform-Specific Resource Directory</li>
+          </ul>
+          <button class="course-cta-btn" onclick="openBooks('social-media')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            Get This Course
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- BOOKS DRAWER MODAL                                         -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <div class="books-overlay" id="booksOverlay" onclick="handleOverlayClick(event)">
+    <div class="books-drawer" id="booksDrawer">
+      <div class="books-drawer__header">
+        <div>
+          <p class="academy-section__eyebrow" id="drawerEyebrow">Affiliate Marketing</p>
+          <h2 class="books-drawer__title" id="drawerTitle">Course Materials</h2>
+        </div>
+        <button class="books-drawer__close" onclick="closeBooks()" aria-label="Close">✕</button>
+      </div>
+      <div class="books-grid" id="booksGrid">
+        <!-- Populated by JS -->
+      </div>
     </div>
   </div>
 
-  <!-- CHECKOUT MODAL (Simulated) -->
-  <div class="modal-overlay" id="checkoutModal">
-    <div class="modal-content">
-      <span class="modal-close" id="closeCheckout">&times;</span>
-      <h2 style="font-family: var(--font-head); color: var(--navy); margin-bottom: 20px;">Unlock Content</h2>
-      <p style="font-size: 14px; color: var(--caption); margin-bottom: 24px;">You are about to purchase access to this premium resource via our simulated payment gateway.</p>
-      
-      <div style="background: #f8f9fa; padding: 16px; border-radius: 12px; margin-bottom: 24px;">
-        <h4 id="checkoutItemTitle" style="color: var(--navy);">Item Name</h4>
+  <!-- CTA SECTION -->
+  <section class="cta-section">
+    <div class="cta-section__bg"></div>
+    <div class="cta-section__orbs"><div class="cta-section__orb cta-section__orb--1"></div><div class="cta-section__orb cta-section__orb--2"></div></div>
+    <div class="section-container">
+      <div class="cta-section__content" style="opacity:1;transform:none;">
+        <p class="cta-section__eyebrow">Start Your Journey</p>
+        <h2 class="cta-section__title">Ready to Level Up<br/><span class="text-sky">Your Skills?</span></h2>
+        <p class="cta-section__body">Access any of our courses above or reach out to Haynes Consult for personalised coaching and strategy sessions.</p>
+        <div class="cta-section__actions">
+          <a href="/#contact" class="btn btn--white btn--lg">Book a Strategy Call</a>
+          <a href="/" class="btn btn--outline-white btn--lg">← Back to Home</a>
+        </div>
       </div>
-
-      <button class="btn btn--primary btn--full" id="confirmPaymentBtn">Simulate Payment (Paystack/Hubtel)</button>
     </div>
-  </div>
+  </section>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const token = localStorage.getItem("haynes_token");
-      const user = JSON.parse(localStorage.getItem("haynes_user") || "null");
-      
-      if (user) {
-        document.getElementById("navAuthBtn").textContent = "Logout";
-      }
-
-      document.getElementById("navAuthBtn").addEventListener("click", () => {
-        if (localStorage.getItem("haynes_token")) {
-          // Logout
-          localStorage.removeItem("haynes_token");
-          localStorage.removeItem("haynes_user");
-          window.location.reload();
-        } else {
-          document.getElementById("authModal").classList.add("active");
-        }
-      });
-
-      function fetchContent() {
-        const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
-        fetch('/api/academy/content', { headers })
-          .then(res => res.json())
-          .then(data => {
-            const grid = document.getElementById("academyGrid");
-            grid.innerHTML = "";
-            data.forEach(item => {
-              const card = document.createElement("div");
-              card.className = "glass-card academy-card hover-swivel";
-              
-              const badgeClass = item.is_premium ? "badge-premium" : "badge-free";
-              const badgeText = item.is_premium ? "Premium" : "Free";
-              
-              let actionHtml = '';
-              if (item.owned) {
-                actionHtml = `<button class="btn btn--ghost btn--full" onclick="downloadItem(${item.id})">Access Content</button>`;
-              } else {
-                actionHtml = `<button class="btn btn--primary btn--full" onclick="unlockItem(${item.id}, '${item.title}')">Unlock Now</button>`;
-              }
-
-              card.innerHTML = `
-                <div class="academy-card-img">
-                  <div class="academy-tier-badge ${badgeClass}">${badgeText}</div>
-                  <img src="${item.image_url}" alt="Cover" />
-                </div>
-                <div class="academy-card-body">
-                  <h3 class="academy-card-title">${item.title}</h3>
-                  <p class="academy-card-desc">${item.description}</p>
-                  <div style="font-size: 12px; margin-bottom: 16px; color: var(--navy); font-weight: bold;">
-                    Type: ${item.type} &middot; Category: ${item.category}
-                  </div>
-                  <div class="academy-card-action">
-                    ${actionHtml}
-                  </div>
-                </div>
-              `;
-              grid.appendChild(card);
-            });
-          })
-          .catch(err => console.error("Error fetching content:", err));
-      }
-
-      fetchContent();
-
-      // Auth Logic
-      let isRegistering = false;
-      document.getElementById("tabLogin").addEventListener("click", (e) => {
-        isRegistering = false;
-        e.target.classList.add("active");
-        document.getElementById("tabRegister").classList.remove("active");
-        document.getElementById("nameGroup").style.display = "none";
-        document.getElementById("authSubmitBtn").textContent = "Login";
-      });
-      document.getElementById("tabRegister").addEventListener("click", (e) => {
-        isRegistering = true;
-        e.target.classList.add("active");
-        document.getElementById("tabLogin").classList.remove("active");
-        document.getElementById("nameGroup").style.display = "block";
-        document.getElementById("authSubmitBtn").textContent = "Register";
-      });
-
-      document.getElementById("authForm").addEventListener("submit", (e) => {
-        e.preventDefault();
-        const url = isRegistering ? '/api/auth/register' : '/api/auth/login';
-        const body = {
-          email: document.getElementById("authEmail").value,
-          password: document.getElementById("authPassword").value
-        };
-        if (isRegistering) body.name = document.getElementById("authName").value;
-
-        fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(body)
-        })
-        .then(res => res.json())
-        .then(data => {
-          if (data.error) {
-            document.getElementById("authError").textContent = data.error;
-          } else {
-            localStorage.setItem("haynes_token", data.token);
-            localStorage.setItem("haynes_user", JSON.stringify(data.user));
-            window.location.reload();
-          }
-        })
-        .catch(err => console.error(err));
-      });
-
-      document.getElementById("closeAuth").addEventListener("click", () => {
-        document.getElementById("authModal").classList.remove("active");
-      });
-
-      // Checkout Logic
-      let currentCheckoutItemId = null;
-
-      window.unlockItem = function(id, title) {
-        if (!localStorage.getItem("haynes_token")) {
-          document.getElementById("authModal").classList.add("active");
-          return;
-        }
-        currentCheckoutItemId = id;
-        document.getElementById("checkoutItemTitle").textContent = title;
-        document.getElementById("checkoutModal").classList.add("active");
-      };
-
-      document.getElementById("closeCheckout").addEventListener("click", () => {
-        document.getElementById("checkoutModal").classList.remove("active");
-      });
-
-      document.getElementById("confirmPaymentBtn").addEventListener("click", () => {
-        const btn = document.getElementById("confirmPaymentBtn");
-        btn.textContent = "Processing...";
-        btn.disabled = true;
-
-        fetch('/api/checkout/simulate', {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem("haynes_token")}`
-          },
-          body: JSON.stringify({ itemId: currentCheckoutItemId })
-        })
-        .then(res => res.json())
-        .then(data => {
-          btn.textContent = "Simulate Payment (Paystack/Hubtel)";
-          btn.disabled = false;
-          if (data.success) {
-            alert("Payment simulated successfully! Content unlocked.");
-            document.getElementById("checkoutModal").classList.remove("active");
-            fetchContent(); // Refresh grid to show unlock state
-          } else {
-            alert("Error: " + data.error);
-          }
-        });
-      });
-
-      window.downloadItem = function(id) {
-        alert("Downloading/viewing content for item " + id + "...");
-      }
-
-    });
-  </script>
   <!-- FOOTER -->
   <footer class="footer" style="background: var(--navy); color: white;">
     <div class="footer__glow"></div>
@@ -502,16 +622,94 @@
         <div style="display: flex; gap: 12px; font-size: 14px;">
           <a href="https://www.tiktok.com/@haynesconsult?_r=1&_t=ZS-95eUS7TMtOS" style="color: rgba(255,255,255,0.5); text-decoration: none;">TikTok</a>
           <a href="https://www.linkedin.com/company/haynes-consult/" style="color: rgba(255,255,255,0.5); text-decoration: none;">LinkedIn</a>
-          <a href="#" style="color: rgba(255,255,255,0.5); text-decoration: none;">YouTube</a>
+          <a href="https://www.instagram.com/haynesconsult?igsh=MWN3NWdqNGhtMmlkZw==" style="color: rgba(255,255,255,0.5); text-decoration: none;">Instagram</a>
         </div>
       </div>
     </div>
     <div style="max-width:var(--container);margin:0 auto;padding:28px clamp(20px,5vw,80px); display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: rgba(255,255,255,0.5);">
-      <p>? 2026 Haynes Consult. All rights reserved.</p>
+      <p>© 2026 Haynes Consult. All rights reserved.</p>
       <p>Built with precision. Powered by innovation.</p>
     </div>
   </footer>
-<script type="module" src="/src/main.js"></script>
+
+  <script>
+    const COURSES = {
+      'affiliate': {
+        label: 'Affiliate Marketing',
+        title: 'Affiliate Marketing School',
+        books: [
+          { name: 'Affiliate Marketing School', file: '/courses/affiliate/Affiliate Marketing School.pdf' },
+          { name: 'Affiliate Marketing School (Condensed)', file: '/courses/affiliate/Affiliate Marketing School1.pdf' },
+          { name: 'Launch Checklist', file: '/courses/affiliate/Checklist.pdf' },
+          { name: 'Resources & Tools', file: '/courses/affiliate/Resources.pdf' },
+        ]
+      },
+      'digital-product': {
+        label: 'Digital Products',
+        title: 'Digital Product School',
+        books: [
+          { name: 'Digital Product School', file: '/courses/digital-product/Digital Product School.pdf' },
+          { name: 'Digital Product School (Condensed)', file: '/courses/digital-product/Digital Product School.pdf1.pdf' },
+          { name: 'Product Launch School', file: '/courses/digital-product/Product Launch School.pdf' },
+          { name: 'Launch Strategy Mind Map', file: '/courses/digital-product/Product launch school mindmap.pdf' },
+          { name: 'Resources & Tools', file: '/courses/digital-product/Resources.pdf' },
+          { name: 'Launch Checklist', file: '/courses/digital-product/Checklist.pdf' },
+        ]
+      },
+      'social-media': {
+        label: 'Social Media Marketing',
+        title: 'Social Media Marketing School',
+        books: [
+          { name: 'Social Marketing School', file: '/courses/social-media/Social Marketing School.pdf' },
+          { name: 'Resources & Tools', file: '/courses/social-media/Resources.pdf' },
+        ]
+      }
+    };
+
+    const pdfIcon = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>`;
+
+    function openBooks(courseId) {
+      const course = COURSES[courseId];
+      if (!course) return;
+
+      document.getElementById('drawerEyebrow').textContent = course.label;
+      document.getElementById('drawerTitle').textContent = course.title + ' — Materials';
+
+      const grid = document.getElementById('booksGrid');
+      grid.innerHTML = '';
+
+      course.books.forEach(book => {
+        const card = document.createElement('div');
+        card.className = 'book-card';
+        card.innerHTML = `
+          <div class="book-card__icon">${pdfIcon}</div>
+          <p class="book-card__name">${book.name}</p>
+          <a href="${book.file}" target="_blank" download class="book-card__get-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Get Course
+          </a>
+        `;
+        grid.appendChild(card);
+      });
+
+      document.getElementById('booksOverlay').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeBooks() {
+      document.getElementById('booksOverlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function handleOverlayClick(e) {
+      if (e.target === document.getElementById('booksOverlay')) closeBooks();
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeBooks();
+    });
+  </script>
+
+  <script type="module" src="/src/main.js"></script>
 </body>
 </html>
-
