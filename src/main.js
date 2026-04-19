@@ -576,3 +576,40 @@ console.log(
   'color:#1565C0;font-size:18px;font-weight:bold;',
   'color:rgba(13,43,126,0.6);font-size:12px;',
 );
+
+/* ============================================================
+   TESTIMONIALS SLIDESHOW (AUTOPLAY)
+============================================================ */
+document.querySelectorAll('.testimonials__slideshow[data-autoplay]').forEach((show) => {
+  const slides = show.querySelectorAll('.testimonials__slide');
+  if (slides.length < 2) return;
+
+  const wrap = show.closest('.testimonials__slideshow-wrap');
+  const dots  = wrap ? wrap.querySelectorAll('.testimonials__dot') : [];
+
+  let idx = 0;
+
+  let timer = setInterval(nextSlide, 6000);
+
+  function nextSlide() {
+    slides[idx].classList.remove('active');
+    if (dots[idx]) dots[idx].classList.remove('active');
+
+    idx = (idx + 1) % slides.length;
+
+    slides[idx].classList.add('active');
+    if (dots[idx]) dots[idx].classList.add('active');
+  }
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      clearInterval(timer);
+      slides[idx].classList.remove('active');
+      if (dots[idx]) dots[idx].classList.remove('active');
+      idx = i;
+      slides[idx].classList.add('active');
+      if (dots[idx]) dots[idx].classList.add('active');
+      timer = setInterval(nextSlide, 6000);
+    });
+  });
+});
