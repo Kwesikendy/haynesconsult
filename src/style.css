@@ -542,6 +542,12 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
   opacity: 0.8;
 }
 
+/* Footer variant of logo image (restores native blue colour and white rounded background) */
+.footer .nav__logo-img {
+  filter: none;
+  mix-blend-mode: normal;
+}
+
 /* Two-line logo text matching reference */
 .nav__logo-text {
   display: flex;
@@ -3036,8 +3042,9 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
   left: 0;
   width: 100%;
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+  transform: translateY(24px) scale(0.98);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
   visibility: hidden;
   padding: 40px;
@@ -3048,12 +3055,21 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
   text-align: center;
   z-index: 1;
 }
-.testimonials__slide.active {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
+.testimonials__slide.leaving {
+  opacity: 0;
+  transform: translateY(-20px) scale(0.97);
+  pointer-events: none;
   visibility: visible;
   z-index: 2;
+  transition: opacity 0.55s cubic-bezier(0.4, 0, 1, 1),
+              transform 0.55s cubic-bezier(0.4, 0, 1, 1);
+}
+.testimonials__slide.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+  visibility: visible;
+  z-index: 3;
 }
 @media (max-width: 768px) {
   .testimonials__slideshow { min-height: 500px; }

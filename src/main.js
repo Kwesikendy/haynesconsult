@@ -578,7 +578,7 @@ console.log(
 );
 
 /* ============================================================
-   TESTIMONIALS SLIDESHOW (AUTOPLAY)
+   TESTIMONIALS SLIDESHOW (AUTOPLAY + CINEMATIC CROSSFADE)
 ============================================================ */
 document.querySelectorAll('.testimonials__slideshow[data-autoplay]').forEach((show) => {
   const slides = show.querySelectorAll('.testimonials__slide');
@@ -588,27 +588,44 @@ document.querySelectorAll('.testimonials__slideshow[data-autoplay]').forEach((sh
   const dots  = wrap ? wrap.querySelectorAll('.testimonials__dot') : [];
 
   let idx = 0;
+  let animating = false;
 
   let timer = setInterval(nextSlide, 6000);
 
-  function nextSlide() {
-    slides[idx].classList.remove('active');
+  function goTo(nextIdx) {
+    if (animating || nextIdx === idx) return;
+    animating = true;
+
+    const current = slides[idx];
+    const next    = slides[nextIdx];
+
+    // 1. Trigger exit on current slide
+    current.classList.add('leaving');
+    current.classList.remove('active');
     if (dots[idx]) dots[idx].classList.remove('active');
 
-    idx = (idx + 1) % slides.length;
+    // 2. After exit animation (~550ms), make the leaving slide fully gone
+    //    and trigger the enter animation on the new slide
+    setTimeout(() => {
+      current.classList.remove('leaving');
 
-    slides[idx].classList.add('active');
-    if (dots[idx]) dots[idx].classList.add('active');
+      idx = nextIdx;
+      next.classList.add('active');
+      if (dots[idx]) dots[idx].classList.add('active');
+
+      // Allow next transition after enter animation completes (~700ms)
+      setTimeout(() => { animating = false; }, 700);
+    }, 500);
+  }
+
+  function nextSlide() {
+    goTo((idx + 1) % slides.length);
   }
 
   dots.forEach((dot, i) => {
     dot.addEventListener('click', () => {
       clearInterval(timer);
-      slides[idx].classList.remove('active');
-      if (dots[idx]) dots[idx].classList.remove('active');
-      idx = i;
-      slides[idx].classList.add('active');
-      if (dots[idx]) dots[idx].classList.add('active');
+      goTo(i);
       timer = setInterval(nextSlide, 6000);
     });
   });

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -17,14 +17,14 @@
     .sp-back-btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-head); font-size: 13px; font-weight: 700; color: #a4cefc; margin-bottom: 28px; transition: gap 0.2s; }
     .sp-back-btn:hover { gap: 14px; }
     .sp-hero__eyebrow { color: #a4cefc; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; }
-    .sp-hero__title { font-family: var(--font-head); font-size: clamp(36px, 6vw, 72px); font-weight: 900; color: #ffffff; line-height: 1.1; margin-bottom: 20px; }
+    .sp-hero__title { font-family: var(--font-head); font-size: clamp(36px, 6vw, 72px); font-weight: 900; color: var(--navy); line-height: 1.1; margin-bottom: 20px; }
     .sp-hero__title span { background: linear-gradient(135deg, var(--royal), var(--sky)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .sp-hero__sub { font-size: 18px; color: rgba(13,43,126,0.6); max-width: 540px; line-height: 1.7; margin-bottom: 36px; }
     .sp-body { padding: 80px 0; background: var(--white); }
     .sp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
     .sp-section { padding: 80px 0; }
     .sp-section--alt { background: linear-gradient(180deg, #f5f9ff, #eaf4fb); }
-    .sp-section-title { font-family: var(--font-head); font-size: clamp(24px, 4vw, 40px); font-weight: 800; color: #ffffff; margin-bottom: 20px; }
+    .sp-section-title { font-family: var(--font-head); font-size: clamp(24px, 4vw, 40px); font-weight: 800; color: var(--navy); margin-bottom: 20px; }
     .sp-section-body { font-size: 16px; color: rgba(13,43,126,0.65); line-height: 1.8; margin-bottom: 20px; }
     .sp-list { display: flex; flex-direction: column; gap: 14px; margin-top: 24px; }
     .sp-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: rgba(13,43,126,0.75); line-height: 1.6; }
@@ -32,15 +32,15 @@
     .sp-services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
     .sp-service-box { padding: 28px 24px; }
     .sp-service-box-icon { font-size: 30px; margin-bottom: 12px; }  
-    .sp-service-box-title { font-family: var(--font-head); font-size: 17px; font-weight: 700; color: #ffffff; margin-bottom: 8px; }
+    .sp-service-box-title { font-family: var(--font-head); font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
     .sp-service-box-body { font-size: 13px; color: rgba(13,43,126,0.6); line-height: 1.65; }
     .sp-clients { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
     .sp-client-card { padding: 24px 16px; text-align: center; }
     .sp-client-initial { width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, var(--navy), var(--royal)); color: white; font-family: var(--font-head); font-size: 18px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
-    .sp-client-name { font-size: 13px; font-weight: 600; color: #ffffff; }
+    .sp-client-name { font-size: 13px; font-weight: 600; color: var(--navy); }
     .sp-faq { display: flex; flex-direction: column; gap: 16px; max-width: 720px; margin: 0 auto; }
     .sp-faq-item { background: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.9); border-radius: 16px; padding: 24px 28px; box-shadow: 0 4px 20px rgba(13,43,126,0.06); }
-    .sp-faq-q { font-family: var(--font-head); font-size: 16px; font-weight: 700; color: #ffffff; margin-bottom: 10px; }
+    .sp-faq-q { font-family: var(--font-head); font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
     .sp-faq-a { font-size: 14px; color: rgba(13,43,126,0.65); line-height: 1.7; }
     @media (max-width: 900px) { .sp-grid { grid-template-columns: 1fr; gap: 40px; } .sp-services-grid { grid-template-columns: 1fr; } .sp-clients { grid-template-columns: repeat(2, 1fr); } }
   </style>
@@ -94,9 +94,9 @@
         </li>
         <li><a href="/academy.html" class="nav__link">Academy</a></li>
         <li><a href="/case-studies.html" class="nav__link">Case Studies</a></li>
-        <li><a href="#contact" class="nav__link" data-nav="contact">Contact</a></li>
+        <li><a href="/#contact" class="nav__link" data-nav="contact">Contact</a></li>
       </ul>
-      <a href="#contact" class="nav__cta btn btn--primary">Get Started</a>
+      <a href="/#contact" class="nav__cta btn btn--primary">Get Started</a>
       <button class="nav__hamburger" id="hamburger" aria-label="Toggle Menu">
         <span></span><span></span><span></span>
       </button>
@@ -105,15 +105,15 @@
       <ul class="nav__mobile-links">
         <li><a href="/" class="nav__mobile-link">Home</a></li>
         <li><a href="/academy.html" class="nav__mobile-link">Academy</a></li>
-        <li><a href="#about" class="nav__mobile-link">About</a></li>
-        <li><a href="#services" class="nav__mobile-link">Services</a></li>
+        <li><a href="/#about" class="nav__mobile-link">About</a></li>
+        <li><a href="/#services" class="nav__mobile-link">Services</a></li>
         <li><a href="/services/digital-services.html" class="nav__mobile-link" style="padding-left:36px;font-size:13px;display:flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg> Digital Services</a></li>
         <li><a href="/services/dental-aesthetic.html" class="nav__mobile-link" style="padding-left:36px;font-size:13px;display:flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg> Dental &amp; Aesthetic Medicine</a></li>
-        <li><a href="#process" class="nav__mobile-link">Process</a></li>
-        <li><a href="#industries" class="nav__mobile-link">Industries</a></li>
-        <li><a href="#team" class="nav__mobile-link">Team</a></li>
-        <li><a href="#contact" class="nav__mobile-link">Contact</a></li>
-        <li><a href="#contact" class="btn btn--primary animate-pulseGlow">Get Started</a></li>
+        <li><a href="/#process" class="nav__mobile-link">Process</a></li>
+        <li><a href="/#industries" class="nav__mobile-link">Industries</a></li>
+        <li><a href="/#team" class="nav__mobile-link">Team</a></li>
+        <li><a href="/#contact" class="nav__mobile-link">Contact</a></li>
+        <li><a href="/#contact" class="btn btn--primary animate-pulseGlow">Get Started</a></li>
       </ul>
     </div>
   </nav>
@@ -172,32 +172,32 @@
       </div>
       <div class="sp-services-grid">
         <div class="glass-card sp-service-box">
-          <div class="sp-service-box-icon">🎨</div>
+          <div class="sp-service-box-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--royal);"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.464-1.118a.953.953 0 0 1 .714-1.618h1.46c3.162 0 5.642-2.514 5.642-5.574A7.974 7.974 0 0 0 12 2z"/></svg></div>
           <div class="sp-service-box-title">Graphic Design</div>
           <div class="sp-service-box-body">Full branding packages including logo design, colour palettes, typography, and brand guidelines. We also do print materials: menus, brochures, signage, banners, and packaging.</div>
         </div>
         <div class="glass-card sp-service-box">
-          <div class="sp-service-box-icon">📱</div>
+          <div class="sp-service-box-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--royal);"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
           <div class="sp-service-box-title">Social Media Management</div>
           <div class="sp-service-box-body">Monthly content calendars, custom-designed posts for Instagram, Facebook, TikTok, and LinkedIn. We handle everything from captions to scheduling and community management.</div>
         </div>
         <div class="glass-card sp-service-box">
-          <div class="sp-service-box-icon">🎯</div>
+          <div class="sp-service-box-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--royal);"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
           <div class="sp-service-box-title">Paid Advertising</div>
           <div class="sp-service-box-body">We design, run, and optimize paid campaigns on Meta (Facebook/Instagram), Google, and TikTok. Strategy, creative, copy, and reporting - all managed by us.</div>
         </div>
         <div class="glass-card sp-service-box">
-          <div class="sp-service-box-icon">🔍</div>
+          <div class="sp-service-box-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--royal);"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
           <div class="sp-service-box-title">SEO & Content</div>
           <div class="sp-service-box-body">On-page SEO audits, keyword strategy, blog writing, and technical optimization. We get your website ranking on the first page of Google.</div>
         </div>
         <div class="glass-card sp-service-box">
-          <div class="sp-service-box-icon">🎬</div>
+          <div class="sp-service-box-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--royal);"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg></div>
           <div class="sp-service-box-title">Video & Animation</div>
           <div class="sp-service-box-body">Promotional corporate videos, animated explainers, social media reels, product demos, and motion graphics. Professional production from concept to final cut.</div>
         </div>
         <div class="glass-card sp-service-box">
-          <div class="sp-service-box-icon">✍️</div>
+          <div class="sp-service-box-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--royal);"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
           <div class="sp-service-box-title">Copywriting & Strategy</div>
           <div class="sp-service-box-body">Brand voice development, website copy, ad copy, email sequences, and content strategy. Words that sell.</div>
         </div>
