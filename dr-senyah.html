@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Meet Dr. Senyah - Haynes Consult</title>
-  <link rel="icon" type="image/jpeg" href="/logo.jpeg" />
+  <link rel="icon" type="image/png" href="/hc.png" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/src/style.css" />
   <style>
@@ -76,6 +76,132 @@
       font-weight: 500;
       color: var(--navy);
     }
+    /* ── Stats Strip ── */
+    .bio-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 20px;
+      margin: 48px 0 8px;
+    }
+    .bio-stat {
+      background: linear-gradient(135deg, rgba(13,43,126,0.06), rgba(0,120,255,0.04));
+      border: 1px solid rgba(13,43,126,0.1);
+      border-radius: 16px;
+      padding: 22px 18px;
+      text-align: center;
+    }
+    .bio-stat__number {
+      font-family: var(--font-head);
+      font-size: 30px;
+      font-weight: 900;
+      color: var(--royal);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .bio-stat__label {
+      font-size: 12px;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 600;
+    }
+    /* ── Section heading inside bio ── */
+    .bio-section-head {
+      font-family: var(--font-head);
+      font-size: 22px;
+      color: var(--navy);
+      margin: 48px 0 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid rgba(13,43,126,0.1);
+    }
+    /* ── Timeline ── */
+    .bio-timeline {
+      list-style: none;
+      padding: 0;
+      position: relative;
+    }
+    .bio-timeline::before {
+      content: '';
+      position: absolute;
+      left: 14px;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--royal), transparent);
+    }
+    .bio-timeline li {
+      padding: 0 0 28px 44px;
+      position: relative;
+    }
+    .bio-timeline li::before {
+      content: '';
+      position: absolute;
+      left: 7px; top: 5px;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: var(--royal);
+      border: 3px solid white;
+      box-shadow: 0 0 0 2px var(--royal);
+    }
+    .bio-timeline .tl-title {
+      font-weight: 700;
+      color: var(--navy);
+      font-size: 15px;
+      margin-bottom: 2px;
+    }
+    .bio-timeline .tl-sub {
+      font-size: 13px;
+      color: var(--royal);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .bio-timeline .tl-desc {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+    /* ── Pills / Tags ── */
+    .bio-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .bio-tag {
+      background: rgba(13,43,126,0.07);
+      color: var(--navy);
+      border: 1px solid rgba(13,43,126,0.15);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    /* ── Membership grid ── */
+    .bio-memberships {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+    .bio-membership {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      background: rgba(13,43,126,0.04);
+      border-radius: 12px;
+      border: 1px solid rgba(13,43,126,0.09);
+    }
+    .bio-membership__dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--royal);
+      flex-shrink: 0;
+    }
+    .bio-membership__name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--navy);
+    }
   </style>
 </head>
 <body>
@@ -87,7 +213,7 @@
   <nav class="nav" id="nav">
     <div class="nav__container">
       <a href="/" class="nav__logo" id="navLogo">
-        <img src="/logo.jpeg" alt="Haynes Consult" class="nav__logo-img" />
+        <img src="/hc.png" alt="Haynes Consult" class="nav__logo-img" />
         <span class="nav__logo-text">
           <span class="nav__logo-name">HAYNES</span>
           <span class="nav__logo-sub">CONSULT</span>
@@ -167,25 +293,160 @@
     </div>
     <div class="bio-content">
       <h2>Clinical Excellence Meets Digital Innovation</h2>
-      <p style="font-weight: 600; color: var(--royal); margin-bottom: 24px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em;">Dental Surgeon • Human Biologist • AI Consultant & Automation Specialist</p>
+      <p style="font-weight: 600; color: var(--royal); margin-bottom: 24px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em;">Dental Surgeon • Human Biologist • AI Consultant &amp; Automation Specialist</p>
       <p>
-        An award-winning Dental Surgeon and Digital Health Innovator, Dr. Atta Boateng Junior Senyah sits at the unique intersection of clinical practice, artificial intelligence, and digital strategy. Currently at Komfo Anokye Teaching Hospital (Ghana's premier tertiary hospital), he holds a Bachelor of Dental Surgery from KNUST, is pursuing a Doctorate of Business Administration in AI & Machine Learning from Walsh College, and is an internationally recognized Diplomate in Aesthetic Medicine from IBAMS.
+        An award-winning Dental Surgeon and Digital Health Innovator, Dr. Atta Boateng Junior Senyah sits at the rare intersection of clinical practice, artificial intelligence, and high-impact digital strategy. Currently completing housemanship at Komfo Anokye Teaching Hospital — Ghana's premier tertiary referral institution — he holds a Bachelor of Dental Surgery from KNUST, a Doctorate of Business Administration in AI &amp; Machine Learning from Walsh College (Michigan), and is an internationally recognized Diplomate in Aesthetic Medicine from IBAMS (New York).
       </p>
       <p>
-        Beyond the clinic, Dr. Senyah builds and scales robust digital infrastructures. As the Founder and Lead Strategist for Haynes Consult, he replaces systemic inefficiencies with flawless automation. He has a proven track record of scaling enterprises—from driving 400 new patients and 100,000+ GHS in revenue for a clinic in just 4 months, to leading global digital campaigns for the Ghana Dental Association reaching over 130,000 people.
+        Beyond the clinic, Dr. Senyah architects and deploys robust digital infrastructures that produce measurable results. As founder of Haynes Consult, he replaces systemic inefficiencies with precision automation — from building custom EHR systems and ICD-10 coding frameworks for surgical departments, to engineering nationwide dental databases and designing the official GDA website used by thousands of professionals across Ghana.
       </p>
       <p>
-        A committed leader and visionary, he serves as a board member for the Ghana Dental Association's National Congress, the World Oral Health Day committee, and the Ghana Cleft Lip & Palate Association. He has been repeatedly honored for his strategic impact, winning the FDI Best Media Award completely natively for two consecutive years (2024, 2025), and the KNUST School of Dentistry Innovation Award.
+        His campaigns have broken records at national scale. The WOHD March 2025 digital campaign he led generated 130,000+ Snapchat reach (95% engagement), grew LinkedIn impressions by 687.6%, drove 20,000 active website users across 7+ countries, and increased event attendance by 300%. A single Snapchat Face Lens filter he created racked up 158,499 views and 18,650 plays.
       </p>
-      
-      <h3 style="font-family: var(--font-head); color: var(--navy); margin-top: 40px;">Professional Achievements & Credentials</h3>
+      <p>
+        A committed leader, he serves on the board of the GDA's 33rd–35th Annual Congress, the World Oral Health Day Committee, and the Ghana Cleft Lip &amp; Palate Association's Constitution and Steering Committees. He has won the FDI Best Media Award two consecutive years (2024 &amp; 2025), the KNUST School of Dentistry Innovation Award, the Excellence &amp; Creativity Award, and the GDA Most Versatile Student Award.
+      </p>
+
+      <!-- ── KEY METRICS ── -->
+      <div class="bio-stats">
+        <div class="bio-stat">
+          <div class="bio-stat__number">400+</div>
+          <div class="bio-stat__label">New Patients Acquired (4 months)</div>
+        </div>
+        <div class="bio-stat">
+          <div class="bio-stat__number">100K+</div>
+          <div class="bio-stat__label">GHS Revenue Generated</div>
+        </div>
+        <div class="bio-stat">
+          <div class="bio-stat__number">130K+</div>
+          <div class="bio-stat__label">Campaign Reach (7 Countries)</div>
+        </div>
+        <div class="bio-stat">
+          <div class="bio-stat__number">688%</div>
+          <div class="bio-stat__label">LinkedIn Impression Growth</div>
+        </div>
+        <div class="bio-stat">
+          <div class="bio-stat__number">158K</div>
+          <div class="bio-stat__label">Snapchat Filter Views</div>
+        </div>
+        <div class="bio-stat">
+          <div class="bio-stat__number">2×</div>
+          <div class="bio-stat__label">FDI Best Media Award Winner</div>
+        </div>
+      </div>
+
+      <!-- ── CREDENTIALS ── -->
+      <h3 class="bio-section-head">Professional Achievements &amp; Credentials</h3>
       <ul class="credentials-list">
-        <li><strong>Dual-Disciplinary Mastery:</strong> Integrates clinical expertise (BDS, IBAMS Diplomate) with deep technical acumen (ongoing DBA in AI & Machine Learning).</li>
-        <li><strong>AI & Systems Integration:</strong> Architect of comprehensive research databases, custom localized EHR models, and advanced automated workflow integrations.</li>
-        <li><strong>National Representation:</strong> Executive leadership and media direction for the Ghana Dental Association and Ghana Cleft Lip & Palate Association.</li>
-        <li><strong>Award-Winning Campaign Strategy:</strong> Two-time consecutive recipient of the FDI Best Media Award, alongside the GDA Most Versatile Student Award.</li>
-        <li><strong>Educational Impact:</strong> Keynote speaker and guest lecturer on the practical applications of AI in modern clinical dentistry at KNUST School of Dentistry.</li>
+        <li><strong>Dual-Disciplinary Mastery:</strong> Integrates clinical expertise (BDS, IBAMS Diplomate) with deep technical acumen (DBA in AI &amp; Machine Learning, Purdue / UT Austin / Johns Hopkins certifications).</li>
+        <li><strong>AI &amp; Systems Integration:</strong> Architect of comprehensive departmental research databases, custom localized EHR models, simplified ICD-10 coding reference systems, and advanced automated workflow integrations via Make, Relevance AI, and Chatbase.</li>
+        <li><strong>National Representation:</strong> Board member and media lead for the Ghana Dental Association (33rd–35th Congress), World Oral Health Day 2025 &amp; 2026, and Ghana Cleft Lip &amp; Palate Association Constitution &amp; Steering Committees.</li>
+        <li><strong>Award-Winning Campaign Strategy:</strong> Two-time consecutive FDI Best Media Award (2024, 2025), KNUST Dean's Innovation Award, Excellence &amp; Creativity Award, and GDA Most Versatile Student Award.</li>
+        <li><strong>Educational Impact:</strong> Guest keynote lecturer at KNUST School of Dentistry on AI and digital dentistry; mentor in the KNUST College of Health Sciences Health Mentorship Program (2019–present).</li>
+        <li><strong>Research &amp; Publication:</strong> Primary researcher — <em>"The Perception and Awareness of Artificial Intelligence in Dentistry among Dentists at KATH"</em> — presented at the Artificial Intelligence Conference, Ghana, 2025.</li>
       </ul>
+
+      <!-- ── EDUCATION ── -->
+      <h3 class="bio-section-head">Education &amp; Certifications</h3>
+      <ul class="bio-timeline">
+        <li>
+          <div class="tl-title">Bachelor of Science — Human Biology</div>
+          <div class="tl-sub">KNUST, Kumasi, Ghana &nbsp;|&nbsp; 2018 – 2022</div>
+        </li>
+        <li>
+          <div class="tl-title">Bachelor of Dental Surgery (BDS)</div>
+          <div class="tl-sub">KNUST, Kumasi, Ghana &nbsp;|&nbsp; 2022 – 2025</div>
+        </li>
+        <li>
+          <div class="tl-title">Post-Graduate Diploma — AI &amp; Machine Learning</div>
+          <div class="tl-sub">University of Texas at Austin, McCombs School of Business &nbsp;|&nbsp; 2023</div>
+        </li>
+        <li>
+          <div class="tl-title">Diplomate in Aesthetic Medicine &amp; Surgery</div>
+          <div class="tl-sub">IBAMS, New York, USA &nbsp;|&nbsp; November 2024</div>
+        </li>
+        <li>
+          <div class="tl-title">Executive MBA &amp; DBA — Artificial Intelligence &amp; Machine Learning</div>
+          <div class="tl-sub">Walsh College, Troy, Michigan / Atlanta College of Liberal Arts &nbsp;|&nbsp; 2022 – 2025</div>
+        </li>
+        <li>
+          <div class="tl-title">Master of Public Health Administration (In Progress)</div>
+          <div class="tl-sub">Università degli Studi Guglielmo Marconi &nbsp;|&nbsp; September 2025 – Present</div>
+        </li>
+        <li>
+          <div class="tl-title">Additional Certifications</div>
+          <div class="tl-sub">Purdue University • Johns Hopkins University • University of Athena Global • Simplilearn</div>
+          <div class="tl-desc">Machine Learning &amp; AI | AI Applications | Executive Diploma in Data Analysis | Digital Marketing Strategy | MBA Essentials in AI</div>
+        </li>
+      </ul>
+
+      <!-- ── INTERNATIONAL EXPERIENCE ── -->
+      <h3 class="bio-section-head">International Professional Experience</h3>
+      <ul class="bio-timeline">
+        <li>
+          <div class="tl-title">Succeed Society — Berlin, Germany</div>
+          <div class="tl-sub">Video Editor &amp; AI Content Strategist &nbsp;|&nbsp; 2024 – 2025</div>
+          <div class="tl-desc">Produced branded video campaigns and AI-optimised content strategies for digital audience growth. Integrated Luma AI and ElevenLabs to scale content quality and volume while cutting production time.</div>
+        </li>
+        <li>
+          <div class="tl-title">Contender — Dubai, UAE</div>
+          <div class="tl-sub">Video Editor | Copywriter | Visual Intelligence Engineer &nbsp;|&nbsp; 2023 – 2024</div>
+          <div class="tl-desc">Developed AI-enhanced creative assets for digital marketing campaigns across the MENA region, boosting client engagement metrics. Led content team and delegated tasks to multinational staff.</div>
+        </li>
+        <li>
+          <div class="tl-title">AZ Solutions — Milan, Italy</div>
+          <div class="tl-sub">Marketing Assistant &amp; SEO Strategist &nbsp;|&nbsp; 2023 – 2024</div>
+          <div class="tl-desc">Supported SEO strategy and digital marketing campaigns, improving lead generation for clients across European markets.</div>
+        </li>
+      </ul>
+
+      <!-- ── TECH STACK ── -->
+      <h3 class="bio-section-head">Technology &amp; Tools</h3>
+      <p style="font-size: 14px; color: var(--text); margin-bottom: 12px;"><strong>AI &amp; Automation:</strong></p>
+      <div class="bio-tags">
+        <span class="bio-tag">Make (Integromat)</span>
+        <span class="bio-tag">Relevance AI</span>
+        <span class="bio-tag">Chatbase</span>
+        <span class="bio-tag">Bolt AI</span>
+        <span class="bio-tag">Claude Code</span>
+        <span class="bio-tag">Orange Data Mining</span>
+        <span class="bio-tag">Generative AI</span>
+        <span class="bio-tag">Luma AI</span>
+        <span class="bio-tag">ElevenLabs</span>
+      </div>
+      <p style="font-size: 14px; color: var(--text); margin: 20px 0 12px;"><strong>Digital Health &amp; Clinical Systems:</strong></p>
+      <div class="bio-tags">
+        <span class="bio-tag">EHR Implementation</span>
+        <span class="bio-tag">ICD-10 Coding</span>
+        <span class="bio-tag">Intraoral Scanning</span>
+        <span class="bio-tag">CAD/CAM Systems</span>
+        <span class="bio-tag">Tele-dentistry</span>
+        <span class="bio-tag">Research Database Design</span>
+      </div>
+      <p style="font-size: 14px; color: var(--text); margin: 20px 0 12px;"><strong>Web &amp; Creative:</strong></p>
+      <div class="bio-tags">
+        <span class="bio-tag">WordPress</span>
+        <span class="bio-tag">Wix / Squarespace</span>
+        <span class="bio-tag">Custom Web Apps</span>
+        <span class="bio-tag">Figma</span>
+        <span class="bio-tag">Adobe Creative Suite</span>
+        <span class="bio-tag">Canva</span>
+        <span class="bio-tag">CapCut</span>
+        <span class="bio-tag">DaVinci Resolve</span>
+        <span class="bio-tag">Snapchat Lens Studio</span>
+      </div>
+
+      <!-- ── MEMBERSHIPS ── -->
+      <h3 class="bio-section-head">Professional Memberships</h3>
+      <div class="bio-memberships">
+        <div class="bio-membership"><div class="bio-membership__dot"></div><span class="bio-membership__name">Ghana Dental Association (GDA)</span></div>
+        <div class="bio-membership"><div class="bio-membership__dot"></div><span class="bio-membership__name">Ghana Medical Association (GMA)</span></div>
+        <div class="bio-membership"><div class="bio-membership__dot"></div><span class="bio-membership__name">IBAMS (New York)</span></div>
+        <div class="bio-membership"><div class="bio-membership__dot"></div><span class="bio-membership__name">Ghana Cleft Lip &amp; Palate Association</span></div>
+        <div class="bio-membership"><div class="bio-membership__dot"></div><span class="bio-membership__name">Int'l Association of AI &amp; Automation</span></div>
+        <div class="bio-membership"><div class="bio-membership__dot"></div><span class="bio-membership__name">Int'l AI Governance Association</span></div>
+        <div class="bio-membership"><div class="bio-membership__dot"></div><span class="bio-membership__name">The AI World Organization (AIW)</span></div>
+      </div>
     </div>
   </section>
 
