@@ -396,6 +396,7 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.7;
+  text-align: center;
 }
 
 .section-body {
