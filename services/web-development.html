@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -30,18 +30,18 @@
     .sp-back-btn {
       display: inline-flex; align-items: center; gap: 8px;
       font-family: var(--font-head); font-size: 13px; font-weight: 700;
-      color: #a4cefc; margin-bottom: 28px; transition: gap 0.2s;
+      color: var(--royal); margin-bottom: 28px; transition: gap 0.2s;
     }
     .sp-back-btn:hover { gap: 14px; }
-    .sp-hero__eyebrow { color: #a4cefc; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; }
-    .sp-hero__title { font-family: var(--font-head); font-size: clamp(36px, 6vw, 72px); font-weight: 900; color: #ffffff; line-height: 1.1; margin-bottom: 20px; }
+    .sp-hero__eyebrow { color: var(--royal); font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; }
+    .sp-hero__title { font-family: var(--font-head); font-size: clamp(36px, 6vw, 72px); font-weight: 900; color: var(--navy); line-height: 1.1; margin-bottom: 20px; }
     .sp-hero__title span { background: linear-gradient(135deg, var(--royal), var(--sky)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .sp-hero__sub { font-size: 18px; color: rgba(13,43,126,0.6); max-width: 540px; line-height: 1.7; margin-bottom: 36px; }
     .sp-body { padding: 80px 0; background: var(--white); }
     .sp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
     .sp-section { padding: 80px 0; }
     .sp-section--alt { background: linear-gradient(180deg, #f5f9ff, #eaf4fb); }
-    .sp-section-title { font-family: var(--font-head); font-size: clamp(24px, 4vw, 40px); font-weight: 800; color: #ffffff; margin-bottom: 20px; }
+    .sp-section-title { font-family: var(--font-head); font-size: clamp(24px, 4vw, 40px); font-weight: 800; color: var(--navy); margin-bottom: 20px; }
     .sp-section-body { font-size: 16px; color: rgba(13,43,126,0.65); line-height: 1.8; margin-bottom: 20px; }
     .sp-list { display: flex; flex-direction: column; gap: 14px; margin-top: 24px; }
     .sp-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: rgba(13,43,126,0.75); line-height: 1.6; }
@@ -50,18 +50,18 @@
     .sp-package { padding: 36px 28px; position: relative; }
     .sp-package--featured { border-color: rgba(21,101,192,0.3) !important; }
     .sp-package-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--navy), var(--royal)); color: white; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; padding: 4px 16px; border-radius: 50px; white-space: nowrap; }
-    .sp-package-name { font-family: var(--font-head); font-size: 20px; font-weight: 800; color: #ffffff; margin-bottom: 8px; }
-    .sp-package-price { font-family: var(--font-head); font-size: 32px; font-weight: 900; color: #a4cefc; margin-bottom: 4px; }
+    .sp-package-name { font-family: var(--font-head); font-size: 20px; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
+    .sp-package-price { font-family: var(--font-head); font-size: 32px; font-weight: 900; color: var(--royal); margin-bottom: 4px; }
     .sp-package-price span { font-size: 14px; font-weight: 500; color: rgba(13,43,126,0.5); }
     .sp-package-desc { font-size: 13px; color: rgba(13,43,126,0.55); margin-bottom: 20px; line-height: 1.6; }
     .sp-package-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
     .sp-package-features li { font-size: 13px; color: rgba(13,43,126,0.7); display: flex; align-items: center; gap: 10px; }
-    .sp-package-features li::before { content: '✓'; color: #a4cefc; font-weight: 700; }
+    .sp-package-features li::before { content: '✓'; color: var(--royal); font-weight: 700; }
     .sp-tech { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
-    .sp-tech-tag { font-family: var(--font-head); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: #a4cefc; background: rgba(21,101,192,0.07); border: 1px solid rgba(21,101,192,0.18); border-radius: 50px; padding: 6px 16px; }
+    .sp-tech-tag { font-family: var(--font-head); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: var(--royal); background: rgba(21,101,192,0.07); border: 1px solid rgba(21,101,192,0.18); border-radius: 50px; padding: 6px 16px; }
     .sp-faq { display: flex; flex-direction: column; gap: 16px; max-width: 720px; margin: 0 auto; }
     .sp-faq-item { background: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.9); border-radius: 16px; padding: 24px 28px; box-shadow: 0 4px 20px rgba(13,43,126,0.06); }
-    .sp-faq-q { font-family: var(--font-head); font-size: 16px; font-weight: 700; color: #ffffff; margin-bottom: 10px; }
+    .sp-faq-q { font-family: var(--font-head); font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
     .sp-faq-a { font-size: 14px; color: rgba(13,43,126,0.65); line-height: 1.7; }
     @media (max-width: 900px) { .sp-grid { grid-template-columns: 1fr; gap: 40px; } .sp-packages { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; } }
   </style>
