@@ -976,13 +976,13 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
 /* â”€â”€ Slide 1 Title â”€â”€ */
 .hero__title-s1 {
   font-family: var(--font-head);
-  font-size: clamp(48px, 7vw, 90px);
+  font-size: clamp(42px, 6vw, 84px);
   font-weight: 900;
   line-height: 1.0;
   letter-spacing: -0.01em;
   color: var(--navy);     /* #0D2B7E â€” deep dark navy exactly like cor1 */
   margin: 0 0 20px;
-  max-width: 540px; /* Constrain text width so it clearly bypasses the robot on right */
+  max-width: 500px; /* Constrain text width so it clearly bypasses the robot on right */
 }
 
 /* Word rows */
