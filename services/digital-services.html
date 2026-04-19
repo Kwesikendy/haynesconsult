@@ -14,7 +14,7 @@
     /* ---- PAGE HERO ---- */
     .ds-hero { 
       min-height: 48vh;
-      background-image: linear-gradient(150deg, rgba(13,43,126,0.9) 0%, rgba(5,15,50,0.85) 100%), url('/hero2.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat;
+      background: linear-gradient(150deg, #ffffff 0%, #eaf4fb 40%, #d6ecfb 70%, #f0f8ff 100%);
       display: flex; align-items: center;
       position: relative; overflow: hidden;
       padding-top: 150px; padding-bottom: 80px;
@@ -35,16 +35,16 @@
     .ds-back-btn {
       display: inline-flex; align-items: center; gap: 8px;
       font-family: var(--font-head); font-size: 13px; font-weight: 700;
-      color: #a4cefc; margin-bottom: 28px; transition: gap 0.2s;
+      color: var(--royal); margin-bottom: 28px; transition: gap 0.2s;
     }
     .ds-back-btn:hover { gap: 14px; }
     .ds-eyebrow {
-      color: #a4cefc; font-size: 12px; font-weight: 700;
+      color: var(--royal); font-size: 12px; font-weight: 700;
       letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px;
     }
     .ds-hero__title {
       font-family: var(--font-head); font-size: clamp(40px, 6vw, 76px);
-      font-weight: 900; color: #ffffff; line-height: 1.08; margin-bottom: 20px;
+      font-weight: 900; color: var(--navy); line-height: 1.08; margin-bottom: 20px;
     }
     .ds-hero__title span {
       background: linear-gradient(135deg, var(--royal), var(--sky));
@@ -59,7 +59,7 @@
     .ds-section--alt { background: linear-gradient(180deg, #f5f9ff 0%, #eaf4fb 100%); }
     .ds-section-title {
       font-family: var(--font-head); font-size: clamp(26px, 4vw, 42px);
-      font-weight: 800; color: #ffffff; margin-bottom: 12px;
+      font-weight: 800; color: var(--navy); margin-bottom: 12px;
     }
     .ds-section-sub { font-size: 16px; color: rgba(13,43,126,0.6); max-width: 600px; margin-bottom: 52px; line-height: 1.7; }
 
@@ -91,7 +91,7 @@
       background: linear-gradient(135deg, rgba(21,101,192,0.1), rgba(61,168,245,0.14));
       border: 1px solid rgba(21,101,192,0.12);
       display: flex; align-items: center; justify-content: center;
-      margin-bottom: 20px; color: #a4cefc;
+      margin-bottom: 20px; color: var(--royal);
       transition: background 0.3s, transform 0.3s;
     }
     .ds-card:hover .ds-card__icon {
@@ -100,8 +100,7 @@
     }
 
     .ds-card__title {
-      font-family: var(--font-head); font-size: 18px; font-weight: 800;
-      color: #ffffff; margin-bottom: 10px;
+      font-family: var(--font-head); font-size: 18px; font-weight: 800; color: var(--navy); margin-bottom: 10px;
     }
     .ds-card__body {
       font-size: 14px; color: rgba(13,43,126,0.65); line-height: 1.75;
@@ -110,7 +109,7 @@
     .ds-card__cta {
       display: inline-flex; align-items: center; gap: 6px;
       font-family: var(--font-head); font-size: 13px; font-weight: 700;
-      color: #a4cefc; margin-top: 24px;
+      color: var(--royal); margin-top: 24px;
       transition: gap 0.2s;
     }
     .ds-card__cta:hover { gap: 12px; }
@@ -118,7 +117,7 @@
       display: inline-block;
       font-family: var(--font-head); font-size: 10px; font-weight: 700;
       letter-spacing: 0.1em; text-transform: uppercase;
-      color: #a4cefc; background: rgba(21,101,192,0.07);
+      color: var(--royal); background: rgba(21,101,192,0.07);
       border: 1px solid rgba(21,101,192,0.15);
       border-radius: 50px; padding: 3px 12px; margin-bottom: 16px;
     }
@@ -151,7 +150,7 @@
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
       margin-bottom: 12px;
     }
-    .ds-process-step-title { font-family: var(--font-head); font-size: 16px; font-weight: 700; color: #ffffff; margin-bottom: 8px; }
+    .ds-process-step-title { font-family: var(--font-head); font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
     .ds-process-step-body { font-size: 13px; color: rgba(13,43,126,0.6); line-height: 1.65; }
 
     @media (max-width: 1024px) { .ds-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -171,39 +170,72 @@
   <div class="cursor-follower" id="cursorFollower"></div>
 
   <!-- NAV -->
-  <nav class="nav nav--scrolled" id="nav">
+  <nav class="nav" id="nav">
     <div class="nav__container">
-      <a href="/" class="nav__logo">
+      <a href="/" class="nav__logo" id="navLogo">
         <img src="/logo.jpeg" alt="Haynes Consult" class="nav__logo-img" />
-        <span class="nav__logo-text">Haynes Consult</span>
+        <span class="nav__logo-text">
+          <span class="nav__logo-name">HAYNES</span>
+          <span class="nav__logo-sub">CONSULT</span>
+        </span>
       </a>
-      <ul class="nav__links">
+      <ul class="nav__links" id="navLinks">
         <li><a href="/" class="nav__link">Home</a></li>
-        <li><a href="/academy.html" class="nav__link">Academy</a></li>
-        <li><a href="/#about" class="nav__link">About</a></li>
+        <li><a href="/about.html" class="nav__link">About</a></li>
         <li class="nav__dropdown-wrap">
-          <a href="/#services" class="nav__link active nav__dropdown-trigger">
+          <a href="#" class="nav__link nav__dropdown-trigger">
             Services <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style="margin-left:4px;vertical-align:middle;"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
           <div class="nav__dropdown">
-            <a href="/services/digital-services.html" class="nav__dropdown-item nav__dropdown-item--active">
+            <a href="/services/digital-services.html" class="nav__dropdown-item">
               <span class="nav__dropdown-icon">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
               </span>
               <span>Digital Services</span>
             </a>
-            <a href="/services/dental-aesthetic.html" class="nav__dropdown-item">
+            <a href="/services/digital-marketing.html" class="nav__dropdown-item">
               <span class="nav__dropdown-icon">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
               </span>
-              <span>Dental &amp; Aesthetic Medicine</span>
+              <span>Digital Marketing</span>
+            </a>
+            <a href="/services/web-development.html" class="nav__dropdown-item">
+              <span class="nav__dropdown-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+              </span>
+              <span>Web Development</span>
+            </a>
+            <a href="/services/ai-automation.html" class="nav__dropdown-item">
+              <span class="nav__dropdown-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+              </span>
+              <span>AI &amp; Automation</span>
             </a>
           </div>
         </li>
-        <li><a href="/#process" class="nav__link">Process</a></li>
-        <li><a href="/#contact" class="nav__link">Contact</a></li>
+        <li><a href="/academy.html" class="nav__link">Academy</a></li>
+        <li><a href="/case-studies.html" class="nav__link">Case Studies</a></li>
+        <li><a href="#contact" class="nav__link" data-nav="contact">Contact</a></li>
       </ul>
-      <a href="/#contact" class="nav__cta btn btn--primary">Get Started</a>
+      <a href="#contact" class="nav__cta btn btn--primary">Get Started</a>
+      <button class="nav__hamburger" id="hamburger" aria-label="Toggle Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav__mobile" id="mobileMenu">
+      <ul class="nav__mobile-links">
+        <li><a href="/" class="nav__mobile-link">Home</a></li>
+        <li><a href="/academy.html" class="nav__mobile-link">Academy</a></li>
+        <li><a href="#about" class="nav__mobile-link">About</a></li>
+        <li><a href="#services" class="nav__mobile-link">Services</a></li>
+        <li><a href="/services/digital-services.html" class="nav__mobile-link" style="padding-left:36px;font-size:13px;display:flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg> Digital Services</a></li>
+        <li><a href="/services/dental-aesthetic.html" class="nav__mobile-link" style="padding-left:36px;font-size:13px;display:flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg> Dental &amp; Aesthetic Medicine</a></li>
+        <li><a href="#process" class="nav__mobile-link">Process</a></li>
+        <li><a href="#industries" class="nav__mobile-link">Industries</a></li>
+        <li><a href="#team" class="nav__mobile-link">Team</a></li>
+        <li><a href="#contact" class="nav__mobile-link">Contact</a></li>
+        <li><a href="#contact" class="btn btn--primary animate-pulseGlow">Get Started</a></li>
+      </ul>
     </div>
   </nav>
 
