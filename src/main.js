@@ -425,7 +425,14 @@ hamburger?.addEventListener('click', () => {
   mobileMenu.classList.toggle('open');
 });
 
-document.querySelectorAll('.nav__mobile-link, .nav__mobile .btn').forEach((link) => {
+// Dedicated close button (×)
+document.getElementById('mobileClose')?.addEventListener('click', () => {
+  hamburger?.classList.remove('open');
+  mobileMenu?.classList.remove('open');
+});
+
+// Close on any link click
+document.querySelectorAll('.nav__mobile-link, .nav__mobile-sub-link, .nav__mobile .btn').forEach((link) => {
   link.addEventListener('click', () => {
     hamburger?.classList.remove('open');
     mobileMenu?.classList.remove('open');
@@ -545,6 +552,7 @@ gsap.from('.nav', {
   duration: 1,
   delay: 0.2,
   ease: 'power3.out',
+  clearProps: 'transform',
 });
 
 /* ============================================================

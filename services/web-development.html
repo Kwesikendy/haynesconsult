@@ -123,22 +123,44 @@
         <span></span><span></span><span></span>
       </button>
     </div>
-    <div class="nav__mobile" id="mobileMenu">
+  </nav>
+      <div class="nav__mobile" id="mobileMenu">
+      <!-- Brand top-left -->
+      <a href="/" class="nav__mobile-brand">
+        <img src="/logo.jpeg" alt="Haynes Consult" />
+        <span class="nav__mobile-brand-text">
+          <span class="nav__mobile-brand-name">HAYNES</span>
+          <span class="nav__mobile-brand-sub">CONSULT</span>
+        </span>
+      </a>
+      <!-- Close button -->
+      <button class="nav__mobile-close" id="mobileClose" aria-label="Close menu">&times;</button>
+
       <ul class="nav__mobile-links">
         <li><a href="/" class="nav__mobile-link">Home</a></li>
+        <li><a href="/about.html" class="nav__mobile-link">About</a></li>
         <li><a href="/academy.html" class="nav__mobile-link">Academy</a></li>
-        <li><a href="/#about" class="nav__mobile-link">About</a></li>
-        <li><a href="/#services" class="nav__mobile-link">Services</a></li>
-        <li><a href="/services/digital-services.html" class="nav__mobile-link" style="padding-left:36px;font-size:13px;display:flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg> Digital Services</a></li>
-        <li><a href="/services/dental-aesthetic.html" class="nav__mobile-link" style="padding-left:36px;font-size:13px;display:flex;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg> Dental &amp; Aesthetic Medicine</a></li>
+        <li><a href="/case-studies.html" class="nav__mobile-link">Case Studies</a></li>
+
+        <!-- Services group -->
+        <li style="width:100%; text-align:center;">
+          <div class="nav__mobile-group-label">Services</div>
+          <div class="nav__mobile-sub-links">
+            <a href="/services/digital-services.html" class="nav__mobile-sub-link">Digital Services</a>
+            <a href="/services/digital-marketing.html" class="nav__mobile-sub-link">Digital Marketing</a>
+            <a href="/services/web-development.html" class="nav__mobile-sub-link">Web Development</a>
+            <a href="/services/ai-automation.html" class="nav__mobile-sub-link">AI &amp; Automation</a>
+          </div>
+        </li>
+
+        <li><div class="nav__mobile-divider"></div></li>
         <li><a href="/#process" class="nav__mobile-link">Process</a></li>
         <li><a href="/#industries" class="nav__mobile-link">Industries</a></li>
         <li><a href="/#team" class="nav__mobile-link">Team</a></li>
         <li><a href="/#contact" class="nav__mobile-link">Contact</a></li>
-        <li><a href="/#contact" class="btn btn--primary animate-pulseGlow">Get Started</a></li>
+        <li><a href="/#contact" class="btn btn--primary">Get Started</a></li>
       </ul>
     </div>
-  </nav>
 
   <!-- HERO -->
   <section class="sp-hero">
