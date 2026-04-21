@@ -3056,3 +3056,45 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
   background: var(--royal);
   transform: scale(1.3);
 }
+
+/* ============================================================
+   BACK TO TOP BUTTON
+============================================================ */
+.back-to-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  background: var(--royal);
+  color: var(--white);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 20px rgba(21, 101, 192, 0.25);
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.back-to-top:hover {
+  background: var(--navy);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(13, 43, 126, 0.3);
+}
+
+.back-to-top svg {
+  width: 20px;
+  height: 20px;
+}
