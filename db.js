@@ -48,6 +48,17 @@ export function initDb() {
       item_id INTEGER,
       purchase_date DATETIME DEFAULT CURRENT_TIMESTAMP
     )`);
+
+    // Transactions (Paystack Guest Checkouts)
+    db.run(`CREATE TABLE IF NOT EXISTS transactions (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      email TEXT,
+      course_id TEXT,
+      amount INTEGER,
+      reference TEXT,
+      status TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )`);
   });
 }
 

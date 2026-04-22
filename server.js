@@ -104,6 +104,20 @@ app.post('/api/checkout/simulate', authenticateToken, (req, res) => {
   }, 1000); // Fake delay
 });
 
+app.post('/api/payments/record', (req, res) => {
+  const { email, courseId, amount, reference, status } = req.body;
+  if (!email || !reference) return res.status(400).json({ error: 'Missing required fields' });
+  
+  db.run(
+    `INSERT INTO transactions (email, course_id, amount, reference, status) VALUES (?, ?, ?, ?, ?)`,
+    [email, courseId, amount, reference, status],
+    function(err) {
+      if (err) return res.status(500).json({ error: err.message });
+      res.json({ success: true, message: 'Transaction recorded locally', transactionId: this.lastID });
+    }
+  );
+});
+
 const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Express server running on http://localhost:${PORT}`);

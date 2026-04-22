@@ -984,8 +984,25 @@
         amount: 15000, // 150 GHS in pesewas
         currency: 'GHS',
         callback: function(response){
-          // On valid payment, show books drawer directly
-          showBooks(checkoutCourseId);
+          // Determine API route base depending on environment
+          const apiBase = window.location.hostname === 'localhost' || window.location.hostname.includes('127.0.0.1') ? 'http://localhost:3001' : '';
+          
+          // Log the successful transaction locally for the Admin Dashboard
+          fetch(apiBase + '/api/payments/record', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: emailInput,
+              courseId: checkoutCourseId,
+              amount: 15000,
+              reference: response.reference,
+              status: response.status || 'success'
+            })
+          }).catch(err => console.error("Database log failed:", err))
+          .finally(() => {
+            // Irrespective of log status, open the books for the user
+            showBooks(checkoutCourseId);
+          });
         },
         onClose: function(){
           // Handle user abort
