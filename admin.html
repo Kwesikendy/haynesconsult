@@ -16,32 +16,84 @@
   </script>
 
   <style>
-    body { background: var(--body-bg); padding-top: 100px; }
-    .admin-container { max-width: 900px; margin: 0 auto; padding: 40px 20px; animation: fade-in 0.3s ease-out; }
-    .admin-header { margin-bottom: 40px; }
-    .admin-header h1 { font-family: var(--font-head); color: var(--navy); font-weight: 900; font-size: 36px; }
-    .admin-header p { color: rgba(13,43,126,0.6); font-size: 16px; margin-top: 8px; }
+    body { 
+      margin: 0; 
+      padding-top: 100px; 
+      background: #000;
+      color: #fff;
+    }
+    
+    /* Premium Video Background */
+    .bg-video {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: -2;
+      opacity: 0.6;
+    }
+    .bg-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle at center, rgba(4, 12, 35, 0.4) 0%, rgba(4, 12, 35, 0.9) 100%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: -1;
+    }
 
-    .admin-card { background: white; border-radius: 20px; padding: 40px; box-shadow: 0 12px 30px rgba(13,43,126,0.06); }
-    .form-group { margin-bottom: 24px; }
-    .form-group label { display: block; font-family: var(--font-head); font-weight: 700; color: var(--navy); font-size: 14px; margin-bottom: 8px; }
-    .form-group input[type="text"], .form-group input[type="number"], .form-group textarea { width: 100%; padding: 14px 16px; border: 2px solid #eef5fc; border-radius: 12px; font-family: var(--font-body); font-size: 15px; outline: none; transition: border-color 0.2s; }
-    .form-group input:focus, .form-group textarea:focus { border-color: var(--royal); }
-    .form-group textarea { resize: vertical; min-height: 100px; }
+    .admin-container { max-width: 900px; margin: 0 auto; padding: 40px 20px; animation: fade-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; position: relative; z-index: 10; }
     
-    .file-drop { border: 2px dashed #dceefb; border-radius: 12px; padding: 30px; text-align: center; background: #f8fbff; cursor: pointer; transition: background 0.2s, border-color 0.2s; }
-    .file-drop:hover { background: #eef5fc; border-color: var(--sky); }
+    .admin-header { margin-bottom: 40px; text-align: center; }
+    .admin-header h1 { font-family: var(--font-head); color: #fff; font-weight: 900; font-size: 42px; margin-bottom: 8px; letter-spacing: -0.02em; }
+    .admin-header p { color: rgba(255,255,255,0.7); font-size: 16px; margin-bottom: 20px; }
+
+    .admin-card { 
+      background: rgba(255, 255, 255, 0.03); 
+      backdrop-filter: blur(40px); 
+      -webkit-backdrop-filter: blur(40px);
+      border: 1px solid rgba(255, 255, 255, 0.08); 
+      padding: 50px; 
+      border-radius: 28px; 
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.05); 
+    }
+    .form-group { margin-bottom: 28px; }
+    .form-group label { display: block; font-family: var(--font-head); font-weight: 700; color: #fff; font-size: 14px; margin-bottom: 10px; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.9; }
+    .form-group input[type="text"], .form-group input[type="number"], .form-group textarea { width: 100%; padding: 16px 20px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; font-family: var(--font-body); font-size: 15px; outline: none; transition: border-color 0.2s, background 0.2s; color: #fff; }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--sky); background: rgba(0,0,0,0.5); }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.3); }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    
+    .file-drop { border: 2px dashed rgba(255,255,255,0.2); border-radius: 12px; padding: 40px; text-align: center; background: rgba(255,255,255,0.02); cursor: pointer; transition: background 0.2s, border-color 0.2s; }
+    .file-drop:hover { background: rgba(255,255,255,0.05); border-color: var(--sky); }
     .file-drop input[type="file"] { display: none; }
-    .file-drop-text { color: var(--royal); font-family: var(--font-head); font-weight: 700; font-size: 14px; margin-top: 10px; }
-    .file-list { margin-top: 12px; font-size: 13px; color: var(--navy); text-align: left; }
+    .file-drop-text { color: var(--sky); font-family: var(--font-head); font-weight: 700; font-size: 14px; margin-top: 12px; }
+    .file-list { margin-top: 14px; font-size: 13px; color: #fff; text-align: center; opacity: 0.8; }
     
-    .btn-submit { background: var(--navy); color: white; border: none; padding: 16px 32px; font-family: var(--font-head); font-weight: 800; border-radius: 50px; cursor: pointer; font-size: 15px; margin-top: 20px; transition: background 0.2s, transform 0.2s; }
-    .btn-submit:hover { background: var(--royal); transform: translateY(-2px); }
+    .btn-submit { background: var(--royal); color: white; border: none; padding: 18px 40px; font-family: var(--font-head); font-weight: 800; border-radius: 50px; cursor: pointer; font-size: 15px; margin-top: 20px; width: 100%; transition: background 0.2s, transform 0.2s; text-transform: uppercase; letter-spacing: 0.05em; }
+    .btn-submit:hover { background: var(--sky); transform: translateY(-2px); }
+
+    .admin-pill {
+      display: inline-flex; align-items: center; background: rgba(255,255,255,0.1); color: #fff; padding: 6px 14px; border-radius: 50px; font-size: 13px; font-weight: 600; border: 1px solid rgba(255,255,255,0.1);
+    }
     
     @keyframes fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Nav adjustments */
+    .nav { background: transparent !important; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .nav__link { color: rgba(255,255,255,0.8); }
+    .nav__link:hover { color: #fff; }
+    .nav__logo-name { color: #fff; }
+    .nav__logo-sub { color: var(--sky); }
   </style>
 </head>
 <body>
+
+  <!-- Cinematic Background -->
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="/heroo2.mp4" type="video/mp4" />
+  </video>
+  <div class="bg-overlay"></div>
 
   <nav class="nav" id="nav">
     <div class="nav__container">
@@ -62,10 +114,10 @@
   <div class="admin-container" id="adminDashboard">
     <div class="admin-header">
       <h1>Deploy New Course</h1>
-      <p>Upload a course, set the price, and attach premium PDFs.</p>
-      <div style="margin-top: 10px; display: inline-flex; align-items: center; background: #eef5fc; color: var(--navy); padding: 6px 12px; border-radius: 50px; font-size: 12px; font-weight: 600;">
-        <span style="width:8px;height:8px;background:#10b981;border-radius:50%;margin-right:8px;"></span> Verified Admin Session Loaded
-        <button onclick="localStorage.removeItem('haynesAdmin'); localStorage.removeItem('haynesUserEmail'); window.location.href='/login.html';" style="margin-left: 12px; background: transparent; border: 1px solid var(--navy); border-radius: 4px; color: var(--navy); cursor: pointer; font-size: 10px; padding: 2px 6px;">Sign Out</button>
+      <p>Upload a course, set the price, and attach premium PDFs to the Academy database.</p>
+      <div class="admin-pill">
+        <span style="width:8px;height:8px;background:#10b981;border-radius:50%;margin-right:8px;box-shadow: 0 0 8px #10b981;"></span> Secure Session Active
+        <button onclick="localStorage.removeItem('haynesAdmin'); localStorage.removeItem('haynesUserEmail'); window.location.href='/login.html';" style="margin-left: 14px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 40px; color: #fff; cursor: pointer; font-size: 11px; padding: 4px 10px; transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">Sign Out</button>
       </div>
     </div>
 
@@ -73,15 +125,15 @@
       <form id="uploadCourseForm" onsubmit="handleUpload(event)">
         <div class="form-group">
           <label>Course Title</label>
-          <input type="text" id="c_title" placeholder="e.g. Masterclass Start" required />
+          <input type="text" id="c_title" placeholder="e.g. Agency Growth Masterclass" required />
         </div>
         <div class="form-group">
           <label>Category (Meta Tag)</label>
-          <input type="text" id="c_category" placeholder="e.g. Digital Products" required />
+          <input type="text" id="c_category" placeholder="e.g. Digital Marketing" required />
         </div>
         <div class="form-group">
-          <label>Description</label>
-          <textarea id="c_desc" placeholder="A compelling description of the value..." required></textarea>
+          <label>Course Description</label>
+          <textarea id="c_desc" placeholder="A compelling description of the value proposition..." required></textarea>
         </div>
         <div class="form-group">
           <label>Price (GHS)</label>
@@ -91,7 +143,7 @@
         <div class="form-group">
           <label>Cover Photo (JPG/PNG)</label>
           <div class="file-drop" onclick="document.getElementById('c_cover').click()">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--royal)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M20.4 14.5L16 10 4 20"/></svg>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--sky)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M20.4 14.5L16 10 4 20"/></svg>
             <div class="file-drop-text" id="cover_text">Click to browse cover image</div>
             <input type="file" id="c_cover" accept="image/*" onchange="updateFileText(this, 'cover_text')" required />
           </div>
@@ -100,7 +152,7 @@
         <div class="form-group">
           <label>Course Materials (PDFs)</label>
           <div class="file-drop" onclick="document.getElementById('c_pdfs').click()">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--royal)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--sky)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
             <div class="file-drop-text" id="pdfs_text">Click to upload multiple PDFs</div>
             <input type="file" id="c_pdfs" accept="application/pdf" multiple onchange="updateFileText(this, 'pdfs_text')" required />
             <div class="file-list" id="pdf_list"></div>
