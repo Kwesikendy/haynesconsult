@@ -355,6 +355,7 @@
       .books-drawer { padding: 28px 20px; }
     }
   </style>
+  <script src="https://js.paystack.co/v1/inline.js"></script>
 </head>
 <body>
   <div class="cursor" id="cursor"></div>
@@ -489,7 +490,7 @@
           </ul>
           <button class="course-cta-btn" onclick="openBooks('affiliate')">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            Get This Course
+            Get This Course — 150 GHS
           </button>
         </div>
       </div>
@@ -514,7 +515,7 @@
           </ul>
           <button class="course-cta-btn" onclick="openBooks('digital-product')">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            Get This Course
+            Get This Course — 150 GHS
           </button>
         </div>
         <!-- Cover image -->
@@ -568,7 +569,7 @@
           </ul>
           <button class="course-cta-btn" onclick="openBooks('social-media')">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            Get This Course
+            Get This Course — 150 GHS
           </button>
         </div>
       </div>
@@ -593,7 +594,7 @@
           </ul>
           <button class="course-cta-btn" onclick="openBooks('product-launch')">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            Get This Course
+            Get This Course — 150 GHS
           </button>
         </div>
         <!-- Cover -->
@@ -637,7 +638,7 @@
           </ul>
           <button class="course-cta-btn" onclick="openBooks('solopreneur')">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            Get This Course
+            Get This Course — 150 GHS
           </button>
         </div>
       </div>
@@ -663,7 +664,7 @@
           </ul>
           <button class="course-cta-btn" onclick="openBooks('shopify')">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            Get This Course
+            Get This Course — 150 GHS
           </button>
         </div>
         <!-- Cover -->
@@ -708,7 +709,7 @@
           </ul>
           <button class="course-cta-btn" onclick="openBooks('instagram')">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            Get This Course
+            Get This Course — 150 GHS
           </button>
         </div>
       </div>
@@ -734,7 +735,7 @@
           </ul>
           <button class="course-cta-btn" onclick="openBooks('htsales')">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            Get This Course
+            Get This Course — 150 GHS
           </button>
         </div>
         <!-- Cover -->
@@ -765,6 +766,25 @@
       <div class="books-grid" id="booksGrid">
         <!-- Populated by JS -->
       </div>
+    </div>
+  </div>
+
+  
+  <!-- EMAIL PROMPT MODAL -->
+  <div class="books-overlay" id="emailModalOverlay" onclick="handleEmailOverlayClick(event)">
+    <div class="books-drawer" id="emailModalDrawer" style="max-width: 460px; text-align: center; border-radius: 24px; padding: 48px 32px;" onclick="event.stopPropagation()">
+      <div style="width: 64px; height: 64px; background: rgba(21,101,192,0.1); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;">
+         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--royal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+      </div>
+      <h2 style="font-family: var(--font-head); font-weight: 900; color: var(--navy); font-size: 28px; margin-bottom: 12px;">Instant Access</h2>
+      <p style="color: rgba(13,43,126,0.65); font-size: 15px; margin-bottom: 32px; line-height: 1.6;">You are about to unlock this premium course. Enter your email to begin checkout and receive your files.</p>
+      
+      <input type="email" id="checkoutEmail" placeholder="you@email.com" style="width: 100%; box-sizing: border-box; padding: 16px 20px; font-size: 16px; border: 2px solid #eef5fc; border-radius: 12px; margin-bottom: 24px; outline: none; font-family: var(--font-body); transition: border-color 0.2s;" onfocus="this.style.borderColor='var(--royal)'" onblur="this.style.borderColor='#eef5fc'" required />
+      
+      <button onclick="processPayment()" style="width: 100%; background: var(--royal); color: white; border: none; padding: 18px; border-radius: 50px; font-weight: 800; font-family: var(--font-head); font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em; cursor: pointer; transition: transform 0.2s, background 0.2s, box-shadow 0.2s;" onmouseover="this.style.background='var(--navy)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 24px rgba(21,101,192,0.3)';" onmouseout="this.style.background='var(--royal)'; this.style.transform='none'; this.style.boxShadow='none';">
+        Pay 150 GHS &amp; Unlock
+      </button>
+      <button onclick="closeEmailModal()" style="background: none; border: none; font-family: var(--font-head); font-weight: 700; color: rgba(13,43,126,0.5); font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 24px; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='var(--navy)'" onmouseout="this.style.color='rgba(13,43,126,0.5)'">Cancel Checkout</button>
     </div>
   </div>
 
@@ -929,7 +949,52 @@
 
     const pdfIcon = `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>`;
 
+    
+    let checkoutCourseId = null;
+
     function openBooks(courseId) {
+      checkoutCourseId = courseId;
+      document.getElementById('emailModalOverlay').classList.add('active');
+      document.body.style.overflow = 'hidden';
+      // attempt to focus
+      setTimeout(() => document.getElementById('checkoutEmail').focus(), 100);
+    }
+
+    function closeEmailModal() {
+      document.getElementById('emailModalOverlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function handleEmailOverlayClick(e) {
+      if (e.target === document.getElementById('emailModalOverlay')) closeEmailModal();
+    }
+
+    function processPayment() {
+      const emailInput = document.getElementById('checkoutEmail').value.trim();
+      if(!emailInput || !emailInput.includes('@')) { 
+        alert('Please enter a valid email address to continue.'); 
+        return; 
+      }
+      
+      closeEmailModal();
+
+      let handler = PaystackPop.setup({
+        key: 'pk_live_a200329e0b7a634a9326d84481d02e67dd61e63c',
+        email: emailInput,
+        amount: 15000, // 150 GHS in pesewas
+        currency: 'GHS',
+        callback: function(response){
+          // On valid payment, show books drawer directly
+          showBooks(checkoutCourseId);
+        },
+        onClose: function(){
+          // Handle user abort
+        }
+      });
+      handler.openIframe();
+    }
+
+    function showBooks(courseId) {
       const course = COURSES[courseId];
       if (!course) return;
       document.getElementById('drawerEyebrow').textContent = course.label;
