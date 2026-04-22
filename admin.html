@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard - Haynes Consult</title>
+  <link rel="icon" type="image/png" href="/hc.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/style.css" />
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+    body { background: var(--body-bg); padding-top: 100px; }
+    .admin-container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+    .admin-header { margin-bottom: 40px; }
+    .admin-header h1 { font-family: var(--font-head); color: var(--navy); font-weight: 900; font-size: 36px; }
+    .admin-header p { color: rgba(13,43,126,0.6); font-size: 16px; margin-top: 8px; }
+
+    .admin-card { background: white; border-radius: 20px; padding: 40px; box-shadow: 0 12px 30px rgba(13,43,126,0.06); }
+    .form-group { margin-bottom: 24px; }
+    .form-group label { display: block; font-family: var(--font-head); font-weight: 700; color: var(--navy); font-size: 14px; margin-bottom: 8px; }
+    .form-group input[type="text"], .form-group input[type="number"], .form-group textarea { width: 100%; padding: 14px 16px; border: 2px solid #eef5fc; border-radius: 12px; font-family: var(--font-body); font-size: 15px; outline: none; transition: border-color 0.2s; }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--royal); }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    
+    .file-drop { border: 2px dashed #dceefb; border-radius: 12px; padding: 30px; text-align: center; background: #f8fbff; cursor: pointer; transition: background 0.2s, border-color 0.2s; }
+    .file-drop:hover { background: #eef5fc; border-color: var(--sky); }
+    .file-drop input[type="file"] { display: none; }
+    .file-drop-text { color: var(--royal); font-family: var(--font-head); font-weight: 700; font-size: 14px; margin-top: 10px; }
+    .file-list { margin-top: 12px; font-size: 13px; color: var(--navy); text-align: left; }
+    
+    .btn-submit { background: var(--navy); color: white; border: none; padding: 16px 32px; font-family: var(--font-head); font-weight: 800; border-radius: 50px; cursor: pointer; font-size: 15px; margin-top: 20px; transition: background 0.2s, transform 0.2s; }
+    .btn-submit:hover { background: var(--royal); transform: translateY(-2px); }
+
+    /* Login Specific Styles */
+    .login-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 65vh; text-align: center; animation: fade-in 0.3s ease-out; }
+    .login-wrapper h2 { font-family: var(--font-head); color: var(--navy); font-size: 32px; font-weight: 900; margin-bottom: 12px; }
+    .login-wrapper p { color: rgba(13,43,126,0.6); max-width: 400px; line-height: 1.6; margin-bottom: 40px; }
+    .auth-error { display: none; background: #ffebee; color: #c62828; padding: 12px 20px; border-radius: 8px; margin-top: 24px; font-weight: 600; font-family: var(--font-body); border: 1px solid #ffcdd2; }
+    
+    @keyframes fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <div class="nav__container">
+      <a href="/" class="nav__logo" id="navLogo">
+        <img src="/hc.png" alt="Haynes Consult" class="nav__logo-img" />
+        <span class="nav__logo-text">
+          <span class="nav__logo-name">HAYNES</span>
+          <span class="nav__logo-sub">ADMIN</span>
+        </span>
+      </a>
+      <ul class="nav__links" id="navLinks">
+        <li><a href="/academy.html" class="nav__link">View Academy</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- GOOGLE AUTHENTICATION GATE -->
+  <div class="login-wrapper" id="googleGate">
+    <div style="background: white; padding: 48px; border-radius: 24px; box-shadow: 0 12px 30px rgba(13,43,126,0.06); display: flex; flex-direction: column; align-items: center;">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--royal)" stroke-width="2" style="margin-bottom: 24px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <h2>Admin Access</h2>
+      <p>Secure restricted entry. Please authenticate your identity using your authorized Haynes Consult email address.</p>
+      
+      <div id="g_id_onload"
+         data-client_id="534598717647-kjbvv0ttare4gcc228cppi0el3050nrv.apps.googleusercontent.com"
+         data-callback="handleGoogleResponse"
+         data-auto_prompt="false">
+      </div>
+      <div class="g_id_signin"
+         data-type="standard"
+         data-size="large"
+         data-theme="filled_blue"
+         data-text="sign_in_with"
+         data-shape="rectangular"
+         data-logo_alignment="left">
+      </div>
+      
+      <div class="auth-error" id="authErrorMsg"></div>
+    </div>
+  </div>
+
+  <!-- THE SECURE ADMIN DASHBOARD (HIDDEN DEFAULT) -->
+  <div class="admin-container" id="adminDashboard" style="display: none;">
+    <div class="admin-header">
+      <h1>Deploy New Course</h1>
+      <p>Upload a course, set the price, and attach premium PDFs.</p>
+      <div style="margin-top: 10px; display: inline-flex; align-items: center; background: #eef5fc; color: var(--navy); padding: 6px 12px; border-radius: 50px; font-size: 12px; font-weight: 600;">
+        <span style="width:8px;height:8px;background:#10b981;border-radius:50%;margin-right:8px;"></span> Verified Admin: <span id="verifiedEmail" style="margin-left:4px;color:var(--royal);"></span>
+      </div>
+    </div>
+
+    <div class="admin-card">
+      <form id="uploadCourseForm" onsubmit="handleUpload(event)">
+        <div class="form-group">
+          <label>Course Title</label>
+          <input type="text" id="c_title" placeholder="e.g. Masterclass Start" required />
+        </div>
+        <div class="form-group">
+          <label>Category (Meta Tag)</label>
+          <input type="text" id="c_category" placeholder="e.g. Digital Products" required />
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="c_desc" placeholder="A compelling description of the value..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label>Price (GHS)</label>
+          <input type="number" id="c_price" value="150" required />
+        </div>
+
+        <div class="form-group">
+          <label>Cover Photo (JPG/PNG)</label>
+          <div class="file-drop" onclick="document.getElementById('c_cover').click()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--royal)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M20.4 14.5L16 10 4 20"/></svg>
+            <div class="file-drop-text" id="cover_text">Click to browse cover image</div>
+            <input type="file" id="c_cover" accept="image/*" onchange="updateFileText(this, 'cover_text')" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Course Materials (PDFs)</label>
+          <div class="file-drop" onclick="document.getElementById('c_pdfs').click()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--royal)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            <div class="file-drop-text" id="pdfs_text">Click to upload multiple PDFs</div>
+            <input type="file" id="c_pdfs" accept="application/pdf" multiple onchange="updateFileText(this, 'pdfs_text')" required />
+            <div class="file-list" id="pdf_list"></div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">Publish Course</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    /* Google JWT Auth Logic */
+    function decodeJwtResponse(token) {
+        let base64Url = token.split('.')[1];
+        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        let jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        return JSON.parse(jsonPayload);
+    }
+
+    function handleGoogleResponse(response) {
+       const responsePayload = decodeJwtResponse(response.credential);
+       const verifiedEmail = responsePayload.email;
+       const allowedAdmins = ["dogbeynathan7@gmail.com", "senyahmartin64@gmail.com"];
+
+       if (allowedAdmins.includes(verifiedEmail)) {
+           // Success: Unlock the dashboard
+           document.getElementById('googleGate').style.display = 'none';
+           document.getElementById('adminDashboard').style.display = 'block';
+           document.getElementById('verifiedEmail').textContent = verifiedEmail;
+       } else {
+           // Reject unauthorized users
+           const errorBox = document.getElementById('authErrorMsg');
+           errorBox.style.display = 'block';
+           errorBox.innerHTML = `Access Denied!<br><span style="font-size:13px;font-weight:400;margin-top:4px;display:block;">${verifiedEmail} is not authorized.</span>`;
+       }
+    }
+
+    /* Uploader Logic */
+    function updateFileText(input, textId) {
+      const el = document.getElementById(textId);
+      if (input.files.length > 0) {
+        el.textContent = input.files.length + ' file(s) selected';
+        if(input.multiple) {
+           const list = Array.from(input.files).map(f => f.name).join('<br/>');
+           document.getElementById('pdf_list').innerHTML = list;
+        }
+      } else {
+        el.textContent = 'Click to browse ' + (input.multiple ? 'multiple PDFs' : 'cover image');
+        if(input.multiple) document.getElementById('pdf_list').innerHTML = '';
+      }
+    }
+
+    async function handleUpload(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      btn.textContent = 'Uploading...';
+      btn.disabled = true;
+
+      const formData = new FormData();
+      formData.append('title', document.getElementById('c_title').value);
+      formData.append('category', document.getElementById('c_category').value);
+      formData.append('description', document.getElementById('c_desc').value);
+      formData.append('price', document.getElementById('c_price').value);
+      
+      const coverFile = document.getElementById('c_cover').files[0];
+      formData.append('cover', coverFile);
+
+      const pdfFiles = document.getElementById('c_pdfs').files;
+      for (let i = 0; i < pdfFiles.length; i++) {
+        formData.append('pdfs', pdfFiles[i]);
+      }
+
+      try {
+        const fetchApiBase = window.location.hostname === 'localhost' || window.location.hostname.includes('127.0.0.1') ? 'http://localhost:3001' : '';
+        const response = await fetch(fetchApiBase + '/api/admin/courses', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (response.ok) {
+          alert('Course successfully deployed to the Academy!');
+          document.getElementById('uploadCourseForm').reset();
+          document.getElementById('cover_text').textContent = 'Click to browse cover image';
+          document.getElementById('pdfs_text').textContent = 'Click to browse multiple PDFs';
+          document.getElementById('pdf_list').innerHTML = '';
+        } else {
+          alert('Error uploading course.');
+        }
+      } catch (err) {
+        alert('Network error: ' + err.message);
+      } finally {
+        btn.textContent = 'Publish Course';
+        btn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>
