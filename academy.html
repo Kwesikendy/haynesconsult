@@ -1099,7 +1099,7 @@
                 <div class="course-cover-img-col">
                   <div class="course-cover-badge">Course 0${indexOffset}</div>
                   <img
-                    src="${apiBase}${course.image_url}"
+                    src="${course.image_url.startsWith('http') ? course.image_url : apiBase + course.image_url}"
                     alt="${course.title}"
                     class="course-cover-img"
                     onclick="openBooks('${course.custom_id}')"
