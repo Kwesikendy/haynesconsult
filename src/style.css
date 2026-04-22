@@ -90,6 +90,8 @@ ul { list-style: none; }
 /* ---- CUSTOM CURSOR ---- */
 .cursor {
   position: fixed;
+  top: 0;
+  left: 0;
   width: 10px;
   height: 10px;
   background: var(--royal);
@@ -97,12 +99,13 @@ ul { list-style: none; }
   pointer-events: none;
   z-index: 9999;
   transition: width 0.2s, height 0.2s, background 0.2s;
-  /* mix-blend-mode: multiply; removed to match logo bg */
   will-change: transform;
 }
 
 .cursor-follower {
   position: fixed;
+  top: 0;
+  left: 0;
   width: 40px;
   height: 40px;
   border: 1.5px solid rgba(21, 101, 192, 0.5);
