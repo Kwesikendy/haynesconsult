@@ -2,20 +2,20 @@ import express from 'express';
 import cors from 'cors';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import 'dotenv/config';
 import db, { initDb } from './db.js';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
+import { v2 as cloudinary } from 'cloudinary';
 
-const uploadDir = path.join(process.cwd(), 'public', 'uploads');
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
-}
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, uploadDir),
-  filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname.replace(/\s+/g, '-'))
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
 });
+
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
 const app = express();
 app.use(cors());
@@ -132,33 +132,61 @@ app.post('/api/payments/record', (req, res) => {
 });
 
 // --- ADMIN COURSE UPLOAD ---
-app.post('/api/admin/courses', upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'pdfs', maxCount: 10 }]), (req, res) => {
-  const { title, category, description, price } = req.body;
-  if(!title || !req.files['cover'] || !req.files['pdfs']) {
-    return res.status(400).json({error: "Missing required files or fields."});
-  }
+function uploadToCloudinary(buffer, folder) {
+  return new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      { folder: folder, resource_type: 'auto' }, 
+      (error, result) => {
+        if (error) reject(error);
+        else resolve(result);
+      }
+    );
+    stream.end(buffer);
+  });
+}
 
-  const coverUrl = '/uploads/' + req.files['cover'][0].filename;
-  const customId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-  const priceValue = parseInt(price) * 100; // stored in pesewas for Paystack
-
-  db.run(
-    `INSERT INTO academy_items (title, category, description, image_url, price, custom_id, type, is_premium) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-    [title, category, description, coverUrl, priceValue, customId, 'Course', 1],
-    function(err) {
-      if (err) return res.status(500).json({ error: err.message });
-      const newCourseId = this.lastID;
-      
-      const statement = db.prepare(`INSERT INTO academy_books (course_id, name, file_url, cover_url) VALUES (?, ?, ?, ?)`);
-      req.files['pdfs'].forEach(file => {
-        const fileUrl = '/uploads/' + file.filename;
-        statement.run([newCourseId, file.originalname.replace('.pdf', ''), fileUrl, null]);
-      });
-      statement.finalize();
-      
-      res.json({ success: true });
+app.post('/api/admin/courses', upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'pdfs', maxCount: 10 }]), async (req, res) => {
+  try {
+    const { title, category, description, price } = req.body;
+    if(!title || !req.files['cover'] || !req.files['pdfs']) {
+      return res.status(400).json({error: "Missing required files or fields."});
     }
-  );
+
+    const customId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    const priceValue = parseInt(price) * 100; // stored in pesewas for Paystack
+
+    // Upload cover image
+    const coverUpload = await uploadToCloudinary(req.files['cover'][0].buffer, 'haynes/covers');
+    const coverUrl = coverUpload.secure_url;
+
+    db.run(
+      `INSERT INTO academy_items (title, category, description, image_url, price, custom_id, type, is_premium) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+      [title, category, description, coverUrl, priceValue, customId, 'Course', 1],
+      async function(err) {
+        if (err) return res.status(500).json({ error: err.message });
+        const newCourseId = this.lastID;
+        
+        // Upload PDFs in parallel
+        const uploadPromises = req.files['pdfs'].map(async (file) => {
+          const pdfUpload = await uploadToCloudinary(file.buffer, 'haynes/pdfs');
+          return { name: file.originalname.replace('.pdf', ''), url: pdfUpload.secure_url };
+        });
+
+        const uploadedPdfs = await Promise.all(uploadPromises);
+
+        const statement = db.prepare(`INSERT INTO academy_books (course_id, name, file_url, cover_url) VALUES (?, ?, ?, ?)`);
+        uploadedPdfs.forEach(pdf => {
+          statement.run([newCourseId, pdf.name, pdf.url, null]);
+        });
+        statement.finalize();
+        
+        res.json({ success: true });
+      }
+    );
+  } catch(err) {
+    console.error("Cloudinary upload error:", err);
+    res.status(500).json({ error: "Failed to upload to cloud" });
+  }
 });
 
 app.get('/api/courses', (req, res) => {
