@@ -752,6 +752,9 @@
   </section>
 
   <!-- ══════════════════════════════════════════════════════════ -->
+  <div id="dynamicCoursesContainer"></div>
+  
+  <!-- ══════════════════════════════════════════════════════════ -->
   <!-- BOOKS DRAWER MODAL                                         -->
   <!-- ══════════════════════════════════════════════════════════ -->
   <div class="books-overlay" id="booksOverlay" onclick="handleOverlayClick(event)">
@@ -781,7 +784,7 @@
       
       <input type="email" id="checkoutEmail" placeholder="you@email.com" style="width: 100%; box-sizing: border-box; padding: 16px 20px; font-size: 16px; border: 2px solid #eef5fc; border-radius: 12px; margin-bottom: 24px; outline: none; font-family: var(--font-body); transition: border-color 0.2s;" onfocus="this.style.borderColor='var(--royal)'" onblur="this.style.borderColor='#eef5fc'" required />
       
-      <button onclick="processPayment()" style="width: 100%; background: var(--royal); color: white; border: none; padding: 18px; border-radius: 50px; font-weight: 800; font-family: var(--font-head); font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em; cursor: pointer; transition: transform 0.2s, background 0.2s, box-shadow 0.2s;" onmouseover="this.style.background='var(--navy)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 24px rgba(21,101,192,0.3)';" onmouseout="this.style.background='var(--royal)'; this.style.transform='none'; this.style.boxShadow='none';">
+      <button id="checkoutPayBtn" onclick="processPayment()" style="width: 100%; background: var(--royal); color: white; border: none; padding: 18px; border-radius: 50px; font-weight: 800; font-family: var(--font-head); font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em; cursor: pointer; transition: transform 0.2s, background 0.2s, box-shadow 0.2s;" onmouseover="this.style.background='var(--navy)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 24px rgba(21,101,192,0.3)';" onmouseout="this.style.background='var(--royal)'; this.style.transform='none'; this.style.boxShadow='none';">
         Pay 150 GHS &amp; Unlock
       </button>
       <button onclick="closeEmailModal()" style="background: none; border: none; font-family: var(--font-head); font-weight: 700; color: rgba(13,43,126,0.5); font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 24px; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='var(--navy)'" onmouseout="this.style.color='rgba(13,43,126,0.5)'">Cancel Checkout</button>
@@ -954,6 +957,12 @@
 
     function openBooks(courseId) {
       checkoutCourseId = courseId;
+      const course = COURSES[courseId] || {};
+      const coursePrice = course.price ? parseInt(course.price, 10) : 15000;
+      
+      const btn = document.getElementById('checkoutPayBtn');
+      if(btn) btn.textContent = `Pay ${coursePrice / 100} GHS & Unlock`;
+
       const cachedEmail = localStorage.getItem('haynesUserEmail');
       
       if (cachedEmail) {
@@ -986,35 +995,33 @@
       
       closeEmailModal();
 
+      const targetCourse = COURSES[checkoutCourseId];
+      const checkoutAmount = (targetCourse && targetCourse.price) ? parseInt(targetCourse.price, 10) : 15000;
+
       let handler = PaystackPop.setup({
         key: 'pk_live_a200329e0b7a634a9326d84481d02e67dd61e63c',
         email: emailInput,
-        amount: 15000, // 150 GHS in pesewas
+        amount: checkoutAmount,
         currency: 'GHS',
         callback: function(response){
-          // Determine API route base depending on environment
           const apiBase = window.location.hostname === 'localhost' || window.location.hostname.includes('127.0.0.1') ? 'http://localhost:3001' : '';
           
-          // Log the successful transaction locally for the Admin Dashboard
           fetch(apiBase + '/api/payments/record', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               email: emailInput,
               courseId: checkoutCourseId,
-              amount: 15000,
+              amount: checkoutAmount,
               reference: response.reference,
               status: response.status || 'success'
             })
           }).catch(err => console.error("Database log failed:", err))
           .finally(() => {
-            // Irrespective of log status, open the books for the user
             showBooks(checkoutCourseId);
           });
         },
-        onClose: function(){
-          // Handle user abort
-        }
+        onClose: function(){}
       });
       handler.openIframe();
     }
@@ -1058,6 +1065,79 @@
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') closeBooks();
     });
+
+    // --- DYNAMIC COURSE INJECTION ---
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const apiBase = window.location.hostname === 'localhost' || window.location.hostname.includes('127.0.0.1') ? 'http://localhost:3001' : '';
+        const res = await fetch(apiBase + '/api/courses');
+        const customCourses = await res.json();
+        
+        const container = document.getElementById('dynamicCoursesContainer');
+        if(!container) return;
+
+        let indexOffset = 5; // courses 1-4 are static
+
+        customCourses.forEach(course => {
+          // 1) Register into global COURSES dictionary so checkout framework works seamlessly
+          COURSES[course.custom_id] = {
+            label: course.category,
+            title: course.title,
+            price: course.price,
+            books: course.books || []
+          };
+
+          // 2) Build HTML matching the static courses visually
+          const section = document.createElement('section');
+          // Alternate the layout class
+          section.className = (indexOffset % 2 === 0) ? 'academy-section academy-section--alt' : 'academy-section';
+          const wrapReverseClass = (indexOffset % 2 === 0) ? 'course-cover-wrap--reverse' : '';
+          
+          section.innerHTML = `
+            <div class="section-container">
+              <div class="course-cover-wrap ${wrapReverseClass}">
+                <div class="course-cover-img-col">
+                  <div class="course-cover-badge">Course 0${indexOffset}</div>
+                  <img
+                    src="${apiBase}${course.image_url}"
+                    alt="${course.title}"
+                    class="course-cover-img"
+                    onclick="openBooks('${course.custom_id}')"
+                  />
+                  <p class="course-cover-click-hint">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                    Click cover to browse books
+                  </p>
+                </div>
+                <!-- Info -->
+                <div class="course-cover-info-col">
+                  <span class="course-tag">${course.category}</span>
+                  <h2 class="course-info-title">${course.title.replace('\n', '<br/>')}</h2>
+                  <p class="course-info-desc">${course.description}</p>
+                  <ul class="course-includes">
+                    <li>${course.title} (Full Guide)</li>
+                    <li>Exclusive Materials & Worksheets</li>
+                  </ul>
+                  <button class="course-cta-btn" onclick="openBooks('${course.custom_id}')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    Get This Course — ${course.price / 100} GHS
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+          container.appendChild(section);
+          indexOffset++;
+        });
+
+        // Trigger GSAP refresh if needed
+        if(window.ScrollTrigger) window.ScrollTrigger.refresh();
+
+      } catch(err) {
+        console.error("Failed to load custom courses from backend:", err);
+      }
+    });
+
   </script>
 
   <script type="module" src="/src/main.js"></script>

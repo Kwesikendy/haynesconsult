@@ -50,29 +50,37 @@ const loader = document.getElementById('loader');
 const loaderProgress = document.getElementById('loaderProgress');
 const loaderText = document.getElementById('loaderText');
 
-let progress = 0;
-const loadInterval = setInterval(() => {
-  progress += Math.random() * 18 + 6;
-  if (progress >= 100) {
-    progress = 100;
-    clearInterval(loadInterval);
-    setTimeout(hideLoader, 250);
-  }
-  loaderProgress.style.width = progress + '%';
-  loaderText.textContent = Math.floor(progress) + '%';
-}, 110);
+if (loader && loaderProgress && loaderText) {
+  let progress = 0;
+  const loadInterval = setInterval(() => {
+    progress += Math.random() * 18 + 6;
+    if (progress >= 100) {
+      progress = 100;
+      clearInterval(loadInterval);
+      setTimeout(hideLoader, 250);
+    }
+    loaderProgress.style.width = progress + '%';
+    loaderText.textContent = Math.floor(progress) + '%';
+  }, 110);
 
-function hideLoader() {
-  gsap.to(loader, {
-    opacity: 0,
-    duration: 0.7,
-    ease: 'power2.inOut',
-    onComplete: () => {
-      loader.style.display = 'none';
-      initHeroSlider();
-      initCanvas();
-    },
-  });
+  function hideLoader() {
+    gsap.to(loader, {
+      opacity: 0,
+      duration: 0.7,
+      ease: 'power2.inOut',
+      onComplete: () => {
+        loader.style.display = 'none';
+        initHeroSlider();
+        initCanvas();
+      },
+    });
+  }
+} else {
+  // Graceful fallback for pages without the loader overlay
+  setTimeout(() => {
+    initHeroSlider();
+    initCanvas();
+  }, 50);
 }
 
 /* ============================================================
@@ -327,12 +335,14 @@ function animateCounter(el) {
   });
 }
 
-ScrollTrigger.create({
-  trigger: '.hero__stats',
-  start: 'top 90%',
-  once: true,
-  onEnter: () => document.querySelectorAll('[data-count]').forEach(animateCounter),
-});
+if (document.querySelector('.hero__stats')) {
+  ScrollTrigger.create({
+    trigger: '.hero__stats',
+    start: 'top 90%',
+    once: true,
+    onEnter: () => document.querySelectorAll('[data-count]').forEach(animateCounter),
+  });
+}
 
 /* ============================================================
    SCROLL ANIMATIONS
@@ -356,22 +366,26 @@ Object.keys(animMap).forEach((type) => {
   });
 });
 
-gsap.to('.cta-section__content', {
-  opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
-  scrollTrigger: { trigger: '.cta-section', start: 'top 78%', once: true },
-});
+if (document.querySelector('.cta-section')) {
+  gsap.to('.cta-section__content', {
+    opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+    scrollTrigger: { trigger: '.cta-section', start: 'top 78%', once: true },
+  });
+}
 
-gsap.fromTo('.process__line',
-  { scaleY: 0 },
-  {
-    scaleY: 1, transformOrigin: 'top center', ease: 'none',
-    scrollTrigger: {
-      trigger: '.process__timeline',
-      start: 'top 80%', end: 'bottom 80%',
-      scrub: 2,
+if (document.querySelector('.process__timeline')) {
+  gsap.fromTo('.process__line',
+    { scaleY: 0 },
+    {
+      scaleY: 1, transformOrigin: 'top center', ease: 'none',
+      scrollTrigger: {
+        trigger: '.process__timeline',
+        start: 'top 80%', end: 'bottom 80%',
+        scrub: 2,
+      },
     },
-  },
-);
+  );
+}
 
 /* ============================================================
    SCROLL LISTENER
