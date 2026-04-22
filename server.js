@@ -3,7 +3,20 @@ import cors from 'cors';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import db, { initDb } from './db.js';
+import multer from 'multer';
+import path from 'path';
+import fs from 'fs';
 
+const uploadDir = path.join(process.cwd(), 'public', 'uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, uploadDir),
+  filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname.replace(/\s+/g, '-'))
+});
+const upload = multer({ storage });
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -116,6 +129,50 @@ app.post('/api/payments/record', (req, res) => {
       res.json({ success: true, message: 'Transaction recorded locally', transactionId: this.lastID });
     }
   );
+});
+
+// --- ADMIN COURSE UPLOAD ---
+app.post('/api/admin/courses', upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'pdfs', maxCount: 10 }]), (req, res) => {
+  const { title, category, description, price } = req.body;
+  if(!title || !req.files['cover'] || !req.files['pdfs']) {
+    return res.status(400).json({error: "Missing required files or fields."});
+  }
+
+  const coverUrl = '/uploads/' + req.files['cover'][0].filename;
+  const customId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  const priceValue = parseInt(price) * 100; // stored in pesewas for Paystack
+
+  db.run(
+    `INSERT INTO academy_items (title, category, description, image_url, price, custom_id, type, is_premium) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+    [title, category, description, coverUrl, priceValue, customId, 'Course', 1],
+    function(err) {
+      if (err) return res.status(500).json({ error: err.message });
+      const newCourseId = this.lastID;
+      
+      const statement = db.prepare(`INSERT INTO academy_books (course_id, name, file_url, cover_url) VALUES (?, ?, ?, ?)`);
+      req.files['pdfs'].forEach(file => {
+        const fileUrl = '/uploads/' + file.filename;
+        statement.run([newCourseId, file.originalname.replace('.pdf', ''), fileUrl, null]);
+      });
+      statement.finalize();
+      
+      res.json({ success: true });
+    }
+  );
+});
+
+app.get('/api/courses', (req, res) => {
+  db.all(`SELECT * FROM academy_items WHERE custom_id IS NOT NULL AND custom_id != ''`, [], (err, courses) => {
+    if (err) return res.status(500).json({ error: err.message });
+    db.all(`SELECT * FROM academy_books`, [], (err, books) => {
+       if (err) return res.status(500).json({ error: err.message });
+       const resCourses = courses.map(c => ({
+         ...c,
+         books: books.filter(b => b.course_id === c.id).map(b => ({ name: b.name, file: b.file_url, cover: b.cover_url }))
+       }));
+       res.json(resCourses);
+    });
+  });
 });
 
 const PORT = 3001;
