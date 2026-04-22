@@ -152,6 +152,14 @@
         <button type="submit" class="btn-submit" id="submitBtn">Publish Course</button>
       </form>
     </div>
+
+    <!-- MANAGE COURSES SECTION -->
+    <div class="admin-card" style="margin-top: 40px;">
+      <h2 style="font-family: var(--font-head); font-weight: 800; font-size: 24px; color: var(--navy); margin-bottom: 24px; letter-spacing:-0.02em;">Manage Deployed Courses</h2>
+      <div id="adminCourseList" style="display:flex; flex-direction:column; gap:16px;">
+        <p style="color:var(--royal); font-size:14px; font-weight:600;">Loading courses...</p>
+      </div>
+    </div>
   </div>
 
   <script type="module" src="/src/main.js"></script>
@@ -212,8 +220,57 @@
       } finally {
         btn.textContent = 'Publish Course';
         btn.disabled = false;
+        loadAdminCourses();
       }
     }
+
+    const fetchApiBase = window.location.hostname === 'localhost' || window.location.hostname.includes('127.0.0.1') ? 'http://localhost:3001' : '';
+
+    async function loadAdminCourses() {
+      try {
+        const res = await fetch(fetchApiBase + '/api/courses');
+        const courses = await res.json();
+        const container = document.getElementById('adminCourseList');
+        if (!container) return;
+        
+        if(courses.length === 0) {
+          container.innerHTML = '<p style="color:rgba(13,43,126,0.5); font-size:14px;">No custom deployed courses found.</p>';
+          return;
+        }
+
+        container.innerHTML = '';
+        courses.forEach(course => {
+          const row = document.createElement('div');
+          row.style.cssText = "display: flex; align-items: center; justify-content: space-between; padding: 16px; background: #f8fbff; border: 1px solid #eef5fc; border-radius: 12px;";
+          row.innerHTML = `
+            <div>
+              <p style="font-weight:700; color:var(--navy); font-size:15px; margin-bottom:4px;">${course.title}</p>
+              <p style="font-size:13px; color:rgba(13,43,126,0.6);">${course.category} — GHS ${course.price / 100}</p>
+            </div>
+            <button onclick="deleteCourse(${course.id})" style="background:var(--navy); color:white; border:none; padding:8px 16px; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; transition: background 0.2s;" onmouseover="this.style.background='#ef4444'" onmouseout="this.style.background='var(--navy)'">Delete</button>
+          `;
+          container.appendChild(row);
+        });
+      } catch(err) {
+        console.error("Failed loading courses", err);
+      }
+    }
+
+    async function deleteCourse(id) {
+      if(!confirm("Are you sure you want to permanently delete this course?")) return;
+      try {
+        const res = await fetch(fetchApiBase + '/api/admin/courses/' + id, { method: 'DELETE' });
+        if(res.ok) {
+          loadAdminCourses();
+        } else {
+          alert('Failed to delete course');
+        }
+      } catch(err) {
+        alert('Network error during deletion');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadAdminCourses);
   </script>
 </body>
 </html>

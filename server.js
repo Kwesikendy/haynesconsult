@@ -189,6 +189,17 @@ app.post('/api/admin/courses', upload.fields([{ name: 'cover', maxCount: 1 }, { 
   }
 });
 
+app.delete('/api/admin/courses/:id', (req, res) => {
+  const courseId = req.params.id;
+  db.run(`DELETE FROM academy_books WHERE course_id = ?`, [courseId], (err) => {
+    if (err) return res.status(500).json({ error: err.message });
+    db.run(`DELETE FROM academy_items WHERE id = ?`, [courseId], function(err) {
+      if (err) return res.status(500).json({ error: err.message });
+      res.json({ success: true, deleted: this.changes });
+    });
+  });
+});
+
 app.get('/api/courses', (req, res) => {
   db.all(`SELECT * FROM academy_items WHERE custom_id IS NOT NULL AND custom_id != ''`, [], (err, courses) => {
     if (err) return res.status(500).json({ error: err.message });
