@@ -9,79 +9,58 @@
   <link rel="stylesheet" href="/src/style.css" />
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
-    body { 
-      margin: 0; 
-      padding-top: 100px; 
-      background: #000;
-      color: #fff;
+    body { background: var(--body-bg); padding-top: 100px; }
+    
+    .login-hero {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 80vh;
+      text-align: center;
+      background: linear-gradient(160deg, #f0f8ff 0%, #e8f4fd 40%, #dceefb 100%);
     }
     
-    /* Premium Video Background */
-    .bg-video {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      z-index: -2;
-      opacity: 0.8;
+    .login-hero::before {
+      content: ''; position: absolute; width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(21,101,192,0.08) 0%, transparent 70%);
+      top: -200px; right: -100px; pointer-events: none;
     }
-    .bg-overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(4, 12, 35, 0.7); /* Deep intense navy tint */
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      z-index: -1;
+    
+    .login-hero::after {
+      content: ''; position: absolute; width: 400px; height: 400px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(21,101,192,0.05) 0%, transparent 70%);
+      bottom: -150px; left: -100px; pointer-events: none;
     }
 
-    /* Glass Login Portal */
-    .login-wrapper { 
-      display: flex; 
-      flex-direction: column; 
-      align-items: center; 
-      justify-content: center; 
-      min-height: 70vh; 
-      text-align: center; 
-      animation: fade-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
-    }
-    
-    .glass-login-card {
-      background: rgba(255, 255, 255, 0.05); 
-      backdrop-filter: blur(30px); 
-      -webkit-backdrop-filter: blur(30px);
-      border: 1px solid rgba(255, 255, 255, 0.15); 
+    .login-card { 
+      background: #ffffff; 
+      border: 1px solid rgba(13,43,126,0.06);
       padding: 56px 48px; 
       border-radius: 28px; 
-      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.05); 
+      box-shadow: 0 32px 80px rgba(13,43,126,0.12); 
       display: flex; 
       flex-direction: column; 
       align-items: center;
-      max-width: 440px;
+      max-width: 460px;
       width: 90%;
       position: relative;
-      overflow: hidden;
+      z-index: 10;
+      animation: fade-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
     }
     
-    .glass-login-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-    }
-
-    .login-wrapper h2 { 
+    .login-card h2 { 
       font-family: var(--font-head); 
-      color: #ffffff; 
-      font-size: 34px; 
+      color: var(--navy); 
+      font-size: 36px; 
       font-weight: 900; 
       margin-bottom: 16px; 
       letter-spacing: -0.02em;
     }
-    .login-wrapper p { 
-      color: rgba(255, 255, 255, 0.7); 
-      max-width: 380px; 
+    .login-card p { 
+      color: rgba(13,43,126,0.65); 
       line-height: 1.6; 
       font-size: 15px;
       margin-bottom: 40px; 
@@ -89,35 +68,25 @@
     
     .icon-wrapper {
       width: 64px; height: 64px;
-      background: rgba(255, 255, 255, 0.1);
+      background: #eef5fc;
       border-radius: 20px;
       display: flex; align-items: center; justify-content: center;
       margin-bottom: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     @keyframes fade-in { 
       from { opacity: 0; transform: translateY(20px); } 
       to { opacity: 1; transform: translateY(0); } 
     }
-    
-    /* Force Nav to adapt to dark background */
-    .nav { background: transparent !important; }
-    .nav.scrolled { background: rgba(4, 12, 35, 0.8) !important; backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); }
-    .nav__link { color: rgba(255,255,255,0.8); }
-    .nav__link:hover { color: #fff; }
-    .nav__logo-name { color: #fff; }
-    .nav__logo-sub { color: var(--sky); }
   </style>
 </head>
 <body>
 
-  <!-- Cinematic Background -->
-  <video class="bg-video" autoplay muted loop playsinline>
-    <source src="/heroo.mp4" type="video/mp4" />
-  </video>
-  <div class="bg-overlay"></div>
+  <!-- GLOBAL CURSOR ELEMENTS -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
 
+  <!-- NAVIGATION -->
   <nav class="nav" id="nav">
     <div class="nav__container">
       <a href="/" class="nav__logo" id="navLogo">
@@ -130,16 +99,29 @@
       <ul class="nav__links" id="navLinks">
         <li><a href="/" class="nav__link">Home</a></li>
         <li><a href="/academy.html" class="nav__link">Academy</a></li>
+        <li><a href="/login.html" class="nav__link" style="color:var(--royal); font-weight:700;">Login</a></li>
       </ul>
       <a href="/#contact" class="nav__cta btn btn--primary">Get Started</a>
+      <button class="nav__hamburger" id="hamburger" aria-label="Toggle Menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
 
+  <div class="nav__mobile" id="mobileMenu">
+    <button class="nav__mobile-close" id="mobileClose" aria-label="Close menu">&times;</button>
+    <ul class="nav__mobile-links">
+      <li><a href="/" class="nav__mobile-link">Home</a></li>
+      <li><a href="/academy.html" class="nav__mobile-link">Academy</a></li>
+      <li><a href="/login.html" class="nav__mobile-link" style="color:var(--royal); font-weight:700;">Login</a></li>
+    </ul>
+  </div>
+
   <!-- PUBLIC CUSTOMER LOGIN -->
-  <div class="login-wrapper">
-    <div class="glass-login-card">
+  <div class="login-hero">
+    <div class="login-card">
       <div class="icon-wrapper">
-         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--royal)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
       </div>
       <h2>Portal Login</h2>
       <p>Sign in with your Google account to access your cached profile and enable 1-Click checkouts across the platform.</p>
@@ -157,10 +139,11 @@
          data-shape="rectangular"
          data-logo_alignment="left">
       </div>
-      <div id="loadingStatus" style="display:none; color:var(--sky); font-weight:700; margin-top:24px;">Authenticating your session...</div>
+      <div id="loadingStatus" style="display:none; color:var(--royal); font-weight:700; margin-top:24px;">Authenticating your session...</div>
     </div>
   </div>
 
+  <script type="module" src="/src/main.js"></script>
   <script>
     /* Google JWT Auth Logic */
     function decodeJwtResponse(token) {
@@ -182,11 +165,6 @@
 
        // Set universal browser session for checkout
        localStorage.setItem('haynesUserEmail', verifiedEmail);
-
-       // Navigation scroll logic for transparent nav
-       window.addEventListener('scroll', () => {
-         document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
-       });
 
        // Stealth Router logic
        if (allowedAdmins.includes(verifiedEmail)) {

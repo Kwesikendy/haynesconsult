@@ -16,85 +16,63 @@
   </script>
 
   <style>
-    body { 
-      margin: 0; 
-      padding-top: 100px; 
-      background: #000;
-      color: #fff;
-    }
+    body { background: var(--body-bg); padding-top: 100px; }
     
-    /* Premium Video Background */
-    .bg-video {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      z-index: -2;
-      opacity: 0.6;
+    .admin-hero {
+      padding: 60px 20px;
+      text-align: center;
+      background: linear-gradient(160deg, #f0f8ff 0%, #e8f4fd 40%, #dceefb 100%);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: -40px;
     }
-    .bg-overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: radial-gradient(circle at center, rgba(4, 12, 35, 0.4) 0%, rgba(4, 12, 35, 0.9) 100%);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      z-index: -1;
+    .admin-hero::before {
+      content: ''; position: absolute; width: 400px; height: 400px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(21,101,192,0.1) 0%, transparent 70%);
+      top: -100px; right: -50px; pointer-events: none;
     }
+    .admin-hero h1 { font-family: var(--font-head); color: var(--navy); font-weight: 900; font-size: 42px; margin-bottom: 8px; letter-spacing: -0.02em; }
+    .admin-hero p { color: rgba(13,43,126,0.65); font-size: 16px; margin-bottom: 24px; max-width: 500px; margin-left: auto; margin-right: auto; }
 
-    .admin-container { max-width: 900px; margin: 0 auto; padding: 40px 20px; animation: fade-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; position: relative; z-index: 10; }
-    
-    .admin-header { margin-bottom: 40px; text-align: center; }
-    .admin-header h1 { font-family: var(--font-head); color: #fff; font-weight: 900; font-size: 42px; margin-bottom: 8px; letter-spacing: -0.02em; }
-    .admin-header p { color: rgba(255,255,255,0.7); font-size: 16px; margin-bottom: 20px; }
+    .admin-container { max-width: 900px; margin: 0 auto; padding: 40px 20px; position: relative; z-index: 10; animation: fade-in 0.5s ease-out; }
 
     .admin-card { 
-      background: rgba(255, 255, 255, 0.03); 
-      backdrop-filter: blur(40px); 
-      -webkit-backdrop-filter: blur(40px);
-      border: 1px solid rgba(255, 255, 255, 0.08); 
+      background: #ffffff; 
+      border: 1px solid rgba(13,43,126,0.06);
       padding: 50px; 
-      border-radius: 28px; 
-      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.05); 
+      border-radius: 24px; 
+      box-shadow: 0 24px 60px rgba(13,43,126,0.08); 
     }
     .form-group { margin-bottom: 28px; }
-    .form-group label { display: block; font-family: var(--font-head); font-weight: 700; color: #fff; font-size: 14px; margin-bottom: 10px; letter-spacing: 0.05em; text-transform: uppercase; opacity: 0.9; }
-    .form-group input[type="text"], .form-group input[type="number"], .form-group textarea { width: 100%; padding: 16px 20px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; font-family: var(--font-body); font-size: 15px; outline: none; transition: border-color 0.2s, background 0.2s; color: #fff; }
-    .form-group input:focus, .form-group textarea:focus { border-color: var(--sky); background: rgba(0,0,0,0.5); }
-    .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.3); }
+    .form-group label { display: block; font-family: var(--font-head); font-weight: 700; color: var(--navy); font-size: 14px; margin-bottom: 10px; letter-spacing: 0.05em; text-transform: uppercase; }
+    .form-group input[type="text"], .form-group input[type="number"], .form-group textarea { width: 100%; padding: 16px 20px; background: #fff; border: 2px solid #eef5fc; border-radius: 12px; font-family: var(--font-body); font-size: 15px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; color: var(--navy); }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--royal); box-shadow: 0 0 0 4px rgba(21,101,192,0.1); }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(13,43,126,0.3); }
     .form-group textarea { resize: vertical; min-height: 120px; }
     
-    .file-drop { border: 2px dashed rgba(255,255,255,0.2); border-radius: 12px; padding: 40px; text-align: center; background: rgba(255,255,255,0.02); cursor: pointer; transition: background 0.2s, border-color 0.2s; }
-    .file-drop:hover { background: rgba(255,255,255,0.05); border-color: var(--sky); }
+    .file-drop { border: 2px dashed #dceefb; border-radius: 12px; padding: 40px; text-align: center; background: #f8fbff; cursor: pointer; transition: background 0.2s, border-color 0.2s; }
+    .file-drop:hover { background: #eef5fc; border-color: var(--sky); }
     .file-drop input[type="file"] { display: none; }
-    .file-drop-text { color: var(--sky); font-family: var(--font-head); font-weight: 700; font-size: 14px; margin-top: 12px; }
-    .file-list { margin-top: 14px; font-size: 13px; color: #fff; text-align: center; opacity: 0.8; }
+    .file-drop-text { color: var(--royal); font-family: var(--font-head); font-weight: 700; font-size: 14px; margin-top: 12px; }
+    .file-list { margin-top: 14px; font-size: 13px; color: var(--navy); text-align: center; font-weight: 500; }
     
-    .btn-submit { background: var(--royal); color: white; border: none; padding: 18px 40px; font-family: var(--font-head); font-weight: 800; border-radius: 50px; cursor: pointer; font-size: 15px; margin-top: 20px; width: 100%; transition: background 0.2s, transform 0.2s; text-transform: uppercase; letter-spacing: 0.05em; }
-    .btn-submit:hover { background: var(--sky); transform: translateY(-2px); }
+    .btn-submit { background: var(--navy); color: white; border: none; padding: 18px 40px; font-family: var(--font-head); font-weight: 800; border-radius: 50px; cursor: pointer; font-size: 15px; margin-top: 20px; width: 100%; transition: background 0.2s, transform 0.2s, box-shadow 0.2s; text-transform: uppercase; letter-spacing: 0.05em; box-shadow: 0 8px 24px rgba(13,43,126,0.2); }
+    .btn-submit:hover { background: var(--royal); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(21,101,192,0.3); }
 
     .admin-pill {
-      display: inline-flex; align-items: center; background: rgba(255,255,255,0.1); color: #fff; padding: 6px 14px; border-radius: 50px; font-size: 13px; font-weight: 600; border: 1px solid rgba(255,255,255,0.1);
+      display: inline-flex; align-items: center; background: #fff; color: var(--navy); padding: 8px 16px; border-radius: 50px; font-size: 13px; font-weight: 600; border: 1px solid rgba(13,43,126,0.1); box-shadow: 0 4px 12px rgba(13,43,126,0.05); margin: 0 auto;
     }
     
     @keyframes fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-    /* Nav adjustments */
-    .nav { background: transparent !important; border-bottom: 1px solid rgba(255,255,255,0.05); }
-    .nav__link { color: rgba(255,255,255,0.8); }
-    .nav__link:hover { color: #fff; }
-    .nav__logo-name { color: #fff; }
-    .nav__logo-sub { color: var(--sky); }
   </style>
 </head>
 <body>
 
-  <!-- Cinematic Background -->
-  <video class="bg-video" autoplay muted loop playsinline>
-    <source src="/heroo2.mp4" type="video/mp4" />
-  </video>
-  <div class="bg-overlay"></div>
+  <!-- GLOBAL CURSOR ELEMENTS -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
 
+  <!-- NAVIGATION -->
   <nav class="nav" id="nav">
     <div class="nav__container">
       <a href="/" class="nav__logo" id="navLogo">
@@ -107,20 +85,32 @@
       <ul class="nav__links" id="navLinks">
         <li><a href="/academy.html" class="nav__link">View Academy</a></li>
       </ul>
+      <a href="/#contact" class="nav__cta btn btn--primary" style="opacity:0; pointer-events:none;">Padding</a>
+      <button class="nav__hamburger" id="hamburger" aria-label="Toggle Menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
+  
+  <div class="nav__mobile" id="mobileMenu">
+    <button class="nav__mobile-close" id="mobileClose" aria-label="Close menu">&times;</button>
+    <ul class="nav__mobile-links">
+      <li><a href="/academy.html" class="nav__mobile-link">View Academy</a></li>
+    </ul>
+  </div>
+
+  <div class="admin-hero">
+    <h1>Deploy New Course</h1>
+    <p>Upload a course, set the price, and attach premium PDFs to the Academy database.</p>
+    <div class="admin-pill">
+      <span style="width:8px;height:8px;background:#10b981;border-radius:50%;margin-right:8px;box-shadow: 0 0 6px rgba(16,185,129,0.5);"></span> 
+      Secure Session Active
+      <button onclick="localStorage.removeItem('haynesAdmin'); localStorage.removeItem('haynesUserEmail'); window.location.href='/login.html';" style="margin-left: 14px; background: transparent; border: 1px solid var(--sky); border-radius: 40px; color: var(--royal); cursor: pointer; font-size: 11px; font-weight: 700; padding: 4px 12px; transition: background 0.2s;" onmouseover="this.style.background='#eef5fc'" onmouseout="this.style.background='transparent'">Sign Out</button>
+    </div>
+  </div>
 
   <!-- THE SECURE ADMIN DASHBOARD -->
   <div class="admin-container" id="adminDashboard">
-    <div class="admin-header">
-      <h1>Deploy New Course</h1>
-      <p>Upload a course, set the price, and attach premium PDFs to the Academy database.</p>
-      <div class="admin-pill">
-        <span style="width:8px;height:8px;background:#10b981;border-radius:50%;margin-right:8px;box-shadow: 0 0 8px #10b981;"></span> Secure Session Active
-        <button onclick="localStorage.removeItem('haynesAdmin'); localStorage.removeItem('haynesUserEmail'); window.location.href='/login.html';" style="margin-left: 14px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 40px; color: #fff; cursor: pointer; font-size: 11px; padding: 4px 10px; transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">Sign Out</button>
-      </div>
-    </div>
-
     <div class="admin-card">
       <form id="uploadCourseForm" onsubmit="handleUpload(event)">
         <div class="form-group">
@@ -143,7 +133,7 @@
         <div class="form-group">
           <label>Cover Photo (JPG/PNG)</label>
           <div class="file-drop" onclick="document.getElementById('c_cover').click()">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--sky)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M20.4 14.5L16 10 4 20"/></svg>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--royal)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M20.4 14.5L16 10 4 20"/></svg>
             <div class="file-drop-text" id="cover_text">Click to browse cover image</div>
             <input type="file" id="c_cover" accept="image/*" onchange="updateFileText(this, 'cover_text')" required />
           </div>
@@ -152,7 +142,7 @@
         <div class="form-group">
           <label>Course Materials (PDFs)</label>
           <div class="file-drop" onclick="document.getElementById('c_pdfs').click()">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--sky)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--royal)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
             <div class="file-drop-text" id="pdfs_text">Click to upload multiple PDFs</div>
             <input type="file" id="c_pdfs" accept="application/pdf" multiple onchange="updateFileText(this, 'pdfs_text')" required />
             <div class="file-list" id="pdf_list"></div>
@@ -164,6 +154,7 @@
     </div>
   </div>
 
+  <script type="module" src="/src/main.js"></script>
   <script>
     /* Uploader Logic */
     function updateFileText(input, textId) {
