@@ -7,10 +7,17 @@
   <link rel="icon" type="image/png" href="/hc.png" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/src/style.css" />
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  
+  <!-- SECURITY ENFORCER -->
+  <script>
+    if (localStorage.getItem('haynesAdmin') !== 'true') {
+      window.location.href = '/login.html'; // Force redirect intruders immediately
+    }
+  </script>
+
   <style>
     body { background: var(--body-bg); padding-top: 100px; }
-    .admin-container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+    .admin-container { max-width: 900px; margin: 0 auto; padding: 40px 20px; animation: fade-in 0.3s ease-out; }
     .admin-header { margin-bottom: 40px; }
     .admin-header h1 { font-family: var(--font-head); color: var(--navy); font-weight: 900; font-size: 36px; }
     .admin-header p { color: rgba(13,43,126,0.6); font-size: 16px; margin-top: 8px; }
@@ -30,12 +37,6 @@
     
     .btn-submit { background: var(--navy); color: white; border: none; padding: 16px 32px; font-family: var(--font-head); font-weight: 800; border-radius: 50px; cursor: pointer; font-size: 15px; margin-top: 20px; transition: background 0.2s, transform 0.2s; }
     .btn-submit:hover { background: var(--royal); transform: translateY(-2px); }
-
-    /* Login Specific Styles */
-    .login-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 65vh; text-align: center; animation: fade-in 0.3s ease-out; }
-    .login-wrapper h2 { font-family: var(--font-head); color: var(--navy); font-size: 32px; font-weight: 900; margin-bottom: 12px; }
-    .login-wrapper p { color: rgba(13,43,126,0.6); max-width: 400px; line-height: 1.6; margin-bottom: 40px; }
-    .auth-error { display: none; background: #ffebee; color: #c62828; padding: 12px 20px; border-radius: 8px; margin-top: 24px; font-weight: 600; font-family: var(--font-body); border: 1px solid #ffcdd2; }
     
     @keyframes fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
   </style>
@@ -57,38 +58,14 @@
     </div>
   </nav>
 
-  <!-- GOOGLE AUTHENTICATION GATE -->
-  <div class="login-wrapper" id="googleGate">
-    <div style="background: white; padding: 48px; border-radius: 24px; box-shadow: 0 12px 30px rgba(13,43,126,0.06); display: flex; flex-direction: column; align-items: center;">
-      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--royal)" stroke-width="2" style="margin-bottom: 24px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      <h2>Admin Access</h2>
-      <p>Secure restricted entry. Please authenticate your identity using your authorized Haynes Consult email address.</p>
-      
-      <div id="g_id_onload"
-         data-client_id="534598717647-kjbvv0ttare4gcc228cppi0el3050nrv.apps.googleusercontent.com"
-         data-callback="handleGoogleResponse"
-         data-auto_prompt="false">
-      </div>
-      <div class="g_id_signin"
-         data-type="standard"
-         data-size="large"
-         data-theme="filled_blue"
-         data-text="sign_in_with"
-         data-shape="rectangular"
-         data-logo_alignment="left">
-      </div>
-      
-      <div class="auth-error" id="authErrorMsg"></div>
-    </div>
-  </div>
-
-  <!-- THE SECURE ADMIN DASHBOARD (HIDDEN DEFAULT) -->
-  <div class="admin-container" id="adminDashboard" style="display: none;">
+  <!-- THE SECURE ADMIN DASHBOARD -->
+  <div class="admin-container" id="adminDashboard">
     <div class="admin-header">
       <h1>Deploy New Course</h1>
       <p>Upload a course, set the price, and attach premium PDFs.</p>
       <div style="margin-top: 10px; display: inline-flex; align-items: center; background: #eef5fc; color: var(--navy); padding: 6px 12px; border-radius: 50px; font-size: 12px; font-weight: 600;">
-        <span style="width:8px;height:8px;background:#10b981;border-radius:50%;margin-right:8px;"></span> Verified Admin: <span id="verifiedEmail" style="margin-left:4px;color:var(--royal);"></span>
+        <span style="width:8px;height:8px;background:#10b981;border-radius:50%;margin-right:8px;"></span> Verified Admin Session Loaded
+        <button onclick="localStorage.removeItem('haynesAdmin'); localStorage.removeItem('haynesUserEmail'); window.location.href='/login.html';" style="margin-left: 12px; background: transparent; border: 1px solid var(--navy); border-radius: 4px; color: var(--navy); cursor: pointer; font-size: 10px; padding: 2px 6px;">Sign Out</button>
       </div>
     </div>
 
@@ -136,34 +113,6 @@
   </div>
 
   <script>
-    /* Google JWT Auth Logic */
-    function decodeJwtResponse(token) {
-        let base64Url = token.split('.')[1];
-        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        let jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-        return JSON.parse(jsonPayload);
-    }
-
-    function handleGoogleResponse(response) {
-       const responsePayload = decodeJwtResponse(response.credential);
-       const verifiedEmail = responsePayload.email;
-       const allowedAdmins = ["dogbeynathan7@gmail.com", "senyahmartin64@gmail.com"];
-
-       if (allowedAdmins.includes(verifiedEmail)) {
-           // Success: Unlock the dashboard
-           document.getElementById('googleGate').style.display = 'none';
-           document.getElementById('adminDashboard').style.display = 'block';
-           document.getElementById('verifiedEmail').textContent = verifiedEmail;
-       } else {
-           // Reject unauthorized users
-           const errorBox = document.getElementById('authErrorMsg');
-           errorBox.style.display = 'block';
-           errorBox.innerHTML = `Access Denied!<br><span style="font-size:13px;font-weight:400;margin-top:4px;display:block;">${verifiedEmail} is not authorized.</span>`;
-       }
-    }
-
     /* Uploader Logic */
     function updateFileText(input, textId) {
       const el = document.getElementById(textId);

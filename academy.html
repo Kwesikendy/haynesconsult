@@ -954,10 +954,18 @@
 
     function openBooks(courseId) {
       checkoutCourseId = courseId;
-      document.getElementById('emailModalOverlay').classList.add('active');
-      document.body.style.overflow = 'hidden';
-      // attempt to focus
-      setTimeout(() => document.getElementById('checkoutEmail').focus(), 100);
+      const cachedEmail = localStorage.getItem('haynesUserEmail');
+      
+      if (cachedEmail) {
+        // Fast 1click checkout bypass
+        document.getElementById('checkoutEmail').value = cachedEmail;
+        processPayment(); 
+      } else {
+        // Standard Guest Checkout 
+        document.getElementById('emailModalOverlay').classList.add('active');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => document.getElementById('checkoutEmail').focus(), 100);
+      }
     }
 
     function closeEmailModal() {
