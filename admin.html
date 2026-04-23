@@ -100,7 +100,14 @@
     .admin-pill {
       display: inline-flex; align-items: center; background: rgba(255,255,255,0.8); backdrop-filter: blur(10px);
       color: var(--navy); padding: 8px 16px; border-radius: 50px; font-size: 13px; font-weight: 600; 
-      border: 1px solid rgba(13,43,126,0.1); box-shadow: 0 4px 12px rgba(13,43,126,0.05); margin: 0 auto;
+      border: 1px solid rgba(13,43,126,0.1); box-shadow: 0 4px 12px rgba(13,43,126,0.05);
+      animation: pulse-border 2s infinite;
+    }
+    
+    @keyframes pulse-border {
+      0% { box-shadow: 0 0 0 0 rgba(16,185,129,0.3); }
+      70% { box-shadow: 0 0 0 6px rgba(16,185,129,0); }
+      100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); }
     }
 
     .course-item {
@@ -144,7 +151,11 @@
       <ul class="nav__links" id="navLinks">
         <li><a href="/academy.html" class="nav__link">View Academy</a></li>
       </ul>
-      <a href="/#contact" class="nav__cta btn btn--primary" style="opacity:0; pointer-events:none;">Padding</a>
+      <div class="admin-pill" style="margin-left: 12px; z-index: 100;">
+        <span style="width:8px;height:8px;background:#10b981;border-radius:50%;margin-right:8px;box-shadow: 0 0 6px rgba(16,185,129,0.5);"></span> 
+        Secure Session
+        <button onclick="localStorage.removeItem('haynesAdmin'); localStorage.removeItem('haynesUserEmail'); window.location.href='/login.html';" style="margin-left: 14px; background: transparent; border: 1px solid var(--sky); border-radius: 40px; color: var(--royal); cursor: pointer; font-size: 11px; font-weight: 700; padding: 4px 12px; transition: background 0.2s;" onmouseover="this.style.background='#eef5fc'" onmouseout="this.style.background='transparent'">Sign Out</button>
+      </div>
       <button class="nav__hamburger" id="hamburger" aria-label="Toggle Menu">
         <span></span><span></span><span></span>
       </button>
@@ -159,13 +170,8 @@
   </div>
 
   <div class="admin-hero">
-    <h1>Deploy New Course</h1>
-    <p>Upload a course, set the price, and attach premium PDFs to the Academy database.</p>
-    <div class="admin-pill">
-      <span style="width:8px;height:8px;background:#10b981;border-radius:50%;margin-right:8px;box-shadow: 0 0 6px rgba(16,185,129,0.5);"></span> 
-      Secure Session Active
-      <button onclick="localStorage.removeItem('haynesAdmin'); localStorage.removeItem('haynesUserEmail'); window.location.href='/login.html';" style="margin-left: 14px; background: transparent; border: 1px solid var(--sky); border-radius: 40px; color: var(--royal); cursor: pointer; font-size: 11px; font-weight: 700; padding: 4px 12px; transition: background 0.2s;" onmouseover="this.style.background='#eef5fc'" onmouseout="this.style.background='transparent'">Sign Out</button>
-    </div>
+    <h1 style="animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; transform: translateY(20px);">Deploy New Course</h1>
+    <p style="animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards; opacity: 0; transform: translateY(20px);">Upload a course, set the price, and attach premium PDFs to the Academy database.</p>
   </div>
 
   <!-- THE SECURE ADMIN DASHBOARD -->
