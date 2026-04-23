@@ -166,21 +166,26 @@ app.post('/api/admin/courses', upload.fields([{ name: 'cover', maxCount: 1 }, { 
         if (err) return res.status(500).json({ error: err.message });
         const newCourseId = this.lastID;
         
-        // Upload PDFs in parallel
-        const uploadPromises = req.files['pdfs'].map(async (file) => {
-          const pdfUpload = await uploadToCloudinary(file.buffer, 'haynes/pdfs');
-          return { name: file.originalname.replace('.pdf', ''), url: pdfUpload.secure_url };
-        });
+        try {
+          // Upload PDFs in parallel
+          const uploadPromises = req.files['pdfs'].map(async (file) => {
+            const pdfUpload = await uploadToCloudinary(file.buffer, 'haynes/pdfs');
+            return { name: file.originalname.replace('.pdf', ''), url: pdfUpload.secure_url };
+          });
 
-        const uploadedPdfs = await Promise.all(uploadPromises);
+          const uploadedPdfs = await Promise.all(uploadPromises);
 
-        const statement = db.prepare(`INSERT INTO academy_books (course_id, name, file_url, cover_url) VALUES (?, ?, ?, ?)`);
-        uploadedPdfs.forEach(pdf => {
-          statement.run([newCourseId, pdf.name, pdf.url, null]);
-        });
-        statement.finalize();
-        
-        res.json({ success: true });
+          const statement = db.prepare(`INSERT INTO academy_books (course_id, name, file_url, cover_url) VALUES (?, ?, ?, ?)`);
+          uploadedPdfs.forEach(pdf => {
+            statement.run([newCourseId, pdf.name, pdf.url, null]);
+          });
+          statement.finalize();
+          
+          res.json({ success: true });
+        } catch(pdfErr) {
+          console.error("Cloudinary PDF upload error:", pdfErr);
+          res.status(500).json({ error: "Cloudinary upload failed for PDFs (files might be too large)" });
+        }
       }
     );
   } catch(err) {
