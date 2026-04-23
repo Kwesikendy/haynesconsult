@@ -1078,31 +1078,52 @@
 
         let indexOffset = 5; // courses 1-4 are static
 
-        customCourses.forEach(course => {
-          // 1) Register into global COURSES dictionary so checkout framework works seamlessly
-          COURSES[course.custom_id] = {
-            label: course.category,
-            title: course.title,
-            price: course.price,
-            books: course.books || []
-          };
+        let indexOffset = 5; // offset for brand new courses
 
-          // 2) Build HTML matching the static courses visually
+        /* Check for existing hardcoded courses and dynamically update them from the Database */
+        customCourses.forEach(course => {
+          // Update global tracking
+          if (!COURSES[course.custom_id]) COURSES[course.custom_id] = {};
+          COURSES[course.custom_id].label = course.category;
+          COURSES[course.custom_id].title = course.title;
+          COURSES[course.custom_id].price = course.price;
+          if (course.books && course.books.length > 0) {
+            COURSES[course.custom_id].books = course.books;
+          }
+
+          // Look for an existing HTML block anchoring on the custom_id
+          const existingImage = document.querySelector(\`img[onclick="openBooks('\${course.custom_id}')"]\`);
+          if (existingImage) {
+            const wrap = existingImage.closest('.course-cover-wrap');
+            if (wrap) {
+              const titleEl = wrap.querySelector('.course-info-title');
+              if (titleEl) titleEl.innerHTML = course.title.replace('\\n', '<br/>');
+              const tagEl = wrap.querySelector('.course-tag');
+              if (tagEl) tagEl.textContent = course.category;
+              const descEl = wrap.querySelector('.course-info-desc');
+              if (descEl) descEl.textContent = course.description;
+              const ctaBtn = wrap.querySelector('.course-cta-btn');
+              if (ctaBtn) ctaBtn.innerHTML = \`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Get This Course — \${course.price / 100} GHS\`;
+            }
+            return; // Skip drawing a new section
+          }
+
+          // 2) Build HTML matching the static courses visually for NEW deployed courses
           const section = document.createElement('section');
           // Alternate the layout class
           section.className = (indexOffset % 2 === 0) ? 'academy-section academy-section--alt' : 'academy-section';
           const wrapReverseClass = (indexOffset % 2 === 0) ? 'course-cover-wrap--reverse' : '';
           
-          section.innerHTML = `
+          section.innerHTML = \`
             <div class="section-container">
-              <div class="course-cover-wrap ${wrapReverseClass}">
+              <div class="course-cover-wrap \${wrapReverseClass}">
                 <div class="course-cover-img-col">
-                  <div class="course-cover-badge">Course 0${indexOffset}</div>
+                  <div class="course-cover-badge">Course 0\${indexOffset}</div>
                   <img
-                    src="${course.image_url.startsWith('http') ? course.image_url : apiBase + course.image_url}"
-                    alt="${course.title}"
+                    src="\${course.image_url.startsWith('http') ? course.image_url : apiBase + course.image_url}"
+                    alt="\${course.title}"
                     class="course-cover-img"
-                    onclick="openBooks('${course.custom_id}')"
+                    onclick="openBooks('\${course.custom_id}')"
                   />
                   <p class="course-cover-click-hint">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
@@ -1111,21 +1132,21 @@
                 </div>
                 <!-- Info -->
                 <div class="course-cover-info-col">
-                  <span class="course-tag">${course.category}</span>
-                  <h2 class="course-info-title">${course.title.replace('\n', '<br/>')}</h2>
-                  <p class="course-info-desc">${course.description}</p>
+                  <span class="course-tag">\${course.category}</span>
+                  <h2 class="course-info-title">\${course.title.replace('\\n', '<br/>')}</h2>
+                  <p class="course-info-desc">\${course.description}</p>
                   <ul class="course-includes">
-                    <li>${course.title} (Full Guide)</li>
+                    <li>\${course.title} (Full Guide)</li>
                     <li>Exclusive Materials & Worksheets</li>
                   </ul>
-                  <button class="course-cta-btn" onclick="openBooks('${course.custom_id}')">
+                  <button class="course-cta-btn" onclick="openBooks('\${course.custom_id}')">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-                    Get This Course — ${course.price / 100} GHS
+                    Get This Course — \${course.price / 100} GHS
                   </button>
                 </div>
               </div>
             </div>
-          `;
+          \`;
           container.appendChild(section);
           indexOffset++;
         });

@@ -200,6 +200,23 @@ app.delete('/api/admin/courses/:id', (req, res) => {
   });
 });
 
+app.put('/api/admin/courses/:id', (req, res) => {
+  const courseId = req.params.id;
+  const { title, category, description, price } = req.body;
+  if(!title || !category || !description) return res.status(400).json({error: "Missing fields"});
+  
+  const priceValue = parseInt(price) * 100;
+  
+  db.run(
+    `UPDATE academy_items SET title = ?, category = ?, description = ?, price = ? WHERE id = ?`,
+    [title, category, description, priceValue, courseId],
+    function(err) {
+      if (err) return res.status(500).json({ error: err.message });
+      res.json({ success: true, updated: this.changes });
+    }
+  );
+});
+
 app.get('/api/courses', (req, res) => {
   db.all(`SELECT * FROM academy_items WHERE custom_id IS NOT NULL AND custom_id != ''`, [], (err, courses) => {
     if (err) return res.status(500).json({ error: err.message });
