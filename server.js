@@ -166,26 +166,21 @@ app.post('/api/admin/courses', upload.fields([{ name: 'cover', maxCount: 1 }, { 
         if (err) return res.status(500).json({ error: err.message });
         const newCourseId = this.lastID;
         
-        try {
-          // Upload PDFs in parallel
-          const uploadPromises = req.files['pdfs'].map(async (file) => {
-            const pdfUpload = await uploadToCloudinary(file.buffer, 'haynes/pdfs');
-            return { name: file.originalname.replace('.pdf', ''), url: pdfUpload.secure_url };
-          });
+        // Upload PDFs in parallel
+        const uploadPromises = req.files['pdfs'].map(async (file) => {
+          const pdfUpload = await uploadToCloudinary(file.buffer, 'haynes/pdfs');
+          return { name: file.originalname.replace('.pdf', ''), url: pdfUpload.secure_url };
+        });
 
-          const uploadedPdfs = await Promise.all(uploadPromises);
+        const uploadedPdfs = await Promise.all(uploadPromises);
 
-          const statement = db.prepare(`INSERT INTO academy_books (course_id, name, file_url, cover_url) VALUES (?, ?, ?, ?)`);
-          uploadedPdfs.forEach(pdf => {
-            statement.run([newCourseId, pdf.name, pdf.url, null]);
-          });
-          statement.finalize();
-          
-          res.json({ success: true });
-        } catch(pdfErr) {
-          console.error("Cloudinary PDF upload error:", pdfErr);
-          res.status(500).json({ error: "Cloudinary upload failed for PDFs (files might be too large)" });
-        }
+        const statement = db.prepare(`INSERT INTO academy_books (course_id, name, file_url, cover_url) VALUES (?, ?, ?, ?)`);
+        uploadedPdfs.forEach(pdf => {
+          statement.run([newCourseId, pdf.name, pdf.url, null]);
+        });
+        statement.finalize();
+        
+        res.json({ success: true });
       }
     );
   } catch(err) {
@@ -203,23 +198,6 @@ app.delete('/api/admin/courses/:id', (req, res) => {
       res.json({ success: true, deleted: this.changes });
     });
   });
-});
-
-app.put('/api/admin/courses/:id', (req, res) => {
-  const courseId = req.params.id;
-  const { title, category, description, price } = req.body;
-  if(!title || !category || !description) return res.status(400).json({error: "Missing fields"});
-  
-  const priceValue = parseInt(price) * 100;
-  
-  db.run(
-    `UPDATE academy_items SET title = ?, category = ?, description = ?, price = ? WHERE id = ?`,
-    [title, category, description, priceValue, courseId],
-    function(err) {
-      if (err) return res.status(500).json({ error: err.message });
-      res.json({ success: true, updated: this.changes });
-    }
-  );
 });
 
 app.get('/api/courses', (req, res) => {

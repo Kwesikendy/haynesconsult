@@ -129,14 +129,6 @@
     .btn-delete:hover {
       background: #ef4444; color: #fff; transform: scale(0.95); box-shadow: 0 4px 12px rgba(239,68,68,0.3);
     }
-    .btn-edit {
-      background: rgba(16,185,129,0.1); color: #10b981; border: 1px solid rgba(16,185,129,0.2); 
-      padding: 8px 16px; border-radius: 50px; font-size: 11px; font-family: var(--font-head); font-weight: 800; 
-      cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.1em; margin-right: 8px;
-    }
-    .btn-edit:hover {
-      background: #10b981; color: #fff; transform: scale(0.95); box-shadow: 0 4px 12px rgba(16,185,129,0.3);
-    }
     @keyframes fade-in-up { to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
@@ -186,7 +178,7 @@
   <div class="admin-container" id="adminDashboard">
     <!-- LEFT COLUMN: Form -->
     <div class="glass-card">
-      <h2 id="formTitle" style="font-family: var(--font-head); font-weight: 800; font-size: 24px; color: var(--navy); margin-bottom: 24px; letter-spacing:-0.02em;">Course Details</h2>
+      <h2 style="font-family: var(--font-head); font-weight: 800; font-size: 24px; color: var(--navy); margin-bottom: 24px; letter-spacing:-0.02em;">Course Details</h2>
       <form id="uploadCourseForm" onsubmit="handleUpload(event)">
         <div class="form-group">
           <label>Course Title</label>
@@ -254,47 +246,12 @@
       }
     }
 
-    const fetchApiBase = window.location.hostname === 'localhost' || window.location.hostname.includes('127.0.0.1') ? 'http://localhost:3001' : '';
-    let editingCourseId = null;
-    let loadedCourses = [];
-
     async function handleUpload(e) {
       e.preventDefault();
       const btn = document.getElementById('submitBtn');
-      btn.textContent = editingCourseId ? 'Saving...' : 'Uploading...';
+      btn.textContent = 'Uploading...';
       btn.disabled = true;
 
-      // EDIT FLOW (PUT)
-      if (editingCourseId) {
-        const payload = {
-          title: document.getElementById('c_title').value,
-          category: document.getElementById('c_category').value,
-          description: document.getElementById('c_desc').value,
-          price: document.getElementById('c_price').value
-        };
-        try {
-          const response = await fetch(fetchApiBase + '/api/admin/courses/' + editingCourseId, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-          });
-          if (response.ok) {
-            alert('Course Details Updated!');
-            cancelEdit();
-            loadAdminCourses();
-          } else {
-            alert('Error updating course.');
-          }
-        } catch (err) {
-          alert('Network error: ' + err.message);
-        } finally {
-          btn.textContent = 'Save Changes';
-          btn.disabled = false;
-        }
-        return;
-      }
-
-      // UPLOAD FLOW (POST)
       const formData = new FormData();
       formData.append('title', document.getElementById('c_title').value);
       formData.append('category', document.getElementById('c_category').value);
@@ -334,11 +291,12 @@
       }
     }
 
+    const fetchApiBase = window.location.hostname === 'localhost' || window.location.hostname.includes('127.0.0.1') ? 'http://localhost:3001' : '';
+
     async function loadAdminCourses() {
       try {
         const res = await fetch(fetchApiBase + '/api/courses');
         const courses = await res.json();
-        loadedCourses = courses;
         const container = document.getElementById('adminCourseList');
         if (!container) return;
         
@@ -360,10 +318,7 @@
                 <span style="font-size:13px; color:rgba(13,43,126,0.6); font-weight:600;">GHS ${course.price / 100}</span>
               </div>
             </div>
-            <div style="display:flex; gap: 8px;">
-              <button class="btn-edit" onclick="editCourse(${course.id})">Edit</button>
-              <button class="btn-delete" onclick="deleteCourse(${course.id})">Delete</button>
-            </div>
+            <button class="btn-delete" onclick="deleteCourse(${course.id})">Delete</button>
           `;
           container.appendChild(row);
         });
@@ -384,64 +339,6 @@
       } catch(err) {
         alert('Network error during deletion');
       }
-    }
-
-    function editCourse(id) {
-      const course = loadedCourses.find(c => c.id === id);
-      if(!course) return;
-      editingCourseId = id;
-      
-      document.getElementById('c_title').value = course.title;
-      document.getElementById('c_category').value = course.category;
-      document.getElementById('c_desc').value = course.description;
-      document.getElementById('c_price').value = course.price / 100;
-      
-      document.getElementById('formTitle').textContent = 'Editing: ' + course.title;
-      
-      // Disable file inputs for editing
-      document.getElementById('c_cover').disabled = true;
-      document.getElementById('c_pdfs').disabled = true;
-      document.getElementById('cover_text').textContent = '(Cover replacement locked during Edit)';
-      document.getElementById('pdfs_text').textContent = '(PDFs replacement locked during Edit)';
-      
-      const btn = document.getElementById('submitBtn');
-      btn.textContent = 'Save Changes';
-      
-      let cancelBtn = document.getElementById('cancelEditBtn');
-      if(!cancelBtn) {
-        cancelBtn = document.createElement('button');
-        cancelBtn.type = 'button';
-        cancelBtn.id = 'cancelEditBtn';
-        cancelBtn.className = 'btn-edit';
-        cancelBtn.style.marginLeft = '12px';
-        cancelBtn.style.color = 'var(--navy)';
-        cancelBtn.style.borderColor = 'rgba(13,43,126,0.2)';
-        cancelBtn.style.background = 'transparent';
-        cancelBtn.textContent = 'Cancel';
-        cancelBtn.onclick = cancelEdit;
-        btn.parentNode.appendChild(cancelBtn);
-      }
-      cancelBtn.style.display = 'inline-flex';
-      
-      window.scrollTo({top: 0, behavior: 'smooth'});
-    }
-
-    function cancelEdit(e) {
-      if(e) e.preventDefault();
-      editingCourseId = null;
-      document.getElementById('uploadCourseForm').reset();
-      document.getElementById('formTitle').textContent = 'Course Details';
-      
-      document.getElementById('c_cover').disabled = false;
-      document.getElementById('c_pdfs').disabled = false;
-      document.getElementById('cover_text').textContent = 'Click to browse cover image';
-      document.getElementById('pdfs_text').textContent = 'Click to browse multiple PDFs';
-      
-      const btn = document.getElementById('submitBtn');
-      btn.textContent = 'Publish Course';
-      
-      const cancelBtn = document.getElementById('cancelEditBtn');
-      if(cancelBtn) cancelBtn.style.display = 'none';
     }
 
     document.addEventListener('DOMContentLoaded', loadAdminCourses);
