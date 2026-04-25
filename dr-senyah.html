@@ -304,7 +304,25 @@
       </a>
       <ul class="nav__links" id="navLinks">
         <li><a href="/" class="nav__link">Home</a></li>
-        <li><a href="/about.html" class="nav__link">About</a></li>
+        <li class="nav__dropdown-wrap">
+          <a href="#" class="nav__link nav__dropdown-trigger">
+            About <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style="margin-left:4px;vertical-align:middle;"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="nav__dropdown">
+            <a href="/about.html" class="nav__dropdown-item">
+              <span class="nav__dropdown-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              </span>
+              <span>About Us</span>
+            </a>
+            <a href="/dr-senyah.html" class="nav__dropdown-item">
+              <span class="nav__dropdown-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </span>
+              <span>Dr. Senyah</span>
+            </a>
+          </div>
+        </li>
         <li class="nav__dropdown-wrap">
           <a href="#" class="nav__link nav__dropdown-trigger">
             Services <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style="margin-left:4px;vertical-align:middle;"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -360,7 +378,13 @@
 
       <ul class="nav__mobile-links">
         <li><a href="/" class="nav__mobile-link">Home</a></li>
-        <li><a href="/about.html" class="nav__mobile-link">About</a></li>
+        <li style="width:100%; text-align:center;">
+          <div class="nav__mobile-group-label">About</div>
+          <div class="nav__mobile-sub-links">
+            <a href="/about.html" class="nav__mobile-sub-link">About Us</a>
+            <a href="/dr-senyah.html" class="nav__mobile-sub-link">Dr. Senyah</a>
+          </div>
+        </li>
         <li><a href="/academy.html" class="nav__mobile-link">Academy</a></li>
         <li><a href="/case-studies.html" class="nav__mobile-link">Case Studies</a></li>
 
