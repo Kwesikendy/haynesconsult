@@ -3,76 +3,74 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About Us - Haynes Consult</title>
+  <meta name="description" content="Haynes Consult Blog - Insights, strategies, and updates on AI, automation, and digital growth." />
+  <title>Blog - Haynes Consult</title>
   <link rel="icon" type="image/png" href="/hc.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/src/style.css" />
   <style>
-    /* Hero */
-    .about-hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex; align-items: center;
-      background: linear-gradient(135deg, #f8f9fc 0%, #e8f4fc 100%);
-      padding-top: 150px; padding-bottom: 120px;
-      overflow: hidden;
+    .sp-hero {
+      min-height: 52vh;
+      background: linear-gradient(150deg, #ffffff 0%, #eaf4fb 40%, #d6ecfb 70%, #f0f8ff 100%);
+      display: flex; align-items: center; position: relative; overflow: hidden;
+      padding-top: 140px; padding-bottom: 80px;
     }
-    .about-title {
-      font-family: var(--font-head);
-      font-size: clamp(40px, 6vw, 64px);
-      color: var(--navy);
-      font-weight: 900;
-      margin-bottom: 16px;
+    .sp-hero__blob-1 {
+      position: absolute; width: 420px; height: 420px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(21,101,192,0.18) 0%, transparent 70%);
+      top: -100px; right: -80px; pointer-events: none;
     }
-    /* Cards */
-    .values-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-      margin-top: 40px;
+    .sp-hero__blob-2 {
+      position: absolute; width: 300px; height: 300px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(61,168,245,0.15) 0%, transparent 70%);
+      bottom: -60px; left: -60px; pointer-events: none;
     }
-    .val-card {
-      padding: 40px 30px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      box-shadow: var(--shadow-soft);
+    .sp-back-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-head); font-size: 13px; font-weight: 700;
+      color: var(--royal); margin-bottom: 28px; transition: gap 0.2s;
     }
-    .val-card h3 {
-      font-family: var(--font-head);
-      font-size: 22px;
-      color: var(--navy);
-      margin-bottom: 12px;
-    }
-    .val-card p {
-      color: var(--text);
-      line-height: 1.6;
-    }
-    .mission-vision-wrapper {
-      display: flex; 
-      gap: 40px; 
-      flex-wrap: wrap; 
-      margin-bottom: 80px;
-    }
-    .mv-box {
-      flex: 1;
-      min-width: 300px;
-      background: #fff;
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: var(--shadow-lift);
-      border-top: 4px solid var(--royal);
-    }
-    .mv-box.vision { border-top-color: var(--sky); }
+    .sp-back-btn:hover { gap: 14px; }
+    .sp-hero__eyebrow { color: var(--royal); font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 14px; }
+    .sp-hero__title { font-family: var(--font-head); font-size: clamp(36px, 6vw, 72px); font-weight: 900; color: var(--navy); line-height: 1.1; margin-bottom: 20px; }
+    .sp-hero__title span { background: linear-gradient(135deg, var(--royal), var(--sky)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .sp-hero__sub { font-size: 18px; color: rgba(13,43,126,0.6); max-width: 540px; line-height: 1.7; margin-bottom: 36px; }
+    .sp-body { padding: 80px 0; background: var(--white); }
+    .sp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+    .sp-section { padding: 80px 0; }
+    .sp-section--alt { background: linear-gradient(180deg, #f5f9ff, #eaf4fb); }
+    .sp-section-title { font-family: var(--font-head); font-size: clamp(24px, 4vw, 40px); font-weight: 800; color: var(--navy); margin-bottom: 20px; }
+    .sp-section-body { font-size: 16px; color: rgba(13,43,126,0.65); line-height: 1.8; margin-bottom: 20px; }
+    .sp-list { display: flex; flex-direction: column; gap: 14px; margin-top: 24px; }
+    .sp-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: rgba(13,43,126,0.75); line-height: 1.6; }
+    .sp-list li::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--royal); flex-shrink: 0; margin-top: 7px; box-shadow: 0 0 8px rgba(21,101,192,0.4); }
+    .sp-packages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .sp-package { padding: 36px 28px; position: relative; }
+    .sp-package--featured { border-color: rgba(21,101,192,0.3) !important; }
+    .sp-package-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--navy), var(--royal)); color: white; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; padding: 4px 16px; border-radius: 50px; white-space: nowrap; }
+    .sp-package-name { font-family: var(--font-head); font-size: 20px; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
+    .sp-package-price { font-family: var(--font-head); font-size: 32px; font-weight: 900; color: var(--royal); margin-bottom: 4px; }
+    .sp-package-price span { font-size: 14px; font-weight: 500; color: rgba(13,43,126,0.5); }
+    .sp-package-desc { font-size: 13px; color: rgba(13,43,126,0.55); margin-bottom: 20px; line-height: 1.6; }
+    .sp-package-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+    .sp-package-features li { font-size: 13px; color: rgba(13,43,126,0.7); display: flex; align-items: center; gap: 10px; }
+    .sp-package-features li::before { content: '✓'; color: var(--royal); font-weight: 700; }
+    .sp-tech { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+    .sp-tech-tag { font-family: var(--font-head); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: var(--royal); background: rgba(21,101,192,0.07); border: 1px solid rgba(21,101,192,0.18); border-radius: 50px; padding: 6px 16px; }
+    .sp-faq { display: flex; flex-direction: column; gap: 16px; max-width: 720px; margin: 0 auto; }
+    .sp-faq-item { background: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.9); border-radius: 16px; padding: 24px 28px; box-shadow: 0 4px 20px rgba(13,43,126,0.06); }
+    .sp-faq-q { font-family: var(--font-head); font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+    .sp-faq-a { font-size: 14px; color: rgba(13,43,126,0.65); line-height: 1.7; }
+    @media (max-width: 900px) { .sp-grid { grid-template-columns: 1fr; gap: 40px; } .sp-packages { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; } }
   </style>
 </head>
 <body>
   <div class="cursor" id="cursor"></div>
   <div class="cursor-follower" id="cursorFollower"></div>
 
-
-  <!-- NAVIGATION -->
+  <!-- NAV -->
   <nav class="nav" id="nav">
     <div class="nav__container">
       <a href="/" class="nav__logo" id="navLogo">
@@ -137,10 +135,9 @@
         <li><a href="/academy.html" class="nav__link">Academy</a></li>
         <li><a href="/blog/index.html" class="nav__link">Blog</a></li>
         <li><a href="/case-studies.html" class="nav__link">Case Studies</a></li>
-        <li><a href="/login.html" class="nav__link" style="color:var(--royal); font-weight:700;">Login</a></li>
-        <li><a href="#contact" class="nav__link" data-nav="contact">Contact</a></li>
+        <li><a href="/#contact" class="nav__link" data-nav="contact">Contact</a></li>
       </ul>
-      <a href="#contact" class="nav__cta btn btn--primary">Get Started</a>
+      <a href="/#contact" class="nav__cta btn btn--primary">Get Started</a>
       <button class="nav__hamburger" id="hamburger" aria-label="Toggle Menu">
         <span></span><span></span><span></span>
       </button>
@@ -191,58 +188,93 @@
       </ul>
     </div>
 
-  <section class="about-hero">
-    <div class="hero__blob hero__blob--1 animate-float" style="opacity:0.3;"></div>
-    <div class="section-container" style="position: relative; z-index: 2;">
-      <div class="section-badge" style="margin-top: 40px;">Who We Are</div>
-      <h1 class="about-title">Let's <span class="text-accent">Digitize.</span></h1>
-      <p class="section-subtitle" style="max-width: 600px;">We simplify the complex. Haynes Consult is a premier digital strategy and technology execution firm dedicated to helping businesses scale through innovation.</p>
+  <!-- HERO -->
+  <section class="sp-hero">
+    <div class="sp-hero__blob-1"></div>
+    <div class="sp-hero__blob-2"></div>
+    <div class="section-container">
+      <a href="/#services" class="sp-back-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to Services
+      </a>
+      <p class="sp-hero__eyebrow">Insights & Updates</p>
+      <h1 class="sp-hero__title">Our Latest<br /><span>Insights</span></h1>
+      <p class="sp-hero__sub">Stay updated with the latest strategies, case studies, and insights in AI, automation, and digital growth from Haynes Consult.</p>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;">
+        <a href="#articles" class="btn btn--primary btn--lg btn--glow">Read Articles</a>
+        <a href="/#contact" class="btn btn--ghost btn--lg">Get in Touch</a>
+      </div>
     </div>
   </section>
 
-  <section class="section-container" style="padding: 80px 20px;">
-    
-    <div class="mission-vision-wrapper">
-      <div class="mv-box mission">
-        <h3 style="font-family: var(--font-head); font-size: 28px; color: var(--navy); margin-bottom: 16px;">Our Mission</h3>
-        <p style="color: var(--text); line-height: 1.7; font-size: 16px;">
-          To empower businesses with actionable intelligence, seamless technology integration, and powerful automated workflows that eliminate friction and rapidly accelerate long-term growth.
-        </p>
+  <!-- BLOG ARTICLES -->
+  <section class="sp-section" id="articles">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="section-badge">Latest News</div>
+        <h2 class="sp-section-title">Articles &amp; Resources</h2>
+        <p class="section-subtitle">Discover strategies and insights to grow your business.</p>
       </div>
-      <div class="mv-box vision">
-        <h3 style="font-family: var(--font-head); font-size: 28px; color: var(--navy); margin-bottom: 16px;">Our Vision</h3>
-        <p style="color: var(--text); line-height: 1.7; font-size: 16px;">
-          To become the leading digital transformation partner across emerging markets, acting as the catalyst that bridges the gap between traditional operations and the limitless potential of AI.
-        </p>
+      
+      <div class="sp-packages" id="blogGrid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+        <div style="text-align:center; padding: 40px 0; grid-column: 1 / -1;">
+          <p style="color:var(--royal); font-size:16px; font-weight:600; font-family: var(--font-head);">Loading articles...</p>
+        </div>
       </div>
     </div>
+  </section>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const fetchApiBase = window.location.hostname === 'localhost' || window.location.hostname.includes('127.0.0.1') ? 'http://localhost:3001' : '';
+        const res = await fetch(fetchApiBase + '/api/blog');
+        const blogs = await res.json();
+        
+        const grid = document.getElementById('blogGrid');
+        
+        if(blogs.length === 0) {
+          grid.innerHTML = `<div style="text-align:center; padding: 40px 0; grid-column: 1 / -1;">
+            <p style="color:rgba(13,43,126,0.6); font-size:16px;">More insights coming soon.</p>
+          </div>`;
+          return;
+        }
 
-    <div style="text-align: center; margin-bottom: 60px;">
-      <h2 style="font-family: var(--font-head); font-size: 36px; color: var(--navy);">Our Core Values</h2>
-      <p style="color: var(--caption); max-width: 600px; margin: 16px auto;">What drives us everyday to deliver excellence.</p>
-    </div>
-    
-    <div class="values-grid">
-      <div class="val-card">
-        <h3>Precision</h3>
-        <p>We believe in data-backed decisions. Every piece of code, every marketing campaign, and every automation pipeline is engineered deliberately without guesswork.</p>
-      </div>
-      <div class="val-card">
-        <h3>Innovation</h3>
-        <p>The digital landscape evolves daily. We stay ahead of the curve, integrating state-of-the-art AI so our clients have unshakeable competitive advantages.</p>
-      </div>
-      <div class="val-card">
-        <h3>Transparency</h3>
-        <p>No jargon. No hidden complexities. We act as true partners, explaining our transformative processes in ways that empower our clients to own their success.</p>
-      </div>
-    </div>
+        grid.innerHTML = '';
+        blogs.forEach(blog => {
+          const card = document.createElement('div');
+          card.className = 'glass-card sp-package hover-swivel';
+          card.innerHTML = `
+            <div style="background-image: url('${blog.image_url}'); background-size: cover; background-position: center; height: 180px; border-radius: 8px; margin-bottom: 20px; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);">
+            </div>
+            <div class="sp-tech-tag" style="display: inline-block; margin-bottom: 12px; background: rgba(217,119,6,0.1); color: #d97706; border-color: rgba(217,119,6,0.2);">${blog.category}</div>
+            <h3 class="sp-package-name" style="font-size: 18px;">${blog.title}</h3>
+            <p class="sp-package-desc" style="margin-bottom: 16px;">${blog.description}</p>
+            <a href="#" class="btn btn--ghost" style="width: 100%;">Read Article</a>
+          `;
+          grid.appendChild(card);
+        });
+      } catch (err) {
+        console.error("Failed to load blogs", err);
+      }
+    });
+  </script>
 
-    <div style="margin-top: 100px; padding: 60px; background: var(--navy); border-radius: 30px; text-align: center; color: white;">
-      <h2 style="font-family: var(--font-head); font-size: 32px; margin-bottom: 20px;">Led by Authority</h2>
-      <p style="opacity: 0.9; max-width: 600px; margin: 0 auto 30px;">Discover the philosophical backbone and strategic insight that powers Haynes Consult's innovative approach.</p>
-      <a href="/dr-senyah.html" class="btn btn--primary" style="background: white; color: var(--navy);">Meet Dr. Senyah</a>
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-section__bg"></div>
+    <div class="cta-section__orbs"><div class="cta-section__orb cta-section__orb--1"></div><div class="cta-section__orb cta-section__orb--2"></div></div>
+    <div class="section-container">
+      <div class="cta-section__content" style="opacity:1;transform:none;">
+        <p class="cta-section__eyebrow">Ready to Get Started?</p>
+        <h2 class="cta-section__title">Let's Build Your<br/><span class="text-sky">Dream Website</span></h2>
+        <p class="cta-section__body">Book a free consultation and we'll show you exactly what your new website will look like.</p>
+        <div class="cta-section__actions">
+          <a href="/#contact" class="btn btn--white btn--lg">Book Free Consultation</a>
+          <a href="/" class="btn btn--outline-white btn--lg">← Back to Home</a>
+        </div>
+      </div>
     </div>
-
   </section>
 
     <!-- FOOTER -->
@@ -306,6 +338,7 @@
     </div>
   </footer>
 
+  
 <script type="module" src="/src/main.js"></script>
 </body>
 </html>

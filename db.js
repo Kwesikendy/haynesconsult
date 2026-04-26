@@ -59,6 +59,31 @@ export function initDb() {
       status TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )`);
+
+    // Blog Posts
+    db.run(`CREATE TABLE IF NOT EXISTS blog_posts (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT,
+      category TEXT,
+      description TEXT,
+      content TEXT,
+      image_url TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )`, () => {
+      db.get('SELECT COUNT(*) as count FROM blog_posts', (err, row) => {
+        if (row && row.count === 0) {
+          const stmt = db.prepare('INSERT INTO blog_posts (title, category, description, content, image_url) VALUES (?, ?, ?, ?, ?)');
+          stmt.run(
+            "How AI is Transforming Healthcare Administration", 
+            "AI & Automation", 
+            "Discover how clinics are using AI to reduce no-shows, automate patient intake, and streamline billing processes.", 
+            "<p>Artificial Intelligence is no longer just a buzzword; it is actively transforming how healthcare facilities operate...</p>", 
+            "/logo.jpeg"
+          );
+          stmt.finalize();
+        }
+      });
+    });
   });
 }
 

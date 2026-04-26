@@ -214,6 +214,45 @@ app.get('/api/courses', (req, res) => {
   });
 });
 
+// --- BLOG API ---
+app.get('/api/blog', (req, res) => {
+  db.all(`SELECT * FROM blog_posts ORDER BY created_at DESC`, [], (err, posts) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(posts);
+  });
+});
+
+app.post('/api/admin/blog', upload.single('cover'), async (req, res) => {
+  try {
+    const { title, category, description, content } = req.body;
+    if (!title || !category || !description || !content || !req.file) {
+      return res.status(400).json({ error: "Missing required fields or cover image." });
+    }
+
+    const coverUpload = await uploadToCloudinary(req.file.buffer, 'haynes/blogs');
+    const coverUrl = coverUpload.secure_url;
+
+    db.run(
+      `INSERT INTO blog_posts (title, category, description, content, image_url) VALUES (?, ?, ?, ?, ?)`,
+      [title, category, description, content, coverUrl],
+      function(err) {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json({ success: true, postId: this.lastID });
+      }
+    );
+  } catch(err) {
+    console.error("Blog upload error:", err);
+    res.status(500).json({ error: "Failed to upload to cloud" });
+  }
+});
+
+app.delete('/api/admin/blog/:id', (req, res) => {
+  db.run(`DELETE FROM blog_posts WHERE id = ?`, [req.params.id], function(err) {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ success: true, deleted: this.changes });
+  });
+});
+
 const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Express server running on http://localhost:${PORT}`);
