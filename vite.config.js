@@ -18,7 +18,7 @@ export default defineConfig({
         digitalMkt: resolve(__dirname, 'services/digital-marketing.html'),
         digitalSvc: resolve(__dirname, 'services/digital-services.html'),
         login: resolve(__dirname, 'login.html'),
-        admin: resolve(__dirname, 'admin.html')
+        admin: resolve(__dirname, 'haynes-hq-secure-portal.html')
       }
     }
   },
