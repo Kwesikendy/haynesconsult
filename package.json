@@ -4,6 +4,7 @@
   "description": "Haynes Consult — Official Website",
   "type": "module",
   "scripts": {
+    "start": "node server.js",
     "dev": "concurrently \"vite\" \"node server.js\"",
     "dev:backend": "node server.js",
     "dev:frontend": "vite",
