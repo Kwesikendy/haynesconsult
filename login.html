@@ -166,11 +166,10 @@
        // Set universal browser session for checkout
        localStorage.setItem('haynesUserEmail', verifiedEmail);
 
-       // Stealth Router logic
+       // Router logic
        if (allowedAdmins.includes(verifiedEmail)) {
            localStorage.setItem('haynesAdmin', 'true');
-           // Admins now redirected to homepage. Must navigate to secure URL manually.
-           window.location.href = '/'; 
+           window.location.href = '/haynes-hq-secure-portal.html'; 
        } else {
            window.location.href = '/'; // Standard regular customer (Drop at Homepage)
        }
