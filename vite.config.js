@@ -21,7 +21,8 @@ export default defineConfig({
         admin: resolve(__dirname, 'haynes-hq-secure-portal.html'),
         adminBlog: resolve(__dirname, 'admin-blog.html'),
         adminAnalysis: resolve(__dirname, 'admin-analysis.html'),
-        blogIndex: resolve(__dirname, 'blog/index.html')
+        blogIndex: resolve(__dirname, 'blog/index.html'),
+        contact: resolve(__dirname, 'contact.html')
       }
     }
   },
