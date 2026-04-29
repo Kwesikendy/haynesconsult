@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -344,20 +344,93 @@
       transform: translateY(-2px);
     }
 
+    /* ── Responsive: Tablet ── */
     @media (max-width: 900px) {
       .course-cover-wrap,
       .course-cover-wrap--reverse {
         grid-template-columns: 1fr;
+        gap: 36px;
       }
-      .course-cover-wrap--reverse .course-cover-img-col,
-      .course-cover-wrap--reverse .course-cover-info-col { order: unset; }
-      .course-cover-img { max-width: 280px; margin: 0 auto; }
+      .course-cover-wrap--reverse .course-cover-img-col { order: 1; }
+      .course-cover-wrap--reverse .course-cover-info-col { order: 2; }
+      .course-cover-img { max-width: 300px; margin: 0 auto; }
       .books-drawer { padding: 28px 20px; }
+      .academy-section { padding: 60px 0; }
+    }
+
+    /* ── Responsive: Mobile ── */
+    @media (max-width: 640px) {
+      .academy-hero {
+        padding-top: 120px;
+        padding-bottom: 64px;
+      }
+      .academy-section {
+        padding: 48px 0;
+      }
+      .academy-section__header {
+        margin-bottom: 32px;
+      }
+      .course-cover-wrap,
+      .course-cover-wrap--reverse {
+        gap: 28px;
+      }
+      .course-cover-img {
+        max-width: 240px;
+        border-radius: 16px;
+      }
+      .course-cover-info-col {
+        padding-top: 0;
+      }
+      .course-info-title {
+        font-size: clamp(24px, 7vw, 34px);
+        margin-bottom: 14px;
+      }
+      .course-info-desc {
+        font-size: 15px;
+        margin-bottom: 22px;
+      }
+      .course-tag { margin-bottom: 12px; }
+      .course-includes { margin-bottom: 24px; }
+      .course-includes li { font-size: 14px; }
+      .course-cta-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 16px 24px;
+        font-size: 13px;
+      }
+      .books-drawer {
+        padding: 24px 16px;
+        border-radius: 20px 20px 0 0;
+      }
+      .books-drawer__header { margin-bottom: 24px; }
+      .books-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 16px;
+      }
+      .book-card { padding: 18px 14px; }
+      #emailModalDrawer {
+        padding: 36px 20px !important;
+        border-radius: 20px 20px 0 0 !important;
+        max-width: 100% !important;
+      }
+    }
+
+    /* ── Responsive: Small phones ── */
+    @media (max-width: 480px) {
+      .course-cover-img { max-width: 200px; }
+      .course-cta-btn {
+        font-size: 12px;
+        padding: 14px 20px;
+      }
+      .books-grid { grid-template-columns: 1fr 1fr; }
+      .book-card__get-btn {
+        font-size: 11px;
+        padding: 8px 14px;
+      }
+      .course-cover-click-hint { font-size: 12px; }
     }
   </style>
   <script src="https://js.paystack.co/v1/inline.js"></script>
-</head>
-<body>
   <div class="cursor" id="cursor"></div>
   <div class="cursor-follower" id="cursorFollower"></div>
 
