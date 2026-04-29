@@ -253,6 +253,73 @@ app.delete('/api/admin/blog/:id', (req, res) => {
   });
 });
 
+app.get('/api/admin/analysis', (req, res) => {
+  db.get(`SELECT COUNT(*) as count FROM users`, (err, userRow) => {
+    if (err) return res.status(500).json({ error: err.message });
+
+    db.get(`SELECT SUM(amount) as totalRevenue, COUNT(*) as totalSales FROM transactions WHERE status='success' OR status='completed'`, (err, transRow) => {
+      if (err) return res.status(500).json({ error: err.message });
+
+      db.get(`SELECT COUNT(*) as count FROM academy_items`, (err, courseRow) => {
+        if (err) return res.status(500).json({ error: err.message });
+
+        db.get(`SELECT COUNT(*) as count FROM blog_posts`, (err, blogRow) => {
+          if (err) return res.status(500).json({ error: err.message });
+
+          db.all(`SELECT email, amount, status, created_at FROM transactions ORDER BY created_at DESC LIMIT 5`, (err, recentTrans) => {
+            if (err) return res.status(500).json({ error: err.message });
+
+            // Monthly revenue for last 6 months
+            db.all(`
+              SELECT strftime('%Y-%m', created_at) as month, SUM(amount) as total
+              FROM transactions
+              WHERE (status='success' OR status='completed')
+                AND created_at >= date('now', '-6 months')
+              GROUP BY month ORDER BY month ASC
+            `, (err, monthlyRevenue) => {
+              if (err) monthlyRevenue = [];
+
+              // Monthly transaction activity (proxy for engagement) for last 6 months
+              db.all(`
+                SELECT strftime('%Y-%m', created_at) as month, COUNT(*) as count
+                FROM transactions
+                WHERE created_at >= date('now', '-6 months')
+                GROUP BY month ORDER BY month ASC
+              `, (err, monthlyActivity) => {
+                if (err) monthlyActivity = [];
+
+                // Sales by course
+                db.all(`
+                  SELECT course_id, COUNT(*) as sales, SUM(amount) as revenue
+                  FROM transactions
+                  WHERE (status='success' OR status='completed') AND course_id IS NOT NULL AND course_id != ''
+                  GROUP BY course_id ORDER BY sales DESC LIMIT 8
+                `, (err, salesByCourse) => {
+                  if (err) salesByCourse = [];
+
+                  res.json({
+                    users: userRow.count,
+                    revenue: transRow.totalRevenue ? (transRow.totalRevenue / 100) : 0,
+                    sales: transRow.totalSales || 0,
+                    courses: courseRow.count,
+                    blogs: blogRow.count,
+                    recentTransactions: recentTrans,
+                    charts: {
+                      monthlyRevenue: monthlyRevenue.map(r => ({ month: r.month, total: r.total / 100 })),
+                      monthlyActivity: monthlyActivity,
+                      salesByCourse: salesByCourse.map(r => ({ course: r.course_id, sales: r.sales, revenue: r.revenue / 100 }))
+                    }
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+  });
+});
+
 const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Express server running on http://localhost:${PORT}`);

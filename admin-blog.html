@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Dashboard - Haynes Consult</title>
+  <title>Blog Admin Dashboard - Haynes Consult</title>
   <link rel="icon" type="image/jpeg" href="/logo.jpeg" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/src/style.css" />
   
   <!-- SECURITY ENFORCER -->
   <script>
-    window.addEventListener("DOMContentLoaded", () => { loadAdminCourses(); });
+    window.addEventListener("DOMContentLoaded", () => { loadAdminBlogs(); });
     if (localStorage.getItem('haynesAdmin') !== 'true') {
       window.location.href = '/login.html'; // Force redirect intruders immediately
     }
@@ -319,8 +319,8 @@
         </span>
       </a>
       <ul class="nav__links" id="navLinks">
-        <li><a href="/haynes-hq-secure-portal.html" class="nav__link" style="color: var(--royal); font-weight: 700;">Academy Admin</a></li>
-        <li><a href="/admin-blog.html" class="nav__link">Blog Admin</a></li>
+        <li><a href="/haynes-hq-secure-portal.html" class="nav__link">Academy Admin</a></li>
+        <li><a href="/admin-blog.html" class="nav__link" style="color: var(--royal); font-weight: 700;">Blog Admin</a></li>
         <li><a href="/admin-analysis.html" class="nav__link">Analysis</a></li>
         <li><a href="/academy.html" class="nav__link">View Academy</a></li>
       </ul>
@@ -350,19 +350,13 @@
     <p style="animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards; opacity: 0; transform: translateY(20px);">Deploy premium courses, manage your catalog, and track resources securely.</p>
     <div class="stat-strip">
       <div class="stat-pill">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
         <div class="stat-pill-info">
-          <span class="stat-pill-val" id="statCourses">0</span>
-          <span class="stat-pill-label">Active Courses</span>
+          <span class="stat-pill-val" id="statBlogs">0</span>
+          <span class="stat-pill-label">Active Posts</span>
         </div>
       </div>
-      <div class="stat-pill">
-        <span style="font-family: var(--font-head); font-weight: 800; font-size: 24px; color: #10b981;">GH₵</span>
-        <div class="stat-pill-info">
-          <span class="stat-pill-val" id="statRevenue" style="color: #10b981;">0</span>
-          <span class="stat-pill-label">Revenue Earned</span>
-        </div>
-      </div>
+      
     </div>
   </div>
 
@@ -370,102 +364,85 @@
   
 
   <!-- THE SECURE ADMIN DASHBOARD -->
-  <div class="admin-container tab-content active" id="academyTab">
+  
+  <div class="admin-container active" id="blogTab">
     <!-- LEFT COLUMN: Form -->
     <div class="glass-card">
       <div class="card-header">
-        <div class="card-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        <div class="card-icon" style="background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(217,119,6,0.1));">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
         </div>
         <div>
-          <h2 class="card-title">Deploy New Course</h2>
-          <p class="card-subtitle">Fill in the details to publish to the Academy</p>
+          <h2 class="card-title">Deploy New Post</h2>
+          <p class="card-subtitle">Publish insights and updates to the blog</p>
         </div>
       </div>
       
-      <form id="uploadCourseForm" onsubmit="handleUpload(event)">
+      <form id="uploadBlogForm" onsubmit="handleBlogUpload(event)">
         <div class="form-group">
-          <label>Course Title</label>
+          <label>Post Title</label>
           <div class="input-wrapper">
-            <input type="text" id="c_title" placeholder="e.g. Agency Growth Masterclass" required />
+            <input type="text" id="b_title" placeholder="e.g. 5 AI Trends for 2026" required />
             <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
           </div>
         </div>
         <div class="form-group">
-          <label>Category (Meta Tag)</label>
+          <label>Category</label>
           <div class="input-wrapper">
-            <input type="text" id="c_category" placeholder="e.g. Digital Marketing" required />
+            <input type="text" id="b_category" placeholder="e.g. AI & Automation" required />
             <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
           </div>
         </div>
         <div class="form-group">
-          <label>Course Description</label>
-          <textarea id="c_desc" placeholder="A compelling description of the value proposition..." required></textarea>
+          <label>Short Description (Card Summary)</label>
+          <textarea id="b_desc" placeholder="A short summary of the article..." style="min-height: 80px;" required></textarea>
         </div>
         <div class="form-group">
-          <label>Price (GH₵)</label>
-          <div class="input-wrapper">
-            <input type="number" id="c_price" value="150" required />
-            <span class="input-icon" style="font-family: var(--font-head); font-weight: 800; font-size: 16px;">GH₵</span>
-          </div>
+          <label>Full Content (HTML supported)</label>
+          <textarea id="b_content" placeholder="<p>Write your full article here...</p>" required></textarea>
         </div>
 
         <div class="form-group">
           <label>Cover Photo (JPG/PNG)</label>
-          <div class="file-drop" onclick="document.getElementById('c_cover').click()">
+          <div class="file-drop" onclick="document.getElementById('b_cover').click()">
             <div class="file-drop-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--royal)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M20.4 14.5L16 10 4 20"/></svg>
             </div>
-            <div class="file-drop-text" id="cover_text">Browse cover image</div>
+            <div class="file-drop-text" id="b_cover_text">Browse cover image</div>
             <div class="file-drop-sub">High resolution, landscape preferred</div>
-            <input type="file" id="c_cover" accept="image/*" onchange="updateFileText(this, 'cover_text')" required />
+            <input type="file" id="b_cover" accept="image/*" onchange="updateFileText(this, 'b_cover_text')" required />
           </div>
         </div>
 
-        <div class="form-group">
-          <label>Course Materials (PDFs)</label>
-          <div class="file-drop" onclick="document.getElementById('c_pdfs').click()">
-            <div class="file-drop-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--royal)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-            </div>
-            <div class="file-drop-text" id="pdfs_text">Upload course PDFs</div>
-            <div class="file-drop-sub">Select multiple files at once</div>
-            <input type="file" id="c_pdfs" accept="application/pdf" multiple onchange="updateFileText(this, 'pdfs_text')" required />
-            <div class="file-list" id="pdf_list"></div>
-          </div>
-        </div>
-
-        <button type="submit" class="btn-submit" id="submitBtn">
-          <span>Publish Course</span>
+        <button type="submit" class="btn-submit" id="submitBlogBtn" style="background: linear-gradient(135deg, #d97706 0%, #b45309 100%);">
+          <span>Publish Post</span>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         </button>
       </form>
     </div>
 
-    <!-- RIGHT COLUMN: MANAGE COURSES SECTION -->
+    <!-- RIGHT COLUMN: MANAGE BLOGS SECTION -->
     <div class="glass-card" style="padding-top: 48px;">
       <div class="card-header">
         <div class="card-icon" style="background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(52,211,153,0.1));">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
         </div>
         <div>
-          <h2 class="card-title">Manage Catalog</h2>
-          <p class="card-subtitle">View and delete deployed courses</p>
+          <h2 class="card-title">Manage Blogs</h2>
+          <p class="card-subtitle">View and delete published posts</p>
         </div>
       </div>
-      <div id="adminCourseList" style="display:flex; flex-direction:column; gap:16px;">
+      <div id="adminBlogList" style="display:flex; flex-direction:column; gap:16px;">
         <div style="text-align:center; padding: 40px 0;">
           <div class="file-drop-icon" style="margin: 0 auto 16px; background: rgba(13,43,126,0.03);">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--royal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.5;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           </div>
-          <p style="color:var(--royal); font-size:14px; font-weight:600;">Loading courses...</p>
+          <p style="color:var(--royal); font-size:14px; font-weight:600;">Loading blogs...</p>
         </div>
       </div>
     </div>
   </div>
 
-  
-  <!-- BLOG MANAGEMENT TAB -->
   <!-- Toast Notification -->
   <div class="toast" id="toast">
     <div class="toast-icon">
@@ -555,12 +532,6 @@
 
     async function loadAdminCourses() {
       try {
-        // Fetch revenue in parallel
-        fetch(fetchApiBase + '/api/admin/analysis').then(r => r.json()).then(data => {
-          const revenueEl = document.getElementById('statRevenue');
-          if (revenueEl && data.revenue !== undefined) revenueEl.textContent = 'GH\u20B5\u00A0' + data.revenue.toLocaleString();
-        }).catch(() => {});
-
         const res = await fetch(fetchApiBase + '/api/courses');
         const courses = await res.json();
         const container = document.getElementById('adminCourseList');
@@ -591,7 +562,7 @@
               <p class="course-title" title="${course.title}">${course.title}</p>
               <div class="course-meta">
                 <span class="course-cat">${course.category}</span>
-                <span class="course-price">GH₵ ${course.price / 100}</span>
+                <span class="course-price">GHS ${course.price / 100}</span>
               </div>
             </div>
             <button class="btn-delete" onclick="deleteCourse(${course.id})" title="Delete Course">
