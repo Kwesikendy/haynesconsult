@@ -6,8 +6,12 @@ import 'dotenv/config';
 import db, { initDb } from './db.js';
 import multer from 'multer';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import fs from 'fs';
 import { v2 as cloudinary } from 'cloudinary';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -20,6 +24,9 @@ const upload = multer({ storage });
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// Serve built frontend
+app.use(express.static(path.join(__dirname, 'dist')));
 
 const JWT_SECRET = process.env.JWT_SECRET || 'haynes_super_secret_key_123';
 
