@@ -282,9 +282,6 @@ app.get('/api/admin/analysis', (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
-  }
-});
-
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Express server running on port ${PORT}`);

@@ -463,6 +463,7 @@ backToTop?.addEventListener('click', () => lenis.scrollTo(0, { duration: 1.3 }))
 ============================================================ */
 document.getElementById('contactForm')?.addEventListener('submit', async (e) => {
   e.preventDefault();
+  const form = e.target;
   const btn = document.getElementById('submitBtn');
   const btnText = btn.querySelector('.btn-text');
   const btnSpinner = btn.querySelector('.btn-spinner');
@@ -471,18 +472,50 @@ document.getElementById('contactForm')?.addEventListener('submit', async (e) => 
   btnText.style.display = 'none';
   btnSpinner.style.display = 'inline';
 
-  await new Promise((r) => setTimeout(r, 1500));
+  const formData = {
+    name: `${form.firstName.value} ${form.lastName.value}`,
+    email: form.email.value,
+    company: form.company.value || 'N/A',
+    service: form.service.value || 'N/A',
+    message: form.message.value,
+    _subject: `New Contact Request from ${form.firstName.value} ${form.lastName.value}`
+  };
 
-  btnText.textContent = '✓ Message Sent!';
-  btnText.style.display = 'inline';
-  btnSpinner.style.display = 'none';
-  gsap.fromTo(btn, { scale: 0.97 }, { scale: 1, duration: 0.35, ease: 'back.out(2)' });
+  try {
+    const response = await fetch('https://formsubmit.co/ajax/info@haynesconsult.com', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    });
 
-  setTimeout(() => {
-    e.target.reset();
-    btn.disabled = false;
-    btnText.textContent = 'Send Message';
-  }, 3000);
+    if (!response.ok) {
+      throw new Error('Failed to send message');
+    }
+
+    btnText.textContent = '✓ Message Sent!';
+    btnText.style.display = 'inline';
+    btnSpinner.style.display = 'none';
+    gsap.fromTo(btn, { scale: 0.97 }, { scale: 1, duration: 0.35, ease: 'back.out(2)' });
+
+    setTimeout(() => {
+      form.reset();
+      btn.disabled = false;
+      btnText.textContent = 'Send Message';
+    }, 3000);
+  } catch (err) {
+    btnText.textContent = '❌ Error Sending';
+    btnText.style.display = 'inline';
+    btnSpinner.style.display = 'none';
+    console.error('Error submitting form:', err);
+    
+    setTimeout(() => {
+      btn.disabled = false;
+      btnText.textContent = 'Send Message';
+    }, 3000);
+  }
 });
 
 /* ============================================================

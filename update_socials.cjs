@@ -9,7 +9,7 @@ const socialLinks = {
 };
 
 const newPhone = '0201985964 / 0249033269';
-const drEmail = 'Senyahmartin64@gmail.com';
+const drEmail = 'info@haynesconsult.com';
 
 const tiktokSVG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 15.68a6.34 6.34 0 006.27 6.28 6.3 6.3 0 006.08-4.66 6.36 6.36 0 00.19-1.57V8.58a8.31 8.31 0 004.83 1.55V6.62a4.41 4.41 0 01-.78.07z"/></svg>';
 
