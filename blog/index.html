@@ -248,7 +248,7 @@
           const card = document.createElement('div');
           card.className = 'glass-card sp-package hover-swivel';
           card.innerHTML = `
-            <div style="background-image: url('${blog.image_url}'); background-size: cover; background-position: center; height: 180px; border-radius: 8px; margin-bottom: 20px; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);">
+            <div style="background-image: url('${blog.image_url}'); background-size: contain; background-repeat: no-repeat; background-position: center; height: 180px; border-radius: 8px; margin-bottom: 20px; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05); background-color: rgba(255,255,255,0.5);">
             </div>
             <div class="sp-tech-tag" style="display: inline-block; margin-bottom: 12px; background: rgba(217,119,6,0.1); color: #d97706; border-color: rgba(217,119,6,0.2);">${blog.category}</div>
             <h3 class="sp-package-name" style="font-size: 18px;">${blog.title}</h3>

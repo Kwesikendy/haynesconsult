@@ -237,6 +237,64 @@ app.delete('/api/admin/blog/:id', (req, res) => {
   }
 });
 
+
+
+// --- CASE STUDIES ---
+app.get('/api/case-studies', (req, res) => {
+  try {
+    const caseStudies = db.prepare('SELECT * FROM case_studies ORDER BY created_at ASC').all();
+    res.json(caseStudies);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/admin/case-studies', upload.single('cover'), async (req, res) => {
+  try {
+    const { title, category, context, strategy, results, metric1_val, metric1_label, metric2_val, metric2_label } = req.body;
+    if (!title || !category || !req.file) {
+      return res.status(400).json({ error: "Missing required fields or cover image." });
+    }
+    const coverUpload = await uploadToCloudinary(req.file.buffer, 'haynes/cases');
+    const result = db.prepare(
+      'INSERT INTO case_studies (title, category, context, strategy, results, metric1_val, metric1_label, metric2_val, metric2_label, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+    ).run(title, category, context, strategy, results, metric1_val, metric1_label, metric2_val, metric2_label, coverUpload.secure_url);
+    res.json({ success: true, id: result.lastInsertRowid });
+  } catch (err) {
+    console.error("Case study upload error:", err);
+    res.status(500).json({ error: "Failed to upload to cloud" });
+  }
+});
+
+app.put('/api/admin/case-studies/:id', upload.single('cover'), async (req, res) => {
+  try {
+    const { title, category, context, strategy, results, metric1_val, metric1_label, metric2_val, metric2_label } = req.body;
+    let imageUrl = null;
+    if (req.file) {
+      const coverUpload = await uploadToCloudinary(req.file.buffer, 'haynes/cases');
+      imageUrl = coverUpload.secure_url;
+    }
+    
+    if (imageUrl) {
+      db.prepare('UPDATE case_studies SET title=?, category=?, context=?, strategy=?, results=?, metric1_val=?, metric1_label=?, metric2_val=?, metric2_label=?, image_url=? WHERE id=?').run(title, category, context, strategy, results, metric1_val, metric1_label, metric2_val, metric2_label, imageUrl, req.params.id);
+    } else {
+      db.prepare('UPDATE case_studies SET title=?, category=?, context=?, strategy=?, results=?, metric1_val=?, metric1_label=?, metric2_val=?, metric2_label=? WHERE id=?').run(title, category, context, strategy, results, metric1_val, metric1_label, metric2_val, metric2_label, req.params.id);
+    }
+    res.json({ success: true });
+  } catch (err) {
+    console.error("Case study update error:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.delete('/api/admin/case-studies/:id', (req, res) => {
+  try {
+    const result = db.prepare('DELETE FROM case_studies WHERE id = ?').run(req.params.id);
+    res.json({ success: true, deleted: result.changes });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 // --- ADMIN ANALYSIS ---
 app.get('/api/admin/analysis', (req, res) => {
   try {
@@ -282,6 +340,9 @@ app.get('/api/admin/analysis', (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Express server running on port ${PORT}`);
