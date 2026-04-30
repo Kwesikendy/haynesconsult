@@ -1,12 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+<meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Case Studies - Haynes Consult</title>
+  
+  
+  
+  
+  <title>Case Studies | Haynes Consult</title>
+  <meta name="description" content="Real-world results. Discover how Haynes Consult drives growth, efficiency, and digital transformation for our clients." />
+  <meta name="keywords" content="AI automation, digital strategy, web development, EHR systems, digital marketing, business consulting, healthcare technology" />
+  <meta name="author" content="Haynes Consult" />
+  
+  <!-- Open Graph / Facebook / LinkedIn -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://haynesconsult.com/case-studies.html" />
-  <link rel="canonical" href="https://haynesconsult.com/case-studies.html" />
+  <meta property="og:title" content="Case Studies | Haynes Consult" />
+  <meta property="og:description" content="Real-world results. Discover how Haynes Consult drives growth, efficiency, and digital transformation for our clients." />
+  <meta property="og:image" content="https://haynesconsult.com/hc.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://haynesconsult.com/case-studies.html" />
+  <meta name="twitter:title" content="Case Studies | Haynes Consult" />
+  <meta name="twitter:description" content="Real-world results. Discover how Haynes Consult drives growth, efficiency, and digital transformation for our clients." />
+  <meta name="twitter:image" content="https://haynesconsult.com/hc.png" />
+<link rel="canonical" href="https://haynesconsult.com/case-studies.html" />
   <link rel="icon" type="image/jpeg" href="/logo.jpeg" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/src/style.css" />
@@ -289,18 +308,18 @@
           
           <div class="cs-block">
             <h4>The Context</h4>
-            ${cs.context}
+            ${cs.context.includes('<p>') ? cs.context : `<p style="white-space: pre-line;">${cs.context}</p>`}
           </div>
           
           <div class="cs-block">
             <h4>The Strategy &amp; Impact</h4>
-            ${cs.strategy}
+            ${cs.strategy.includes('<p>') ? cs.strategy : `<p style="white-space: pre-line;">${cs.strategy}</p>`}
           </div>
 
           <div class="cs-block">
             <h4>Results at a Glance</h4>
             <ul style="color: var(--text); font-size: 15px; line-height: 1.6; padding-left: 20px; margin-top: 8px;">
-              ${cs.results}
+              ${cs.results.includes('<li') ? cs.results : cs.results.split('\\n').filter(r => r.trim()).map(r => `<li style="margin-bottom: 8px;">${r.trim()}</li>`).join('')}
             </ul>
           </div>
           
