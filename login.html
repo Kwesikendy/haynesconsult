@@ -158,23 +158,37 @@
         return JSON.parse(jsonPayload);
     }
 
-    function handleGoogleResponse(response) {
+    
+    async function handleGoogleResponse(response) {
        document.querySelector('.g_id_signin').style.display = 'none';
        document.getElementById('loadingStatus').style.display = 'block';
 
-       const responsePayload = decodeJwtResponse(response.credential);
-       const verifiedEmail = responsePayload.email;
-       const allowedAdmins = ["dogbeynathan7@gmail.com", "info@haynesconsult.com"];
-
-       // Set universal browser session for checkout
-       localStorage.setItem('haynesUserEmail', verifiedEmail);
-
-       // Router logic
-       if (allowedAdmins.includes(verifiedEmail)) {
-           localStorage.setItem('haynesAdmin', 'true');
-           window.location.href = '/haynes-hq-secure-portal.html'; 
-       } else {
-           window.location.href = '/'; // Standard regular customer (Drop at Homepage)
+       try {
+         const fetchApiBase = window.location.hostname === 'localhost' || window.location.hostname.includes('127.0.0.1') ? 'http://localhost:3001' : '';
+         const res = await fetch(fetchApiBase + '/api/auth/google', {
+           method: 'POST',
+           headers: { 'Content-Type': 'application/json' },
+           body: JSON.stringify({ credential: response.credential })
+         });
+         const data = await res.json();
+         
+         if (data.token) {
+           localStorage.setItem('haynesUserEmail', data.email);
+           if (data.role === 'admin') {
+             localStorage.setItem('haynesAdmin', 'true');
+             localStorage.setItem('haynesToken', data.token);
+             window.location.href = '/haynes-hq-secure-portal.html'; 
+           } else {
+             window.location.href = '/'; 
+           }
+         } else {
+           alert('Authentication failed');
+           window.location.reload();
+         }
+       } catch (err) {
+         console.error(err);
+         alert('Network error during authentication');
+         window.location.reload();
        }
     }
   </script>

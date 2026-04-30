@@ -22,7 +22,10 @@ cloudinary.config({
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: ['https://haynesconsult.com', 'http://localhost:3000', 'http://localhost:3001', 'http://127.0.0.1:3000'],
+  credentials: true
+}));
 app.use(express.json());
 
 // Serve built frontend
@@ -44,6 +47,39 @@ function authenticateToken(req, res, next) {
     next();
   });
 }
+
+
+function authenticateAdmin(req, res, next) {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  if (!token) return res.status(401).json({ error: 'No token provided' });
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) return res.status(403).json({ error: 'Invalid token' });
+    if (user.role !== 'admin') return res.status(403).json({ error: 'Admin access required' });
+    req.user = user;
+    next();
+  });
+}
+
+app.post('/api/auth/google', async (req, res) => {
+  const { credential } = req.body;
+  try {
+    const response = await fetch('https://oauth2.googleapis.com/tokeninfo?id_token=' + credential);
+    const data = await response.json();
+    if (data.error) return res.status(401).json({ error: 'Invalid token' });
+    
+    const allowedAdmins = ["dogbeynathan7@gmail.com", "info@haynesconsult.com"];
+    if (allowedAdmins.includes(data.email)) {
+      const token = jwt.sign({ email: data.email, role: 'admin' }, JWT_SECRET, { expiresIn: '24h' });
+      return res.json({ token, role: 'admin', email: data.email });
+    }
+    
+    const token = jwt.sign({ email: data.email, role: 'user' }, JWT_SECRET, { expiresIn: '24h' });
+    res.json({ token, role: 'user', email: data.email });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
 
 // --- AUTH ---
 app.post('/api/auth/register', (req, res) => {
@@ -142,7 +178,7 @@ function uploadToCloudinary(buffer, folder) {
   });
 }
 
-app.post('/api/admin/courses', upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'pdfs', maxCount: 10 }]), async (req, res) => {
+app.post('/api/admin/courses', authenticateAdmin, upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'pdfs', maxCount: 10 }]), async (req, res) => {
   try {
     const { title, category, description, price } = req.body;
     if (!title || !req.files['cover'] || !req.files['pdfs']) {
@@ -177,7 +213,7 @@ app.post('/api/admin/courses', upload.fields([{ name: 'cover', maxCount: 1 }, { 
   }
 });
 
-app.delete('/api/admin/courses/:id', (req, res) => {
+app.delete('/api/admin/courses/:id', authenticateAdmin, (req, res) => {
   try {
     db.prepare('DELETE FROM academy_books WHERE course_id = ?').run(req.params.id);
     const result = db.prepare('DELETE FROM academy_items WHERE id = ?').run(req.params.id);
@@ -211,7 +247,17 @@ app.get('/api/blog', (req, res) => {
   }
 });
 
-app.post('/api/admin/blog', upload.single('cover'), async (req, res) => {
+app.get('/api/blog/:id', (req, res) => {
+  try {
+    const post = db.prepare('SELECT * FROM blog_posts WHERE id = ?').get(req.params.id);
+    if (!post) return res.status(404).json({ error: 'Post not found' });
+    res.json(post);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/admin/blog', authenticateAdmin, upload.single('cover'), async (req, res) => {
   try {
     const { title, category, description, content } = req.body;
     if (!title || !category || !description || !content || !req.file) {
@@ -228,7 +274,7 @@ app.post('/api/admin/blog', upload.single('cover'), async (req, res) => {
   }
 });
 
-app.delete('/api/admin/blog/:id', (req, res) => {
+app.delete('/api/admin/blog/:id', authenticateAdmin, (req, res) => {
   try {
     const result = db.prepare('DELETE FROM blog_posts WHERE id = ?').run(req.params.id);
     res.json({ success: true, deleted: result.changes });
@@ -249,7 +295,7 @@ app.get('/api/case-studies', (req, res) => {
   }
 });
 
-app.post('/api/admin/case-studies', upload.single('cover'), async (req, res) => {
+app.post('/api/admin/case-studies', authenticateAdmin, upload.single('cover'), async (req, res) => {
   try {
     const { title, category, context, strategy, results, metric1_val, metric1_label, metric2_val, metric2_label } = req.body;
     if (!title || !category || !req.file) {
@@ -266,7 +312,7 @@ app.post('/api/admin/case-studies', upload.single('cover'), async (req, res) => 
   }
 });
 
-app.put('/api/admin/case-studies/:id', upload.single('cover'), async (req, res) => {
+app.put('/api/admin/case-studies/:id', authenticateAdmin, upload.single('cover'), async (req, res) => {
   try {
     const { title, category, context, strategy, results, metric1_val, metric1_label, metric2_val, metric2_label } = req.body;
     let imageUrl = null;
@@ -287,7 +333,7 @@ app.put('/api/admin/case-studies/:id', upload.single('cover'), async (req, res) 
   }
 });
 
-app.delete('/api/admin/case-studies/:id', (req, res) => {
+app.delete('/api/admin/case-studies/:id', authenticateAdmin, (req, res) => {
   try {
     const result = db.prepare('DELETE FROM case_studies WHERE id = ?').run(req.params.id);
     res.json({ success: true, deleted: result.changes });
@@ -296,7 +342,7 @@ app.delete('/api/admin/case-studies/:id', (req, res) => {
   }
 });
 // --- ADMIN ANALYSIS ---
-app.get('/api/admin/analysis', (req, res) => {
+app.get('/api/admin/analysis', authenticateAdmin, (req, res) => {
   try {
     const users = db.prepare('SELECT COUNT(*) as count FROM users').get().count;
     const transRow = db.prepare("SELECT SUM(amount) as totalRevenue, COUNT(*) as totalSales FROM transactions WHERE status='success' OR status='completed'").get();

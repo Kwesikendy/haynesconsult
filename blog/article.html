@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Article | Haynes Consult</title>
+  <link rel="icon" type="image/jpeg" href="/logo.jpeg" />
+  
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/style.css" />
+  
+  <style>
+    .article-hero {
+      padding: 160px 0 60px;
+      text-align: center;
+      background: linear-gradient(180deg, var(--body-bg) 0%, rgba(21,101,192,0.03) 100%);
+    }
+    .article-category {
+      display: inline-block;
+      padding: 6px 12px;
+      background: rgba(217,119,6,0.1);
+      color: #d97706;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 20px;
+    }
+    .article-title {
+      font-family: var(--font-head);
+      color: var(--navy);
+      font-size: 48px;
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .article-image {
+      width: 100%;
+      max-width: 900px;
+      height: 450px;
+      margin: 0 auto 60px;
+      border-radius: 24px;
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 24px 64px rgba(13,43,126,0.15);
+    }
+    .article-content {
+      max-width: 760px;
+      margin: 0 auto 80px;
+      font-family: var(--font-body);
+      font-size: 18px;
+      line-height: 1.8;
+      color: rgba(13,43,126,0.8);
+    }
+    .article-content p {
+      margin-bottom: 24px;
+    }
+    .article-content h2, .article-content h3 {
+      font-family: var(--font-head);
+      color: var(--navy);
+      margin: 48px 0 24px;
+      font-weight: 800;
+    }
+    .article-content ul, .article-content ol {
+      margin-bottom: 24px;
+      padding-left: 24px;
+    }
+    .article-content li {
+      margin-bottom: 12px;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--royal);
+      font-weight: 600;
+      text-decoration: none;
+      margin-bottom: 40px;
+      transition: opacity 0.3s;
+    }
+    .back-link:hover {
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- GLOBAL CURSOR ELEMENTS -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <!-- NAVIGATION -->
+  <nav class="nav" id="nav">
+    <div class="nav__container">
+      <a href="/" class="nav__logo" id="navLogo">
+        <img src="/logo.jpeg" alt="Haynes Consult" class="nav__logo-img" />
+        <span class="nav__logo-text">
+          <span class="nav__logo-name">HAYNES</span>
+          <span class="nav__logo-sub">CONSULT</span>
+        </span>
+      </a>
+      <ul class="nav__links" id="navLinks">
+        <li><a href="/" class="nav__link">Home</a></li>
+        <li class="nav__dropdown-wrap">
+          <a href="#" class="nav__link nav__dropdown-trigger">
+            About <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style="margin-left:4px;vertical-align:middle;"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="nav__dropdown">
+            <a href="/about.html" class="nav__dropdown-item"><span>About Us</span></a>
+            <a href="/dr-senyah.html" class="nav__dropdown-item"><span>Dr. Senyah</span></a>
+          </div>
+        </li>
+        <li><a href="/academy.html" class="nav__link">Academy</a></li>
+        <li><a href="/blog/index.html" class="nav__link">Blog</a></li>
+        <li><a href="/case-studies.html" class="nav__link">Case Studies</a></li>
+      </ul>
+      <a href="/contact.html" class="nav__cta btn btn--primary">Get Started</a>
+      <button class="nav__hamburger" id="hamburger" aria-label="Toggle Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav__mobile" id="mobileMenu">
+    <button class="nav__mobile-close" id="mobileClose" aria-label="Close menu">&times;</button>
+    <ul class="nav__mobile-links">
+      <li><a href="/" class="nav__mobile-link">Home</a></li>
+      <li><a href="/about.html" class="nav__mobile-link">About Us</a></li>
+      <li><a href="/dr-senyah.html" class="nav__mobile-link">Dr. Senyah</a></li>
+      <li><a href="/academy.html" class="nav__mobile-link">Academy</a></li>
+      <li><a href="/blog/index.html" class="nav__mobile-link">Blog</a></li>
+      <li><a href="/case-studies.html" class="nav__mobile-link">Case Studies</a></li>
+    </ul>
+  </div>
+
+  <main id="articleContainer">
+    <div style="padding: 200px 20px; text-align: center; color: var(--royal); font-family: var(--font-head); font-weight: 700; font-size: 24px;">
+      Loading article...
+    </div>
+  </main>
+
+  <!-- CTA -->
+  <section class="cta-section" style="margin-top: 0;">
+    <div class="cta-section__bg"></div>
+    <div class="section-container">
+      <div class="cta-section__content" style="opacity:1;transform:none;">
+        <p class="cta-section__eyebrow">Ready to Get Started?</p>
+        <h2 class="cta-section__title">Let's Build Your<br/><span class="text-sky">Digital Future</span></h2>
+        <div class="cta-section__actions">
+          <a href="/contact.html" class="btn btn--white btn--lg">Book Free Consultation</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__glow"></div>
+    <div class="footer__top">
+      <div class="footer__statement">Digitize.<br>Automate.<br><em>Grow.</em></div>
+      <a href="/contact.html" class="footer__top-cta">Start a Project<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <div class="footer__mid">
+      <a href="/" class="footer__brand">
+        <img src="/logo.jpeg" alt="Haynes Consult" />
+        <span class="footer__brand-text">
+          <span class="footer__brand-name">HAYNES</span>
+          <span class="footer__brand-sub">CONSULT</span>
+        </span>
+      </a>
+      <nav class="footer__nav">
+        <a href="/about.html">About</a>
+        <a href="/dr-senyah.html">Dr. Senyah</a>
+        <a href="/academy.html">Academy</a>
+        <a href="/case-studies.html">Case Studies</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+      <div class="footer__contact-line">
+        <span>Accra, Ghana</span>
+        <a href="mailto:info@haynesconsult.com">info@haynesconsult.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/src/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const articleId = urlParams.get('id');
+      const container = document.getElementById('articleContainer');
+
+      if (!articleId) {
+        container.innerHTML = '<div style="padding: 200px 20px; text-align: center; color: var(--navy); font-size: 24px;">Article not found.</div>';
+        return;
+      }
+
+      try {
+        const fetchApiBase = window.location.hostname === 'localhost' || window.location.hostname.includes('127.0.0.1') ? 'http://localhost:3001' : '';
+        const res = await fetch(fetchApiBase + '/api/blog/' + articleId);
+        if (!res.ok) throw new Error('Failed to load article');
+        
+        const blog = await res.json();
+        
+        document.title = blog.title + " | Haynes Consult";
+        
+        const rawContent = blog.content;
+        const htmlContent = rawContent.includes('<p>') ? rawContent : ('<p>' + rawContent.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>') + '</p>');
+
+        container.innerHTML = `
+          <section class="article-hero">
+            <div class="section-container">
+              <a href="/blog/index.html" class="back-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Back to Blog
+              </a>
+              <div>
+                <span class="article-category">${blog.category}</span>
+              </div>
+              <h1 class="article-title">${blog.title}</h1>
+            </div>
+          </section>
+
+          <section class="section-container" style="padding-top: 0;">
+            <div class="article-image" style="background-image: url('${blog.image_url}');"></div>
+            <div class="article-content">
+              ${htmlContent}
+            </div>
+          </section>
+        `;
+
+      } catch (err) {
+        container.innerHTML = '<div style="padding: 200px 20px; text-align: center; color: var(--navy); font-size: 24px;">Failed to load article. Please try again later.</div>';
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>
