@@ -29,7 +29,7 @@ app.use(cors({
 app.use(express.json());
 
 // Serve built frontend
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, 'dist'), { extensions: ['html'] }));
 
 const JWT_SECRET = process.env.JWT_SECRET || 'haynes_super_secret_key_123';
 
