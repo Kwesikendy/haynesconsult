@@ -68,7 +68,7 @@ app.post('/api/auth/google', async (req, res) => {
     const data = await response.json();
     if (data.error) return res.status(401).json({ error: 'Invalid token' });
     
-    const allowedAdmins = ["dogbeynathan7@gmail.com", "info@haynesconsult.com"];
+    const allowedAdmins = ["dogbeynathan7@gmail.com", "info@haynesconsult.com", "attaboatengsenyah@gmail.com", "senyahmartin64@gmail.com"];
     if (allowedAdmins.includes(data.email)) {
       const token = jwt.sign({ email: data.email, role: 'admin' }, JWT_SECRET, { expiresIn: '24h' });
       return res.json({ token, role: 'admin', email: data.email });
