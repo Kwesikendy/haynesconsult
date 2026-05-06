@@ -49,10 +49,21 @@
     .sp-list { display: flex; flex-direction: column; gap: 14px; margin-top: 24px; }
     .sp-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: rgba(13,43,126,0.75); line-height: 1.6; }
     .sp-list li::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--royal); flex-shrink: 0; margin-top: 7px; box-shadow: 0 0 8px rgba(21,101,192,0.4); }
-    .sp-packages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .sp-packages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding-top: 20px; overflow: visible; }
     .sp-package { padding: 36px 28px; position: relative; }
-    .sp-package--featured { border-color: rgba(21,101,192,0.3) !important; }
-    .sp-package-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--navy), var(--royal)); color: white; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; padding: 4px 16px; border-radius: 50px; white-space: nowrap; }
+        .sp-package--featured { border-color: rgba(21,101,192,0.3) !important; }
+    .sp-package-badge-inline {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--navy), var(--royal));
+      color: white;
+      font-family: var(--font-head);
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 5px 18px;
+      border-radius: 50px;
+      margin-bottom: 16px;
+      white-space: nowrap;
+    }
     .sp-package-name { font-family: var(--font-head); font-size: 20px; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
     .sp-package-price { font-family: var(--font-head); font-size: 32px; font-weight: 900; color: var(--royal); margin-bottom: 4px; }
     .sp-package-price span { font-size: 14px; font-weight: 500; color: rgba(13,43,126,0.5); }
@@ -302,13 +313,12 @@
           <a href="/contact.html" class="btn btn--ghost btn--full">Get a Quote</a>
         </div>
         <div class="glass-card sp-package sp-package--featured">
-          <div class="sp-package-badge">Most Popular</div>
+          <div class="sp-package-badge-inline">? Most Popular</div>
           <div class="sp-package-name">Business</div>
           <div class="sp-package-price">Contact Us <span>for pricing</span></div>
           <p class="sp-package-desc">For growing businesses that need a feature-rich, conversion-optimized website.</p>
           <ul class="sp-package-features">
             <li>Up to 15 pages</li>
-            <li>CMS (WordPress or Wix)</li>
             <li>Booking / enquiry system</li>
             <li>Full SEO + Google Analytics</li>
             <li>Blog setup</li>

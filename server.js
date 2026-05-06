@@ -23,10 +23,15 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 const app = express();
 app.use(cors({
-  origin: ['https://haynesconsult.com', 'http://localhost:3000', 'http://localhost:3001', 'http://127.0.0.1:3000'],
+  origin: ['https://haynesconsult.com', 'https://www.haynesconsult.com', 'http://localhost:3000', 'http://localhost:3001', 'http://127.0.0.1:3000'],
   credentials: true
 }));
 app.use(express.json());
+
+// 301 Redirects for old/incorrect URLs — keeps SEO equity and fixes broken links
+app.get(['/about-us', '/about-us.html'], (req, res) => {
+  res.redirect(301, '/about.html');
+});
 
 // Serve built frontend
 app.use(express.static(path.join(__dirname, 'dist'), { extensions: ['html'] }));
@@ -178,11 +183,18 @@ function uploadToCloudinary(buffer, folder) {
   });
 }
 
-app.post('/api/admin/courses', authenticateAdmin, upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'pdfs', maxCount: 10 }]), async (req, res) => {
+app.post('/api/admin/courses', authenticateAdmin, upload.fields([
+  { name: 'cover', maxCount: 1 },
+  { name: 'pdfs', maxCount: 10 },
+  { name: 'videos', maxCount: 5 }
+]), async (req, res) => {
   try {
     const { title, category, description, price } = req.body;
-    if (!title || !req.files['cover'] || !req.files['pdfs']) {
-      return res.status(400).json({ error: "Missing required files or fields." });
+    const hasPdfs = req.files['pdfs'] && req.files['pdfs'].length > 0;
+    const hasVideos = req.files['videos'] && req.files['videos'].length > 0;
+
+    if (!title || !req.files['cover'] || (!hasPdfs && !hasVideos)) {
+      return res.status(400).json({ error: "Missing required files or fields. Please upload at least one PDF or video." });
     }
 
     const customId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
@@ -196,15 +208,29 @@ app.post('/api/admin/courses', authenticateAdmin, upload.fields([{ name: 'cover'
     ).run(title, category, description, coverUrl, priceValue, customId, 'Course', 1);
 
     const newCourseId = courseResult.lastInsertRowid;
-
-    const uploadPromises = req.files['pdfs'].map(async (file) => {
-      const pdfUpload = await uploadToCloudinary(file.buffer, 'haynes/pdfs');
-      return { name: file.originalname.replace('.pdf', ''), url: pdfUpload.secure_url };
-    });
-
-    const uploadedPdfs = await Promise.all(uploadPromises);
     const insertBook = db.prepare('INSERT INTO academy_books (course_id, name, file_url, cover_url) VALUES (?, ?, ?, ?)');
-    uploadedPdfs.forEach(pdf => insertBook.run(newCourseId, pdf.name, pdf.url, null));
+
+    // Upload PDFs
+    if (hasPdfs) {
+      const pdfPromises = req.files['pdfs'].map(async (file) => {
+        const pdfUpload = await uploadToCloudinary(file.buffer, 'haynes/pdfs');
+        return { name: file.originalname.replace(/\.pdf$/i, ''), url: pdfUpload.secure_url };
+      });
+      const uploadedPdfs = await Promise.all(pdfPromises);
+      uploadedPdfs.forEach(pdf => insertBook.run(newCourseId, pdf.name, pdf.url, null));
+    }
+
+    // Upload Videos
+    if (hasVideos) {
+      const videoPromises = req.files['videos'].map(async (file) => {
+        const ext = file.originalname.split('.').pop();
+        const videoUpload = await uploadToCloudinary(file.buffer, 'haynes/videos');
+        const cleanName = file.originalname.replace(/\.[^.]+$/, '');
+        return { name: '🎬 ' + cleanName, url: videoUpload.secure_url };
+      });
+      const uploadedVideos = await Promise.all(videoPromises);
+      uploadedVideos.forEach(video => insertBook.run(newCourseId, video.name, video.url, null));
+    }
 
     res.json({ success: true });
   } catch (err) {

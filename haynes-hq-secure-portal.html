@@ -13,10 +13,35 @@
   
   <!-- SECURITY ENFORCER -->
   <script>
-    window.addEventListener("DOMContentLoaded", () => { loadAdminCourses(); });
-    if (localStorage.getItem('haynesAdmin') !== 'true') {
-      window.location.href = '/login.html'; // Force redirect intruders immediately
+    // Immediate check: redirect if flag missing
+    if (localStorage.getItem('haynesAdmin') !== 'true' || !localStorage.getItem('haynesToken')) {
+      window.location.href = '/login.html';
     }
+
+    // On load: validate the JWT against the server — catches expired tokens
+    window.addEventListener("DOMContentLoaded", () => {
+      const token = localStorage.getItem('haynesToken');
+      const base = window.location.hostname === 'localhost' || window.location.hostname.includes('127.0.0.1')
+        ? 'http://localhost:3001' : '';
+      fetch(base + '/api/admin/analysis', {
+        headers: { 'Authorization': 'Bearer ' + token }
+      }).then(r => {
+        if (r.status === 401 || r.status === 403) {
+          // Token invalid or expired — force re-login
+          localStorage.removeItem('haynesAdmin');
+          localStorage.removeItem('haynesToken');
+          localStorage.removeItem('haynesUserEmail');
+          window.location.href = '/login.html';
+        } else {
+          r.json().then(data => {
+            const revenueEl = document.getElementById('statRevenue');
+            if (revenueEl && data.revenue !== undefined)
+              revenueEl.textContent = 'GH\u20B5\u00A0' + data.revenue.toLocaleString();
+          }).catch(() => {});
+          loadAdminCourses();
+        }
+      }).catch(() => { loadAdminCourses(); });
+    });
   </script>
 
   <style>
@@ -388,7 +413,7 @@
         </div>
       </div>
       
-      <form id="uploadCourseForm" onsubmit="handleUpload(event)">
+      <form id="uploadCourseForm" onsubmit="handleUpload(event)" novalidate>
         <div class="form-group">
           <label>Course Title</label>
           <div class="input-wrapper">
@@ -423,20 +448,33 @@
             </div>
             <div class="file-drop-text" id="cover_text">Browse cover image</div>
             <div class="file-drop-sub">High resolution, landscape preferred</div>
-            <input type="file" id="c_cover" accept="image/*" onchange="updateFileText(this, 'cover_text')" required />
+            <input type="file" id="c_cover" accept="image/*" onchange="updateFileText(this, 'cover_text')" />
           </div>
         </div>
 
         <div class="form-group">
-          <label>Course Materials (PDFs)</label>
+          <label>Course Materials — PDFs <span style="font-weight:500;color:rgba(13,43,126,0.45);text-transform:none;font-size:11px;">(optional)</span></label>
           <div class="file-drop" onclick="document.getElementById('c_pdfs').click()">
             <div class="file-drop-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--royal)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
             </div>
             <div class="file-drop-text" id="pdfs_text">Upload course PDFs</div>
             <div class="file-drop-sub">Select multiple files at once</div>
-            <input type="file" id="c_pdfs" accept="application/pdf" multiple onchange="updateFileText(this, 'pdfs_text')" required />
+            <input type="file" id="c_pdfs" accept="application/pdf" multiple onchange="updateFileText(this, 'pdfs_text', 'pdf_list')" />
             <div class="file-list" id="pdf_list"></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Course Videos <span style="font-weight:500;color:rgba(13,43,126,0.45);text-transform:none;font-size:11px;">(optional)</span></label>
+          <div class="file-drop" onclick="document.getElementById('c_videos').click()">
+            <div class="file-drop-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--royal)" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
+            </div>
+            <div class="file-drop-text" id="videos_text">Upload course videos</div>
+            <div class="file-drop-sub">MP4, MOV or WebM · up to 5 files</div>
+            <input type="file" id="c_videos" accept="video/mp4,video/quicktime,video/webm,video/*" multiple onchange="updateFileText(this, 'videos_text', 'video_list')" />
+            <div class="file-list" id="video_list"></div>
           </div>
         </div>
 
@@ -485,19 +523,21 @@
   <script type="module" src="/src/main.js"></script>
   <script>
     /* Uploader Logic */
-    function updateFileText(input, textId) {
+    function updateFileText(input, textId, listId) {
       const el = document.getElementById(textId);
+      const listEl = listId ? document.getElementById(listId) : null;
       if (input.files.length > 0) {
         el.textContent = input.files.length + ' file(s) selected';
         el.style.color = 'var(--royal)';
-        if(input.multiple) {
-           const list = Array.from(input.files).map(f => f.name).join('<br/>');
-           document.getElementById('pdf_list').innerHTML = list;
+        if (listEl) {
+          listEl.innerHTML = Array.from(input.files).map(f => f.name).join('<br/>');
         }
       } else {
-        el.textContent = textId === 'cover_text' ? 'Browse cover image' : 'Upload course PDFs';
+        if (textId === 'cover_text') el.textContent = 'Browse cover image';
+        else if (textId === 'pdfs_text') el.textContent = 'Upload course PDFs';
+        else if (textId === 'videos_text') el.textContent = 'Upload course videos';
         el.style.color = 'var(--navy)';
-        if(input.multiple) document.getElementById('pdf_list').innerHTML = '';
+        if (listEl) listEl.innerHTML = '';
       }
     }
 
@@ -510,23 +550,41 @@
 
     async function handleUpload(e) {
       e.preventDefault();
+
+      // Manual validation (native browser validation disabled via novalidate
+      // because hidden file inputs can't be focused by the browser validator)
+      const title = document.getElementById('c_title').value.trim();
+      const category = document.getElementById('c_category').value.trim();
+      const desc = document.getElementById('c_desc').value.trim();
+      const coverFile = document.getElementById('c_cover').files[0];
+      const pdfFiles = document.getElementById('c_pdfs').files;
+      const videoFiles = document.getElementById('c_videos').files;
+
+      if (!title) { alert('Please enter a course title.'); return; }
+      if (!category) { alert('Please enter a category.'); return; }
+      if (!desc) { alert('Please enter a course description.'); return; }
+      if (!coverFile) { alert('Please upload a cover image.'); return; }
+      if (pdfFiles.length === 0 && videoFiles.length === 0) {
+        alert('Please upload at least one PDF or video for the course.'); return;
+      }
+
       const btn = document.getElementById('submitBtn');
       const originalText = btn.innerHTML;
       btn.innerHTML = '<span>Uploading...</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation: spin 1s linear infinite;"><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/><line x1="16.24" y1="4.93" x2="19.07" y2="7.76"/></svg>';
       btn.disabled = true;
 
       const formData = new FormData();
-      formData.append('title', document.getElementById('c_title').value);
-      formData.append('category', document.getElementById('c_category').value);
-      formData.append('description', document.getElementById('c_desc').value);
+      formData.append('title', title);
+      formData.append('category', category);
+      formData.append('description', desc);
       formData.append('price', document.getElementById('c_price').value);
-      
-      const coverFile = document.getElementById('c_cover').files[0];
       formData.append('cover', coverFile);
 
-      const pdfFiles = document.getElementById('c_pdfs').files;
       for (let i = 0; i < pdfFiles.length; i++) {
         formData.append('pdfs', pdfFiles[i]);
+      }
+      for (let i = 0; i < videoFiles.length; i++) {
+        formData.append('videos', videoFiles[i]);
       }
 
       try {
@@ -545,6 +603,9 @@
           document.getElementById('pdfs_text').textContent = 'Upload course PDFs';
           document.getElementById('pdfs_text').style.color = 'var(--navy)';
           document.getElementById('pdf_list').innerHTML = '';
+          document.getElementById('videos_text').textContent = 'Upload course videos';
+          document.getElementById('videos_text').style.color = 'var(--navy)';
+          document.getElementById('video_list').innerHTML = '';
         } else {
           alert('Error uploading course.');
         }
@@ -560,13 +621,9 @@
     const fetchApiBase = window.location.hostname === 'localhost' || window.location.hostname.includes('127.0.0.1') ? 'http://localhost:3001' : '';
 
     async function loadAdminCourses() {
-      try {
-        // Fetch revenue in parallel
-        fetch(fetchApiBase + '/api/admin/analysis').then(r => r.json()).then(data => {
-          const revenueEl = document.getElementById('statRevenue');
-          if (revenueEl && data.revenue !== undefined) revenueEl.textContent = 'GH\u20B5\u00A0' + data.revenue.toLocaleString();
-        }).catch(() => {});
+        // Revenue is now fetched in the security enforcer with auth — skip here to avoid duplicate
 
+      try {
         const res = await fetch(fetchApiBase + '/api/courses');
         const courses = await res.json();
         const container = document.getElementById('adminCourseList');
