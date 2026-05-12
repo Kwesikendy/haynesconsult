@@ -33,6 +33,10 @@ app.get(['/about-us', '/about-us.html'], (req, res) => {
   res.redirect(301, '/about.html');
 });
 
+app.get(['/about-us/dr-martin-senyah', '/about-us/dr-martin-senyah.html'], (req, res) => {
+  res.redirect(301, '/dr-senyah.html');
+});
+
 // Serve built frontend
 app.use(express.static(path.join(__dirname, 'dist'), { extensions: ['html'] }));
 
