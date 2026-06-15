@@ -160,14 +160,29 @@ app.post('/api/checkout/simulate', authenticateToken, (req, res) => {
   }
 });
 
-app.post('/api/payments/record', (req, res) => {
+app.post('/api/payments/record', async (req, res) => {
   const { email, courseId, amount, reference, status } = req.body;
   if (!email || !reference) return res.status(400).json({ error: 'Missing required fields' });
   try {
+    const paystackRes = await fetch(`https://api.paystack.co/transaction/verify/${reference}`, {
+      headers: {
+        Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`
+      }
+    });
+    const paystackData = await paystackRes.json();
+    
+    if (!paystackData.status || paystackData.data.status !== 'success') {
+      return res.status(400).json({ error: 'Payment verification failed' });
+    }
+
+    if (paystackData.data.amount < amount) {
+       return res.status(400).json({ error: 'Payment amount mismatch' });
+    }
+
     const result = db.prepare(
       'INSERT INTO transactions (email, course_id, amount, reference, status) VALUES (?, ?, ?, ?, ?)'
-    ).run(email, courseId, amount, reference, status);
-    res.json({ success: true, message: 'Transaction recorded locally', transactionId: result.lastInsertRowid });
+    ).run(email, courseId, amount, reference, 'success');
+    res.json({ success: true, message: 'Transaction verified and recorded', transactionId: result.lastInsertRowid });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
