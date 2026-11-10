@@ -58,6 +58,26 @@ export function initDb() {
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   )`);
 
+  // Edify Subscriptions
+  db.exec(`CREATE TABLE IF NOT EXISTS edify_subscriptions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    clinic_name TEXT,
+    clinic_type TEXT,
+    admin_name TEXT,
+    email TEXT,
+    phone TEXT,
+    plan_id TEXT,
+    plan_name TEXT,
+    billing_cycle TEXT,
+    amount INTEGER,
+    currency TEXT DEFAULT 'GHS',
+    reference TEXT UNIQUE,
+    status TEXT,
+    expires_at TEXT,
+    edify_org_id TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  )`);
+
   // Blog Posts
   db.exec(`CREATE TABLE IF NOT EXISTS blog_posts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -107,11 +127,10 @@ export function initDb() {
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   )`);
 
-  // Seed case studies if empty
+  // Seed case studies if empty or missing new flagship case studies
   const csCount = db.prepare('SELECT COUNT(*) as count FROM case_studies').get();
+  const insertCS = db.prepare('INSERT INTO case_studies (title, category, context, strategy, results, metric1_val, metric1_label, metric2_val, metric2_label, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
   if (csCount.count === 0) {
-    const insertCS = db.prepare('INSERT INTO case_studies (title, category, context, strategy, results, metric1_val, metric1_label, metric2_val, metric2_label, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-    
     insertCS.run(
       "From Blueprint to Breakthrough: Mid City Dental Clinic",
       "Dental Practice Growth",
@@ -141,6 +160,43 @@ export function initDb() {
       "708", "Patients Acquired", "8 mo", "Timeframe to Scale",
       "/clients/standard_practice.png"
     );
+  }
+
+  const additionalCaseStudies = [
+    {
+      title: "Edify Multi-Tenant EHR & Hospital Automation Rollout (JOHIL General Hospital, Daksa Dental & TrueSmile Dental)",
+      category: "Healthcare SaaS & EHR",
+      context: "<p>Leading healthcare providers including JOHIL General Hospital, Daksa Dental Clinic, and TrueSmile Dental needed to replace fragmented paper charts, long waiting room queues, and manual insurance billing with a unified, cloud-ready hospital operating system.</p>",
+      strategy: "<p>Haynes Consult engineered and deployed <strong>Edify</strong>, a multi-tenant FHIR R4 Electronic Health Records and clinic automation platform tailored for general hospitals, dental clinics, optical centres, and specialist practices. We configured role-based workspaces for receptionists, triage nurses, clinicians, pharmacists, lab technicians, and cashiers, alongside a real-time Digital Queue Management System issuing automated ticket tokens (<code>A001</code>) with live TV waiting room displays.</p><p style=\"margin-top: 12px;\">Clinicians were equipped with an AI Voice Scribe that transcribes consultations directly into structured SOAP notes and ICD-10 diagnoses, an interactive 32-tooth FDI Dental Odontogram, and automated NHIS claims vetting with instant XML export.</p>",
+      results: "<li style=\"margin-bottom: 8px;\">100% paperless transition across reception, triage, consultation, pharmacy, and billing within 3 weeks</li><li style=\"margin-bottom: 8px;\">85% reduction in missed appointments via automated SMS, Email &amp; WhatsApp reminders</li><li style=\"margin-bottom: 8px;\">Real-time Digital Queue System (Registered → Waiting → Called → Completed) cut patient wait times by 45%</li><li style=\"margin-bottom: 8px;\">AI Voice Scribe reduced clinical documentation time by 60% per encounter</li><li style=\"margin-bottom: 8px;\">Automated NHIS Claims XML vetting and instant digital payment receipts</li>",
+      metric1_val: "85%",
+      metric1_label: "Fewer No-Shows",
+      metric2_val: "100%",
+      metric2_label: "Paperless in 3 Wks",
+      image_url: "/edify.png"
+    },
+    {
+      title: "AI Workflow & Patient Acquisition Automation",
+      category: "AI & Automation",
+      context: "<p>Growing multi-chair clinics were losing high-value patients due to missed phone calls, unconfirmed appointments, manual follow-ups, and disconnected front-desk billing workflows.</p>",
+      strategy: "<p>We implemented an end-to-end AI patient acquisition and communication engine connected directly to clinic scheduling and billing. Every patient registration, appointment booking, and payment triggers instant SMS and email confirmations, downloadable receipts, and a 3-stage automated reminder sequence (24 hours prior, morning of appointment, and 2 hours prior).</p>",
+      results: "<li style=\"margin-bottom: 8px;\">3-stage automated appointment reminder engine (24h, Morning-of, 2h before)</li><li style=\"margin-bottom: 8px;\">Instant automated SMS &amp; Email payment receipts upon invoice settlement</li><li style=\"margin-bottom: 8px;\">3x increase in repeat patient recall and treatment plan completion</li><li style=\"margin-bottom: 8px;\">Zero manual reminder calls required from front-desk reception staff</li>",
+      metric1_val: "3×",
+      metric1_label: "Patient Recall Rate",
+      metric2_val: "24/7",
+      metric2_label: "Automated Workflows",
+      image_url: "/clients/artemis.jpeg"
+    }
+  ];
+
+  for (const cs of additionalCaseStudies) {
+    const exists = db.prepare('SELECT id FROM case_studies WHERE title = ?').get(cs.title);
+    if (!exists) {
+      insertCS.run(
+        cs.title, cs.category, cs.context, cs.strategy, cs.results,
+        cs.metric1_val, cs.metric1_label, cs.metric2_val, cs.metric2_label, cs.image_url
+      );
+    }
   }
 }
 

@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Edify Healthcare OS — Automated EHR, Queue & Clinic Management | Haynes Consult</title>
+  <meta name="description" content="Edify by Haynes Consult is the all-in-one automated healthcare operating system for General Hospitals, Dental Clinics, Specialist Practices, and Optical Centres. Self-serve signup, instant activation, AI Voice Scribe, Digital Queue System, and automated patient reminders." />
+  
+  <!-- Open Graph / Facebook / LinkedIn -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Edify Healthcare OS — Automated EHR & Clinic Management | Haynes Consult" />
+  <meta property="og:description" content="Digitize and automate your hospital or clinic in minutes. Select a package, sign up, pay, and activate your Edify workspace automatically." />
+  <meta property="og:image" content="https://haynesconsult.com/hc.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Edify Healthcare OS — Automated EHR & Clinic Management | Haynes Consult" />
+  <meta name="twitter:description" content="Digitize and automate your hospital or clinic in minutes. Select a package, sign up, pay, and activate your Edify workspace automatically." />
+  <meta name="twitter:image" content="https://haynesconsult.com/hc.png" />
+
+  <link rel="icon" type="image/jpeg" href="/logo.jpeg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/style.css" />
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+
+  <style>
+    .edify-hero {
+      padding: 150px 0 90px;
+      background: linear-gradient(180deg, var(--body-bg) 0%, var(--ice) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .edify-hero__grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 56px;
+      align-items: center;
+    }
+    .edify-hero__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+    .edify-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 15px 26px;
+      border-radius: 50px;
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy);
+      background: var(--white);
+      border: 1.5px solid rgba(21, 101, 192, 0.25);
+      box-shadow: var(--shadow-card);
+      cursor: pointer;
+      transition: all var(--fast);
+    }
+    .edify-btn-secondary:hover {
+      border-color: var(--royal);
+      color: var(--royal);
+      transform: translateY(-2px);
+    }
+    .edify-console {
+      padding: 28px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid var(--glass-border-strong);
+      box-shadow: var(--shadow-lift);
+    }
+    .edify-console__top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 16px;
+      margin-bottom: 18px;
+      border-bottom: 1px solid rgba(21, 101, 192, 0.12);
+    }
+    .edify-console__dots {
+      display: flex;
+      gap: 6px;
+    }
+    .edify-console__dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--sky);
+    }
+    .edify-console__dots span:first-child { background: var(--navy); }
+    .edify-console__dots span:nth-child(2) { background: var(--royal); }
+    .edify-console__tag {
+      font-family: var(--font-head);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--royal);
+      background: rgba(21, 101, 192, 0.1);
+      padding: 5px 12px;
+      border-radius: 50px;
+    }
+    .edify-queue-preview {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .edify-queue-token {
+      padding: 16px;
+      border-radius: 16px;
+      background: var(--navy);
+      color: var(--white);
+    }
+    .edify-queue-token small {
+      display: block;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--sky-light);
+      margin-bottom: 4px;
+    }
+    .edify-queue-token strong {
+      font-family: var(--font-head);
+      font-size: 28px;
+      font-weight: 900;
+      display: block;
+    }
+    .edify-queue-token span {
+      font-size: 12px;
+      color: var(--ice);
+    }
+    .edify-console-metric {
+      padding: 16px;
+      border-radius: 16px;
+      background: var(--ice);
+      border: 1px solid rgba(21, 101, 192, 0.15);
+      color: var(--navy);
+    }
+    .edify-console-metric small {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--royal);
+      margin-bottom: 4px;
+    }
+    .edify-console-metric strong {
+      font-family: var(--font-head);
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--navy);
+      display: block;
+    }
+    .edify-console-metric span {
+      font-size: 12px;
+      color: var(--navy);
+      opacity: 0.75;
+    }
+    .edify-pipeline-strip {
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: var(--body-bg);
+      border: 1px solid rgba(21, 101, 192, 0.14);
+      margin-bottom: 14px;
+    }
+    .edify-pipeline-strip__title {
+      font-family: var(--font-head);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--royal);
+      margin-bottom: 8px;
+    }
+    .edify-pipeline-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .edify-pipeline-badges span {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 50px;
+      background: var(--white);
+      color: var(--navy);
+      border: 1px solid rgba(21, 101, 192, 0.16);
+    }
+    .edify-pipeline-badges span.active {
+      background: var(--royal);
+      color: var(--white);
+      border-color: var(--royal);
+    }
+
+    /* Self-serve flow strip */
+    .edify-flow-strip {
+      padding: 36px 0;
+      background: var(--white);
+      border-top: 1px solid rgba(21, 101, 192, 0.1);
+      border-bottom: 1px solid rgba(21, 101, 192, 0.1);
+    }
+    .edify-flow-steps {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+    .edify-flow-step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: var(--body-bg);
+      border: 1px solid rgba(21, 101, 192, 0.12);
+    }
+    .edify-flow-step__num {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: var(--white);
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .edify-flow-step__text strong {
+      display: block;
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+    .edify-flow-step__text span {
+      font-size: 12px;
+      color: var(--royal);
+    }
+
+    /* Designed For 4-column grid */
+    .edify-who-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+    }
+    .edify-who-card {
+      padding: 30px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .edify-who-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: rgba(21, 101, 192, 0.1);
+      color: var(--royal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .edify-who-card h3 {
+      font-family: var(--font-head);
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+    .edify-who-card p {
+      font-size: 13.5px;
+      line-height: 1.65;
+      color: var(--navy);
+      opacity: 0.78;
+      flex: 1;
+    }
+    .edify-who-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .edify-who-tags span {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--royal);
+      background: rgba(21, 101, 192, 0.08);
+      padding: 4px 10px;
+      border-radius: 50px;
+    }
+
+    /* Pricing section */
+    .edify-pricing {
+      padding: var(--section-pad) 0;
+      background: linear-gradient(180deg, var(--white) 0%, var(--ice) 100%);
+    }
+    .edify-billing-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--body-bg);
+      border: 1.5px solid rgba(21, 101, 192, 0.18);
+      padding: 6px;
+      border-radius: 50px;
+      margin-top: 20px;
+    }
+    .edify-billing-btn {
+      border: none;
+      background: transparent;
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy);
+      padding: 10px 22px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all var(--fast);
+    }
+    .edify-billing-btn.active {
+      background: var(--navy);
+      color: var(--white);
+      box-shadow: var(--glow-navy);
+    }
+    .edify-save-pill {
+      font-size: 11px;
+      font-weight: 800;
+      background: rgba(61, 168, 245, 0.2);
+      color: var(--royal);
+      padding: 3px 9px;
+      border-radius: 50px;
+      margin-left: 6px;
+    }
+    .edify-pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 48px;
+      align-items: stretch;
+    }
+    .edify-plan-card {
+      padding: 38px 32px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      background: rgba(255, 255, 255, 0.85);
+    }
+    .edify-plan-card--popular {
+      border: 2px solid var(--royal);
+      box-shadow: var(--shadow-lift);
+      transform: translateY(-8px);
+    }
+    .edify-plan-badge {
+      display: inline-block;
+      align-self: flex-start;
+      font-family: var(--font-head);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 5px 14px;
+      border-radius: 50px;
+      background: rgba(21, 101, 192, 0.1);
+      color: var(--royal);
+      margin-bottom: 14px;
+    }
+    .edify-plan-card--popular .edify-plan-badge {
+      background: var(--navy);
+      color: var(--white);
+    }
+    .edify-plan-title {
+      font-family: var(--font-head);
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .edify-plan-desc {
+      font-size: 13.5px;
+      color: var(--navy);
+      opacity: 0.75;
+      margin-bottom: 22px;
+      line-height: 1.55;
+    }
+    .edify-plan-price {
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(21, 101, 192, 0.12);
+    }
+    .edify-plan-price__amount {
+      font-family: var(--font-head);
+      font-size: 38px;
+      font-weight: 900;
+      color: var(--navy);
+      line-height: 1.1;
+    }
+    .edify-plan-price__period {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--royal);
+    }
+    .edify-plan-price__sub {
+      display: block;
+      font-size: 12px;
+      color: var(--navy);
+      opacity: 0.65;
+      margin-top: 4px;
+    }
+    .edify-plan-features {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      margin-bottom: 28px;
+      flex: 1;
+    }
+    .edify-plan-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13.5px;
+      color: var(--navy);
+      line-height: 1.45;
+    }
+    .edify-plan-features li svg {
+      color: var(--royal);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .edify-plan-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .edify-trial-btn {
+      width: 100%;
+      padding: 12px 18px;
+      border-radius: 50px;
+      border: 1.5px solid rgba(21, 101, 192, 0.25);
+      background: var(--white);
+      color: var(--navy);
+      font-family: var(--font-head);
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--fast);
+    }
+    .edify-trial-btn:hover {
+      border-color: var(--royal);
+      color: var(--royal);
+      background: var(--body-bg);
+    }
+
+    /* Onboarding Wizard Modal */
+    .edify-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(13, 43, 126, 0.68);
+      backdrop-filter: blur(8px);
+      z-index: 9500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .edify-modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .edify-modal {
+      background: var(--white);
+      color: var(--navy);
+      width: 100%;
+      max-width: 760px;
+      max-height: 92vh;
+      overflow-y: auto;
+      border-radius: 26px;
+      padding: 36px;
+      border: 1px solid var(--glass-border-strong);
+      box-shadow: var(--shadow-lift);
+      position: relative;
+    }
+    .edify-modal__close {
+      position: absolute;
+      top: 22px;
+      right: 22px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid rgba(21, 101, 192, 0.2);
+      background: var(--body-bg);
+      color: var(--navy);
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .edify-wizard-steps {
+      display: flex;
+      gap: 10px;
+      margin: 18px 0 24px;
+    }
+    .edify-wizard-step-pill {
+      flex: 1;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: var(--body-bg);
+      border: 1px solid rgba(21, 101, 192, 0.15);
+      font-family: var(--font-head);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--navy);
+      opacity: 0.6;
+    }
+    .edify-wizard-step-pill.active {
+      opacity: 1;
+      background: var(--navy);
+      color: var(--white);
+      border-color: var(--navy);
+    }
+    .edify-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .edify-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .edify-field label {
+      font-family: var(--font-head);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .edify-field input,
+    .edify-field select {
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1.5px solid rgba(21, 101, 192, 0.22);
+      background: var(--body-bg);
+      color: var(--navy);
+      font-family: var(--font-body);
+      font-size: 14px;
+    }
+    .edify-field input:focus,
+    .edify-field select:focus {
+      outline: none;
+      border-color: var(--royal);
+      background: var(--white);
+    }
+    .edify-summary-box {
+      padding: 18px 20px;
+      border-radius: 16px;
+      background: var(--ice);
+      border: 1px solid rgba(21, 101, 192, 0.2);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .edify-receipt-card {
+      padding: 26px;
+      border-radius: 20px;
+      background: var(--body-bg);
+      border: 2px solid var(--royal);
+      margin-top: 16px;
+    }
+    .edify-receipt-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+      padding: 16px 0;
+      border-top: 1px dashed rgba(21, 101, 192, 0.25);
+      border-bottom: 1px dashed rgba(21, 101, 192, 0.25);
+    }
+    .edify-receipt-item small {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--royal);
+    }
+    .edify-receipt-item strong {
+      font-family: var(--font-head);
+      font-size: 14px;
+      color: var(--navy);
+    }
+
+    @media (max-width: 1024px) {
+      .edify-hero__grid,
+      .edify-who-grid,
+      .edify-pricing-grid {
+        grid-template-columns: 1fr;
+      }
+      .edify-flow-steps {
+        grid-template-columns: 1fr 1fr;
+      }
+      .edify-plan-card--popular {
+        transform: none;
+      }
+    }
+    @media (max-width: 640px) {
+      .edify-flow-steps,
+      .edify-form-grid,
+      .edify-receipt-grid,
+      .edify-queue-preview {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================ -->
+  <!-- CURSOR -->
+  <!-- ============================================================ -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <!-- ============================================================ -->
+  <!-- LOADER -->
+  <!-- ============================================================ -->
+  <div class="loader" id="loader">
+    <div class="loader__inner">
+      <div class="loader__logo">
+        <img src="/hc.png" alt="Haynes Consult Logo" />
+      </div>
+      <div class="loader__bar">
+        <div class="loader__progress" id="loaderProgress"></div>
+      </div>
+      <span class="loader__text" id="loaderText">0%</span>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- NAVIGATION -->
+  <!-- ============================================================ -->
+  <nav class="nav" id="nav">
+    <div class="nav__container">
+      <a href="/" class="nav__logo" id="navLogo">
+        <img src="/hc.png" alt="Haynes Consult" class="nav__logo-img" />
+        <span class="nav__logo-text">
+          <span class="nav__logo-name">HAYNES</span>
+          <span class="nav__logo-sub">CONSULT</span>
+        </span>
+      </a>
+      <ul class="nav__links" id="navLinks">
+        <li><a href="/" class="nav__link">Home</a></li>
+        <li class="nav__dropdown-wrap">
+          <a href="#" class="nav__link nav__dropdown-trigger">
+            About <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style="margin-left:4px;vertical-align:middle;"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="nav__dropdown">
+            <a href="/about.html" class="nav__dropdown-item">
+              <span class="nav__dropdown-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              </span>
+              <span>About Us</span>
+            </a>
+            <a href="/dr-senyah.html" class="nav__dropdown-item">
+              <span class="nav__dropdown-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </span>
+              <span>Dr. Senyah</span>
+            </a>
+          </div>
+        </li>
+        <li class="nav__dropdown-wrap">
+          <a href="#" class="nav__link nav__dropdown-trigger">
+            Services <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style="margin-left:4px;vertical-align:middle;"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="nav__dropdown">
+            <a href="/services/digital-services.html" class="nav__dropdown-item">
+              <span class="nav__dropdown-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+              </span>
+              <span>Digital Services</span>
+            </a>
+            <a href="/services/digital-marketing.html" class="nav__dropdown-item">
+              <span class="nav__dropdown-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              </span>
+              <span>Digital Marketing</span>
+            </a>
+            <a href="/services/web-development.html" class="nav__dropdown-item">
+              <span class="nav__dropdown-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+              </span>
+              <span>Web Development</span>
+            </a>
+            <a href="/services/ai-automation.html" class="nav__dropdown-item">
+              <span class="nav__dropdown-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+              </span>
+              <span>AI &amp; Automation</span>
+            </a>
+          </div>
+        </li>
+        <li><a href="/academy.html" class="nav__link">Academy</a></li>
+        <li><a href="/blog/index.html" class="nav__link">Blog</a></li>
+        <li><a href="/case-studies.html" class="nav__link">Case Studies</a></li>
+        <li><a href="/health-dashboard.html" class="nav__link">Portal</a></li>
+        <li><a href="/contact.html" class="nav__link" data-nav="contact">Contact</a></li>
+      </ul>
+      <a href="#pricing" class="nav__cta btn btn--primary">Start Clinic Trial</a>
+      <button class="nav__hamburger" id="hamburger" aria-label="Toggle Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="nav__mobile" id="mobileMenu">
+    <!-- Brand top-left -->
+    <a href="/" class="nav__mobile-brand">
+      <img src="/logo.jpeg" alt="Haynes Consult" />
+      <span class="nav__mobile-brand-text">
+        <span class="nav__mobile-brand-name">HAYNES</span>
+        <span class="nav__mobile-brand-sub">CONSULT</span>
+      </span>
+    </a>
+    <!-- Close button -->
+    <button class="nav__mobile-close" id="mobileClose" aria-label="Close menu">&times;</button>
+
+    <ul class="nav__mobile-links">
+      <li><a href="/" class="nav__mobile-link">Home</a></li>
+      <li style="width:100%; text-align:center;">
+        <div class="nav__mobile-group-label">About</div>
+        <div class="nav__mobile-sub-links">
+          <a href="/about.html" class="nav__mobile-sub-link">About Us</a>
+          <a href="/dr-senyah.html" class="nav__mobile-sub-link">Dr. Senyah</a>
+        </div>
+      </li>
+      <li><a href="/academy.html" class="nav__mobile-link">Academy</a></li>
+      <li><a href="/blog/index.html" class="nav__mobile-link">Blog</a></li>
+      <li><a href="/case-studies.html" class="nav__mobile-link">Case Studies</a></li>
+      <li><a href="/health-dashboard.html" class="nav__mobile-link">Portal</a></li>
+
+      <!-- Services group -->
+      <li style="width:100%; text-align:center;">
+        <div class="nav__mobile-group-label">Services</div>
+        <div class="nav__mobile-sub-links">
+          <a href="/services/digital-services.html" class="nav__mobile-sub-link">Digital Services</a>
+          <a href="/services/digital-marketing.html" class="nav__mobile-sub-link">Digital Marketing</a>
+          <a href="/services/web-development.html" class="nav__mobile-sub-link">Web Development</a>
+          <a href="/services/ai-automation.html" class="nav__mobile-sub-link">AI &amp; Automation</a>
+        </div>
+      </li>
+
+      <li><div class="nav__mobile-divider"></div></li>
+      <li><a href="/contact.html" class="nav__mobile-link">Contact</a></li>
+      <li><a href="#pricing" class="btn btn--primary">Get Started</a></li>
+    </ul>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- HERO SECTION — EDIFY HEALTHCARE OS                           -->
+  <!-- ============================================================ -->
+  <section class="edify-hero" id="dashboard-hero">
+    <div class="section-container">
+      <div class="edify-hero__grid">
+        <div data-animate="slideLeft">
+          <div class="section-badge">Flagship Product by Haynes Consult</div>
+          <h1 class="section-title" style="margin-bottom: 20px;">
+            <span class="text-accent">Edify</span> — The Automated Operating System for Modern Clinics &amp; Hospitals
+          </h1>
+          <p class="section-body" style="font-size: 1.12rem; margin-bottom: 18px;">
+            Replace paper folders, crowded waiting rooms, and missed appointments with one intelligent platform. Edify unifies <strong>FHIR R4 Electronic Health Records</strong>, <strong>AI Clinical Voice Scribe</strong>, <strong>Digital Queue Management</strong>, <strong>Automated SMS &amp; Email Reminders</strong>, and <strong>NHIS/Private Billing</strong>.
+          </p>
+          <p class="section-body" style="font-size: 0.98rem;">
+            No manual sales calls required — choose your clinic package below, create your administrator account, complete instant checkout, and your hospital workspace activates automatically.
+          </p>
+
+          <div class="edify-hero__actions">
+            <a href="#pricing" class="btn btn--primary btn--lg">
+              Select a Package &amp; Start Now
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <button type="button" class="edify-btn-secondary" onclick="openEdifyOnboarding('professional', 'monthly')">
+              Interactive Self-Serve Signup
+            </button>
+            <a href="https://edify.haynesconsult.com" id="edifyDirectLoginBtn" target="_blank" rel="noopener" class="edify-btn-secondary">
+              Launch Edify (edify.haynesconsult.com) ↗
+            </a>
+          </div>
+        </div>
+
+        <div data-animate="slideRight">
+          <div class="edify-console glass-card">
+            <div class="edify-console__top">
+              <div class="edify-console__dots">
+                <span></span><span></span><span></span>
+              </div>
+              <a href="https://edify.haynesconsult.com" target="_blank" rel="noopener" class="edify-console__tag" style="text-decoration:none;">edify.haynesconsult.com ↗</a>
+            </div>
+
+            <a href="https://edify.haynesconsult.com" target="_blank" rel="noopener" style="display:block; margin-bottom: 16px; border-radius: 16px; overflow: hidden; border: 1px solid rgba(21, 101, 192, 0.18); box-shadow: 0 12px 28px rgba(10, 36, 99, 0.12);">
+              <img src="/edify.png" alt="Edify Healthcare Platform — edify.haynesconsult.com" style="width: 100%; height: auto; display: block; object-fit: cover;" />
+            </a>
+
+            <div class="edify-queue-preview">
+              <div class="edify-queue-token">
+                <small>Now Serving · Room 2</small>
+                <strong>Token A014</strong>
+                <span>Assigned: Dr. Mensah · Dental / OPD</span>
+              </div>
+              <div class="edify-console-metric">
+                <small>AI Voice Scribe</small>
+                <strong>SOAP Auto-Drafted</strong>
+                <span>ICD-10 &amp; Rx generated in 4.2s</span>
+              </div>
+            </div>
+
+            <div class="edify-pipeline-strip">
+              <div class="edify-pipeline-strip__title">Automated Patient Queue Lifecycle</div>
+              <div class="edify-pipeline-badges">
+                <span>1. Registered</span>
+                <span>2. Booked</span>
+                <span>3. Arrived</span>
+                <span>4. Waiting</span>
+                <span class="active">5. Called (TV)</span>
+                <span>6. With Clinician</span>
+                <span>7. Completed</span>
+              </div>
+            </div>
+
+            <div class="edify-pipeline-strip" style="margin-bottom: 0;">
+              <div class="edify-pipeline-strip__title">Automated Notification &amp; Receipt Triggers</div>
+              <div class="edify-pipeline-badges">
+                <span class="active">✓ Registration SMS/Email</span>
+                <span class="active">✓ 24h · Morning · 2h Reminders</span>
+                <span class="active">✓ Instant PDF Payment Receipt</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 5-STEP AUTOMATED SELF-SERVE ONBOARDING FLOW                  -->
+  <!-- ============================================================ -->
+  <section class="edify-flow-strip">
+    <div class="section-container">
+      <div class="edify-flow-steps">
+        <div class="edify-flow-step">
+          <div class="edify-flow-step__num">1</div>
+          <div class="edify-flow-step__text">
+            <strong>Explore Edify</strong>
+            <span>Review modules &amp; tiers</span>
+          </div>
+        </div>
+        <div class="edify-flow-step">
+          <div class="edify-flow-step__num">2</div>
+          <div class="edify-flow-step__text">
+            <strong>Select Package</strong>
+            <span>Starter, Pro, or Enterprise</span>
+          </div>
+        </div>
+        <div class="edify-flow-step">
+          <div class="edify-flow-step__num">3</div>
+          <div class="edify-flow-step__text">
+            <strong>Sign Up Clinic</strong>
+            <span>Set branches &amp; admin login</span>
+          </div>
+        </div>
+        <div class="edify-flow-step">
+          <div class="edify-flow-step__num">4</div>
+          <div class="edify-flow-step__text">
+            <strong>Pay or Start Trial</strong>
+            <span>MoMo, Card, or 14-Day Trial</span>
+          </div>
+        </div>
+        <div class="edify-flow-step">
+          <div class="edify-flow-step__num">5</div>
+          <div class="edify-flow-step__text">
+            <strong>Auto-Activated</strong>
+            <span>Instant receipt &amp; portal login</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- WHO EDIFY IS DESIGNED FOR                                    -->
+  <!-- ============================================================ -->
+  <section class="about" id="who-its-for" style="padding: var(--section-pad) 0;">
+    <div class="section-container">
+      <div class="section-header" data-animate="fadeUp">
+        <div class="section-badge">Tailored Clinical Workspaces</div>
+        <h2 class="section-title">Built for Every <span class="text-accent">Healthcare Facility</span></h2>
+        <p class="section-subtitle">Edify adapts its clinical charts, queue stations, and billing codes to your exact specialty.</p>
+      </div>
+
+      <div class="edify-who-grid">
+        <div class="glass-card edify-who-card hover-swivel">
+          <div class="edify-who-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/></svg>
+          </div>
+          <h3>General Hospitals &amp; Polyclinics</h3>
+          <p>End-to-end OPD triage, inpatient ward &amp; bed management (ADT), laboratory worklists, pharmacy dispensing, and NHIS XML claims vetting.</p>
+          <div class="edify-who-tags">
+            <span>OPD &amp; IPD Wards</span>
+            <span>Lab &amp; Pharmacy</span>
+            <span>NHIS XML</span>
+          </div>
+        </div>
+
+        <div class="glass-card edify-who-card hover-swivel">
+          <div class="edify-who-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2C7.5 2 5 5.5 5 9c0 2.8 1.2 5.2 2 8 .6 2.1 1.3 5 2.8 5 1.1 0 1.4-2.5 2.2-2.5s1.1 2.5 2.2 2.5c1.5 0 2.2-2.9 2.8-5 .8-2.8 2-5.2 2-8 0-3.5-2.5-7-7-7Z"/></svg>
+          </div>
+          <h3>Dental Clinics &amp; Practices</h3>
+          <p>Interactive 32-tooth FDI dental odontogram, surface-level caries &amp; restoration charting, multi-visit treatment plans, and chairside recall automation.</p>
+          <div class="edify-who-tags">
+            <span>32-Tooth FDI Chart</span>
+            <span>Chairside Queue</span>
+            <span>Recall SMS</span>
+          </div>
+        </div>
+
+        <div class="glass-card edify-who-card hover-swivel">
+          <div class="edify-who-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <h3>Specialist &amp; Private Clinics</h3>
+          <p>Pediatrics, OB/GYN, Cardiology, ENT, and Dermatology templates with AI Voice Scribe, longitudinal vitals trends, and e-prescriptions.</p>
+          <div class="edify-who-tags">
+            <span>AI Voice Scribe</span>
+            <span>Smart SOAP Notes</span>
+            <span>Telehealth</span>
+          </div>
+        </div>
+
+        <div class="glass-card edify-who-card hover-swivel">
+          <div class="edify-who-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/></svg>
+          </div>
+          <h3>Optical &amp; Eye Centres</h3>
+          <p>Visual acuity, refraction charting (OD/OS), intraocular pressure tracking, frame &amp; lens dispensing orders, and automated pickup alerts.</p>
+          <div class="edify-who-tags">
+            <span>Refraction OD/OS</span>
+            <span>Optical POS</span>
+            <span>Pickup Alerts</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- CORE AUTOMATION PILLARS                                      -->
+  <!-- ============================================================ -->
+  <section class="services" id="features" style="padding: var(--section-pad) 0;">
+    <div class="services__bg-orb services__bg-orb--1"></div>
+    <div class="services__bg-orb services__bg-orb--2"></div>
+    <div class="section-container">
+      <div class="section-header" data-animate="fadeUp">
+        <div class="section-badge">Complete Clinic Automation</div>
+        <h2 class="section-title">Everything Your Facility Needs in <span class="text-accent">One Place</span></h2>
+        <p class="section-subtitle">Engineered to eliminate administrative bottlenecks, prevent no-shows, and accelerate clinical documentation.</p>
+      </div>
+
+      <div class="services__grid">
+        <!-- Pillar 1 -->
+        <div class="services__card glass-card hover-swivel" data-animate="cardReveal" data-delay="0">
+          <span class="services__card-number">01</span>
+          <h3 class="services__card-title">Digital Queue &amp; TV Waiting Room</h3>
+          <p class="services__card-body">Issue automated queue tickets (<code>A001</code>, <code>B002</code>) at check-in and track every patient stage in real time across reception, triage, and consultation rooms.</p>
+          <ul class="services__card-list">
+            <li><span class="list-dot"></span>Registered → Booked → Arrived → Waiting → Called → Completed</li>
+            <li><span class="list-dot"></span>One-Click "Call Next Patient" with Audio Chime &amp; TV Display</li>
+            <li><span class="list-dot"></span>Automatic Clinician &amp; Consulting Room Assignment</li>
+          </ul>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="services__card glass-card services__card--featured hover-swivel" data-animate="cardReveal" data-delay="0.1">
+          <span class="services__card-number">02</span>
+          <h3 class="services__card-title">Multi-Stage Automated Reminders</h3>
+          <p class="services__card-body">Cut missed appointments by up to 85%. Edify automatically dispatches branded SMS and Email alerts at every stage of the patient journey.</p>
+          <ul class="services__card-list">
+            <li><span class="list-dot"></span>Instant Registration &amp; Appointment Booking Confirmation</li>
+            <li><span class="list-dot"></span>Automated Reminders: 24h Prior, Morning-Of, and 2h Prior</li>
+            <li><span class="list-dot"></span>Instant Digital Receipt &amp; Thank-You Alert After Payment</li>
+          </ul>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="services__card glass-card hover-swivel" data-animate="cardReveal" data-delay="0.2">
+          <span class="services__card-number">03</span>
+          <h3 class="services__card-title">AI Clinical Scribe &amp; NHIS Billing</h3>
+          <p class="services__card-body">Speak naturally during consultations while Edify drafts structured SOAP notes, suggests ICD-10 codes, and routes itemized bills to the cashier.</p>
+          <ul class="services__card-list">
+            <li><span class="list-dot"></span>Ambient AI Voice-to-SOAP Clinical Documentation</li>
+            <li><span class="list-dot"></span>NHIS Tariff Sync, Claims Vetting &amp; XML Export</li>
+            <li><span class="list-dot"></span>Multi-Branch Isolation &amp; Role-Based Access Control</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- INTERACTIVE PRICING & PACKAGES SECTION                       -->
+  <!-- ============================================================ -->
+  <section class="edify-pricing" id="pricing">
+    <div class="section-container">
+      <div class="section-header" data-animate="fadeUp">
+        <div class="section-badge">Self-Serve Subscription Packages</div>
+        <h2 class="section-title">Select Your <span class="text-accent">Edify Package</span> &amp; Launch Today</h2>
+        <p class="section-subtitle">Transparent pricing in Ghana Cedis (GH₵). Sign up online, receive your official payment receipt immediately, and access your activated clinic portal in under 2 minutes.</p>
+
+        <div class="edify-billing-toggle" role="tablist" aria-label="Billing Cycle Toggle">
+          <button type="button" class="edify-billing-btn active" id="toggleMonthlyBtn" onclick="setBillingCycle('monthly')">
+            Monthly Billing
+          </button>
+          <button type="button" class="edify-billing-btn" id="toggleAnnualBtn" onclick="setBillingCycle('annual')">
+            Annual Billing <span class="edify-save-pill">Save up to 24%</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="edify-pricing-grid">
+        <!-- Starter Clinic -->
+        <div class="glass-card edify-plan-card" data-animate="cardReveal" data-delay="0">
+          <span class="edify-plan-badge">Solo &amp; Small Practices</span>
+          <h3 class="edify-plan-title">Starter Clinic</h3>
+          <p class="edify-plan-desc">Ideal for single-branch dental, optical, or specialist clinics transitioning from paper to digital records.</p>
+          <div class="edify-plan-price">
+            <span class="edify-plan-price__amount" id="price-starter">GH₵ 600</span>
+            <span class="edify-plan-price__period" id="period-starter">/ month</span>
+            <span class="edify-plan-price__sub" id="sub-starter">Or GH₵ 6,000 billed annually (2 months free)</span>
+          </div>
+          <ul class="edify-plan-features">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Up to 3 Staff Accounts &amp; 1 Clinic Branch</span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>FHIR R4 Electronic Health Records (EHR)</span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Digital Queue System (Token A001 + Waiting List)</span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Automated Registration &amp; Booking SMS/Email</span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Cash, MoMo &amp; Card Billing + Instant PDF Receipts</span></li>
+          </ul>
+          <div class="edify-plan-actions">
+            <button type="button" class="btn btn--primary btn--full" onclick="openEdifyOnboarding('starter')">
+              Select Starter &amp; Sign Up
+            </button>
+            <button type="button" class="edify-trial-btn" onclick="openEdifyOnboarding('starter', 'trial')">
+              Start 14-Day Free Trial
+            </button>
+          </div>
+        </div>
+
+        <!-- Professional Clinic -->
+        <div class="glass-card edify-plan-card edify-plan-card--popular" data-animate="cardReveal" data-delay="0.1">
+          <span class="edify-plan-badge">Most Popular</span>
+          <h3 class="edify-plan-title">Professional Clinic</h3>
+          <p class="edify-plan-desc">Full automation suite with AI Voice Scribe, 3-stage appointment reminders, FDI dental charting, and pharmacy/lab modules.</p>
+          <div class="edify-plan-price">
+            <span class="edify-plan-price__amount" id="price-professional">GH₵ 1,000</span>
+            <span class="edify-plan-price__period" id="period-professional">/ month</span>
+            <span class="edify-plan-price__sub" id="sub-professional">Or GH₵ 8,500 billed annually (Save GH₵ 3,500/yr)</span>
+          </div>
+          <ul class="edify-plan-features">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Up to 15 Staff Accounts &amp; 2 Clinic Branches</span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>AI Clinical Voice Scribe &amp; Smart SOAP Notes</span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>3-Stage Reminders (24h, Morning-Of &amp; 2h Prior)</span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>32-Tooth FDI Dental Chart, Optical &amp; Vitals Modules</span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Live Waiting Room TV Display &amp; Audio Calling</span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Pharmacy Inventory, E-Prescribing &amp; Lab Worklists</span></li>
+          </ul>
+          <div class="edify-plan-actions">
+            <button type="button" class="btn btn--primary btn--full" onclick="openEdifyOnboarding('professional')">
+              Select Professional &amp; Sign Up
+            </button>
+            <button type="button" class="edify-trial-btn" onclick="openEdifyOnboarding('professional', 'trial')">
+              Start 14-Day Free Trial
+            </button>
+          </div>
+        </div>
+
+        <!-- Enterprise Hospital -->
+        <div class="glass-card edify-plan-card" data-animate="cardReveal" data-delay="0.2">
+          <span class="edify-plan-badge">Multi-Branch &amp; Hospitals</span>
+          <h3 class="edify-plan-title">Enterprise Hospital</h3>
+          <p class="edify-plan-desc">Built for general hospitals and multi-branch healthcare groups requiring inpatient wards, NHIS XML claims, and unlimited staff.</p>
+          <div class="edify-plan-price">
+            <span class="edify-plan-price__amount" id="price-enterprise">GH₵ 2,200</span>
+            <span class="edify-plan-price__period" id="period-enterprise">/ month</span>
+            <span class="edify-plan-price__sub" id="sub-enterprise">Or GH₵ 20,000 billed annually (Save GH₵ 6,400/yr)</span>
+          </div>
+          <ul class="edify-plan-features">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Unlimited Staff Accounts &amp; Multi-Branch Isolation</span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>NHIS Claims XML Vetting &amp; Corporate Insurance Billing</span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Inpatient Ward &amp; Bed Management (ADT) + Handover</span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Executive Revenue Analytics &amp; AI Forecasting</span></li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Dedicated Onboarding Engineer &amp; 24/7 Priority SLA</span></li>
+          </ul>
+          <div class="edify-plan-actions">
+            <button type="button" class="btn btn--primary btn--full" onclick="openEdifyOnboarding('enterprise')">
+              Select Enterprise &amp; Sign Up
+            </button>
+            <button type="button" class="edify-trial-btn" onclick="openEdifyOnboarding('enterprise', 'trial')">
+              Start 14-Day Free Trial
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SELF-SERVE CLINIC ONBOARDING WIZARD MODAL                    -->
+  <!-- ============================================================ -->
+  <div class="edify-modal-overlay" id="edifyOnboardingModal" role="dialog" aria-modal="true" aria-labelledby="edifyModalTitle">
+    <div class="edify-modal">
+      <button type="button" class="edify-modal__close" onclick="closeEdifyOnboarding()" aria-label="Close modal">&times;</button>
+
+      <div class="section-badge" style="margin-bottom: 8px;">Automated Self-Serve Provisioning</div>
+      <h2 id="edifyModalTitle" style="font-family: var(--font-head); font-size: 24px; font-weight: 900; color: var(--navy);">
+        Activate Your Edify Clinic Workspace
+      </h2>
+
+      <div class="edify-wizard-steps">
+        <div class="edify-wizard-step-pill active" id="wizStepPill1">1. Package &amp; Billing</div>
+        <div class="edify-wizard-step-pill" id="wizStepPill2">2. Clinic &amp; Admin Details</div>
+        <div class="edify-wizard-step-pill" id="wizStepPill3">3. Instant Activation &amp; Receipt</div>
+      </div>
+
+      <!-- STEP 1 & 2 FORM -->
+      <form id="edifyOnboardingForm" onsubmit="handleEdifyOnboardingSubmit(event)">
+        <div class="edify-summary-box">
+          <div>
+            <small style="display:block; font-size:11px; font-weight:700; text-transform:uppercase; color:var(--royal);">Selected Package</small>
+            <strong id="summaryPlanName" style="font-family:var(--font-head); font-size:18px; color:var(--navy);">Professional Clinic</strong>
+          </div>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <select id="onboardPlanSelect" onchange="updateOnboardingSummary()" style="padding:8px 12px; border-radius:10px; border:1px solid rgba(21,101,192,0.25); font-weight:700; color:var(--navy); background:var(--white);">
+              <option value="starter">Starter Clinic</option>
+              <option value="professional" selected>Professional Clinic</option>
+              <option value="enterprise">Enterprise Hospital</option>
+            </select>
+            <select id="onboardCycleSelect" onchange="updateOnboardingSummary()" style="padding:8px 12px; border-radius:10px; border:1px solid rgba(21,101,192,0.25); font-weight:700; color:var(--navy); background:var(--white);">
+              <option value="monthly">Monthly Billing</option>
+              <option value="annual">Annual Billing (Save up to 24%)</option>
+              <option value="trial">14-Day Free Trial (GH₵ 0 Today)</option>
+            </select>
+          </div>
+          <div style="text-align:right;">
+            <small style="display:block; font-size:11px; font-weight:700; text-transform:uppercase; color:var(--royal);">Total Due Today</small>
+            <strong id="summaryAmountDue" style="font-family:var(--font-head); font-size:20px; color:var(--navy);">GH₵ 1,000</strong>
+          </div>
+        </div>
+
+        <div class="edify-form-grid">
+          <div class="edify-field">
+            <label for="onboardClinicName">Hospital / Clinic Name *</label>
+            <input type="text" id="onboardClinicName" required placeholder="e.g. PrimeCare Dental & Medical Centre" />
+          </div>
+          <div class="edify-field">
+            <label for="onboardSpecialty">Facility Type / Specialty *</label>
+            <select id="onboardSpecialty" required>
+              <option value="General Hospital">General Hospital / Polyclinic</option>
+              <option value="Dental Clinic">Dental Clinic (with 32-Tooth FDI Chart)</option>
+              <option value="Specialist Clinic">Specialist Medical Clinic</option>
+              <option value="Optical Clinic">Optical &amp; Eye Care Centre</option>
+              <option value="Diagnostic & Lab Centre">Diagnostic &amp; Laboratory Centre</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="edify-form-grid">
+          <div class="edify-field">
+            <label for="onboardFirstName">Administrator First Name *</label>
+            <input type="text" id="onboardFirstName" required placeholder="Kwame" />
+          </div>
+          <div class="edify-field">
+            <label for="onboardLastName">Administrator Last Name *</label>
+            <input type="text" id="onboardLastName" required placeholder="Mensah" />
+          </div>
+        </div>
+
+        <div class="edify-form-grid">
+          <div class="edify-field">
+            <label for="onboardEmail">Official Clinic / Admin Email *</label>
+            <input type="email" id="onboardEmail" required placeholder="admin@yourclinic.com" />
+          </div>
+          <div class="edify-field">
+            <label for="onboardPhone">Clinic Phone / WhatsApp Number *</label>
+            <input type="tel" id="onboardPhone" required placeholder="+233 20 198 5964" />
+          </div>
+        </div>
+
+        <div class="edify-form-grid">
+          <div class="edify-field">
+            <label for="onboardBranch">Primary Branch Location *</label>
+            <input type="text" id="onboardBranch" required placeholder="East Legon, Accra" value="Main Branch — Accra" />
+          </div>
+          <div class="edify-field">
+            <label for="onboardPassword">Create Portal Password (min. 12 chars) *</label>
+            <input type="password" id="onboardPassword" required minlength="12" placeholder="At least 12 characters" />
+          </div>
+        </div>
+
+        <div id="onboardErrorBox" style="display:none; padding:12px 16px; border-radius:12px; background:rgba(21,101,192,0.08); border:1px solid var(--royal); color:var(--navy); font-size:13px; font-weight:600; margin-bottom:16px;"></div>
+
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:20px;">
+          <button type="submit" class="btn btn--primary btn--lg" id="onboardSubmitBtn" style="flex:1; justify-content:center;">
+            <span id="onboardSubmitText">Pay &amp; Auto-Activate Clinic Workspace</span>
+          </button>
+          <button type="button" class="edify-btn-secondary" id="onboardFastVerifyBtn" onclick="submitOnboardingWithReference('EDIFY-SIM-' + Date.now())" title="Instant checkout verification for demos & testing">
+            Instant Demo Checkout &amp; Receipt
+          </button>
+        </div>
+      </form>
+
+      <!-- STEP 3: AUTOMATED PAYMENT CONFIRMATION & OFFICIAL RECEIPT -->
+      <div id="edifyReceiptView" style="display:none;">
+        <div class="edify-receipt-card" id="printableReceiptArea">
+          <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+            <div>
+              <span class="edify-plan-badge" style="background:var(--navy); color:var(--white); margin-bottom:6px;">✓ Payment Confirmed &amp; Clinic Activated</span>
+              <h3 style="font-family:var(--font-head); font-size:20px; font-weight:900; color:var(--navy);" id="rcpClinicName">Clinic Workspace Ready</h3>
+            </div>
+            <div style="text-align:right;">
+              <small style="display:block; font-size:11px; font-weight:700; color:var(--royal);">OFFICIAL RECEIPT NO.</small>
+              <strong id="rcpNumber" style="font-family:var(--font-head); font-size:16px; color:var(--navy);">EDF-RCP-00001</strong>
+            </div>
+          </div>
+
+          <div class="edify-receipt-grid">
+            <div class="edify-receipt-item">
+              <small>Package &amp; Billing Cycle</small>
+              <strong id="rcpPlan">Professional Clinic (monthly)</strong>
+            </div>
+            <div class="edify-receipt-item">
+              <small>Amount Paid</small>
+              <strong id="rcpAmount">GH₵ 1,000.00</strong>
+            </div>
+            <div class="edify-receipt-item">
+              <small>Payment Reference</small>
+              <strong id="rcpReference">EDIFY-REF-001</strong>
+            </div>
+            <div class="edify-receipt-item">
+              <small>Administrator Account</small>
+              <strong id="rcpAdmin">admin@clinic.com</strong>
+            </div>
+            <div class="edify-receipt-item">
+              <small>Activation Date</small>
+              <strong id="rcpPaidAt">Today</strong>
+            </div>
+            <div class="edify-receipt-item">
+              <small>Subscription Valid Until</small>
+              <strong id="rcpExpiresAt">Next Billing Date</strong>
+            </div>
+          </div>
+
+          <p style="font-size:13px; color:var(--navy); opacity:0.8; line-height:1.5;">
+            A copy of this receipt and your login credentials have been logged for your facility. Your Edify workspace (EHR, Digital Queue System, AI Scribe, and Automated Reminders) is now active.
+          </p>
+        </div>
+
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:22px;">
+          <a href="https://edify.haynesconsult.com/login" id="rcpPortalBtn" class="btn btn--primary btn--lg" style="flex:1; justify-content:center;">
+            Access Your Activated Edify Clinic Portal →
+          </a>
+          <button type="button" class="edify-btn-secondary" onclick="window.print()">
+            Print / Save Official PDF Receipt
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- CTA SECTION                                                  -->
+  <!-- ============================================================ -->
+  <section class="cta-section">
+    <div class="cta-section__bg"></div>
+    <div class="cta-section__orbs">
+      <div class="cta-section__orb cta-section__orb--1"></div>
+      <div class="cta-section__orb cta-section__orb--2"></div>
+    </div>
+    <div class="section-container">
+      <div class="cta-section__content" data-animate="fadeUp">
+        <p class="cta-section__eyebrow">Ready to Automate Your Facility?</p>
+        <h2 class="cta-section__title">Launch <span class="text-sky">Edify</span> in Your Clinic Today.</h2>
+        <p class="cta-section__body">Join leading hospitals, dental clinics, and specialist centres across Ghana running paperless on Edify.</p>
+        <div class="cta-section__actions">
+          <button type="button" class="btn btn--white btn--lg" onclick="openEdifyOnboarding('professional', 'monthly')">
+            <span>Sign Up &amp; Activate Now</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- FOOTER                                                       -->
+  <!-- ============================================================ -->
+  <footer class="footer">
+    <div class="footer__glow"></div>
+
+    <!-- Editorial statement + CTA -->
+    <div class="footer__top">
+      <div class="footer__statement">
+        Digitize.<br>Automate.<br><em>Grow.</em>
+      </div>
+      <a href="/contact.html" class="footer__top-cta">
+        Start a Project
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+    <!-- Mid row: brand | nav | contact | socials -->
+    <div class="footer__mid">
+      <a href="/" class="footer__brand">
+        <img src="/logo.jpeg" alt="Haynes Consult" />
+        <span class="footer__brand-text">
+          <span class="footer__brand-name">HAYNES</span>
+          <span class="footer__brand-sub">CONSULT</span>
+        </span>
+      </a>
+
+      <nav class="footer__nav">
+        <a href="/about.html">About</a>
+        <a href="/dr-senyah.html">Dr. Senyah</a>
+        <a href="/academy.html">Academy</a>
+        <a href="/case-studies.html">Case Studies</a>
+        <a href="/#services">Services</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+
+      <div class="footer__contact-line">
+        <span>Accra, Ghana</span>
+        <a href="mailto:info@haynesconsult.com">info@haynesconsult.com</a>
+        <span>+233 20 198 5964</span>
+      </div>
+
+      <div class="footer__social">
+        <a href="https://www.tiktok.com/@haynesconsult?_r=1&_t=ZS-95eUS7TMtOS" class="footer__social-btn" target="_blank" rel="noopener" aria-label="TikTok">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.74a4.85 4.85 0 0 1-1.01-.05z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/company/haynes-consult/" class="footer__social-btn" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/haynesconsult?igsh=MWN3NWdqNGhtMmlkZw==" class="footer__social-btn" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="footer__bar">
+      <span>© 2026 Haynes Consult. All rights reserved.</span>
+      <span>Accra &nbsp;·&nbsp; Ghana &nbsp;·&nbsp; Africa</span>
+    </div>
+  </footer>
+
+  <!-- Back to top -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M18 15l-6-6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+
+  <script>
+    const EDIFY_PRICING = {
+      starter: { name: 'Starter Clinic', monthly: 600, annual: 6000 },
+      professional: { name: 'Professional Clinic', monthly: 1000, annual: 8500 },
+      enterprise: { name: 'Enterprise Hospital', monthly: 2200, annual: 20000 }
+    };
+
+    let currentBillingCycle = 'monthly';
+
+    function setBillingCycle(cycle) {
+      currentBillingCycle = cycle;
+      document.getElementById('toggleMonthlyBtn').classList.toggle('active', cycle === 'monthly');
+      document.getElementById('toggleAnnualBtn').classList.toggle('active', cycle === 'annual');
+
+      Object.keys(EDIFY_PRICING).forEach((planId) => {
+        const plan = EDIFY_PRICING[planId];
+        const priceEl = document.getElementById('price-' + planId);
+        const periodEl = document.getElementById('period-' + planId);
+        const subEl = document.getElementById('sub-' + planId);
+        if (cycle === 'annual') {
+          priceEl.textContent = 'GH₵ ' + plan.annual.toLocaleString();
+          periodEl.textContent = '/ year';
+          subEl.textContent = 'Equivalent to GH₵ ' + Math.round(plan.annual / 12).toLocaleString() + '/mo (Annual savings applied)';
+        } else {
+          priceEl.textContent = 'GH₵ ' + plan.monthly.toLocaleString();
+          periodEl.textContent = '/ month';
+          subEl.textContent = 'Or GH₵ ' + plan.annual.toLocaleString() + ' billed annually';
+        }
+      });
+    }
+
+    function openEdifyOnboarding(planId, cycleOverride) {
+      const selectedPlan = planId || 'professional';
+      const selectedCycle = cycleOverride || currentBillingCycle || 'monthly';
+      document.getElementById('onboardPlanSelect').value = selectedPlan;
+      document.getElementById('onboardCycleSelect').value = selectedCycle;
+
+      // Reset view to form
+      document.getElementById('edifyOnboardingForm').style.display = 'block';
+      document.getElementById('edifyReceiptView').style.display = 'none';
+      document.getElementById('onboardErrorBox').style.display = 'none';
+      document.getElementById('wizStepPill1').classList.add('active');
+      document.getElementById('wizStepPill2').classList.add('active');
+      document.getElementById('wizStepPill3').classList.remove('active');
+
+      updateOnboardingSummary();
+      document.getElementById('edifyOnboardingModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeEdifyOnboarding() {
+      document.getElementById('edifyOnboardingModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function updateOnboardingSummary() {
+      const planId = document.getElementById('onboardPlanSelect').value;
+      const cycle = document.getElementById('onboardCycleSelect').value;
+      const plan = EDIFY_PRICING[planId] || EDIFY_PRICING.professional;
+      const amount = cycle === 'trial' ? 0 : (cycle === 'annual' ? plan.annual : plan.monthly);
+
+      document.getElementById('summaryPlanName').textContent = plan.name;
+      document.getElementById('summaryAmountDue').textContent = cycle === 'trial'
+        ? 'GH₵ 0 (14-Day Trial)'
+        : 'GH₵ ' + amount.toLocaleString() + (cycle === 'annual' ? ' / yr' : ' / mo');
+
+      const submitText = document.getElementById('onboardSubmitText');
+      const fastVerifyBtn = document.getElementById('onboardFastVerifyBtn');
+      if (cycle === 'trial') {
+        submitText.textContent = 'Start 14-Day Free Trial & Activate Portal →';
+        fastVerifyBtn.style.display = 'none';
+      } else {
+        submitText.textContent = 'Pay GH₵ ' + amount.toLocaleString() + ' & Auto-Activate Clinic →';
+        fastVerifyBtn.style.display = 'inline-flex';
+      }
+    }
+
+    function handleEdifyOnboardingSubmit(e) {
+      e.preventDefault();
+      const planId = document.getElementById('onboardPlanSelect').value;
+      const cycle = document.getElementById('onboardCycleSelect').value;
+      const email = document.getElementById('onboardEmail').value.trim();
+      const password = document.getElementById('onboardPassword').value;
+      const plan = EDIFY_PRICING[planId] || EDIFY_PRICING.professional;
+      const amountGhs = cycle === 'trial' ? 0 : (cycle === 'annual' ? plan.annual : plan.monthly);
+
+      if (!password || password.length < 12) {
+        showOnboardError('Administrator password must be at least 12 characters.');
+        return;
+      }
+
+      if (cycle === 'trial') {
+        submitOnboardingWithReference('EDIFY-TRIAL-' + Date.now());
+        return;
+      }
+
+      if (window.PaystackPop) {
+        const handler = PaystackPop.setup({
+          key: 'pk_live_7b723aef1dd54dcb414923fffbc7548d14a58879',
+          email: email,
+          amount: amountGhs * 100,
+          currency: 'GHS',
+          ref: 'EDIFY-' + planId.toUpperCase() + '-' + Date.now(),
+          callback: function(response) {
+            submitOnboardingWithReference(response.reference);
+          },
+          onClose: function() {}
+        });
+        handler.openIframe();
+      } else {
+        submitOnboardingWithReference('EDIFY-SIM-' + Date.now());
+      }
+    }
+
+    function showOnboardError(msg) {
+      const box = document.getElementById('onboardErrorBox');
+      box.textContent = msg;
+      box.style.display = 'block';
+    }
+
+    async function submitOnboardingWithReference(reference) {
+      const errorBox = document.getElementById('onboardErrorBox');
+      errorBox.style.display = 'none';
+
+      const hospitalName = document.getElementById('onboardClinicName').value.trim();
+      const specialization = document.getElementById('onboardSpecialty').value;
+      const firstName = document.getElementById('onboardFirstName').value.trim();
+      const lastName = document.getElementById('onboardLastName').value.trim();
+      const email = document.getElementById('onboardEmail').value.trim();
+      const phone = document.getElementById('onboardPhone').value.trim();
+      const branchName = document.getElementById('onboardBranch').value.trim();
+      const password = document.getElementById('onboardPassword').value;
+      const planId = document.getElementById('onboardPlanSelect').value;
+      const billingCycle = document.getElementById('onboardCycleSelect').value;
+
+      if (!hospitalName || !firstName || !lastName || !email || !phone) {
+        showOnboardError('Please fill in all required clinic and administrator fields first.');
+        return;
+      }
+      if (!password || password.length < 12) {
+        showOnboardError('Password must be at least 12 characters long.');
+        return;
+      }
+
+      const submitBtn = document.getElementById('onboardSubmitBtn');
+      const submitText = document.getElementById('onboardSubmitText');
+      const originalText = submitText.textContent;
+      submitBtn.disabled = true;
+      submitText.textContent = 'Provisioning Clinic Workspace...';
+
+      try {
+        const apiBase = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port !== '3000'
+          ? 'http://localhost:3001'
+          : '';
+        const res = await fetch(apiBase + '/api/edify/onboard', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            hospitalName,
+            selectedInstitution: 'Custom',
+            specialization,
+            firstName,
+            lastName,
+            email,
+            phone,
+            password,
+            branches: [{ name: branchName || (hospitalName + ' Main Branch'), address: branchName, phone }],
+            planId,
+            billingCycle,
+            reference
+          })
+        });
+
+        const data = await res.json();
+        if (!res.ok || !data.success) {
+          throw new Error(data.error || 'Failed to complete onboarding');
+        }
+
+        const r = data.receipt;
+        document.getElementById('rcpClinicName').textContent = r.clinicName + ' — Active';
+        document.getElementById('rcpNumber').textContent = r.receiptNo;
+        document.getElementById('rcpPlan').textContent = r.planName + ' (' + r.billingCycle.toUpperCase() + ')';
+        document.getElementById('rcpAmount').textContent = 'GH₵ ' + Number(r.amount).toLocaleString();
+        document.getElementById('rcpReference').textContent = r.reference;
+        document.getElementById('rcpAdmin').textContent = r.adminName + ' (' + r.email + ')';
+        document.getElementById('rcpPaidAt').textContent = new Date(r.paidAt).toLocaleDateString('en-GB', {
+          day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+        });
+        document.getElementById('rcpExpiresAt').textContent = new Date(r.expiresAt).toLocaleDateString('en-GB', {
+          day: 'numeric', month: 'short', year: 'numeric'
+        });
+
+        const portalBtn = document.getElementById('rcpPortalBtn');
+        portalBtn.href = data.edifyLoginUrl || 'https://edify.haynesconsult.com';
+
+        document.getElementById('edifyOnboardingForm').style.display = 'none';
+        document.getElementById('edifyReceiptView').style.display = 'block';
+        document.getElementById('wizStepPill3').classList.add('active');
+      } catch (err) {
+        showOnboardError(err.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitText.textContent = originalText;
+      }
+    }
+  </script>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -24,7 +24,8 @@ export default defineConfig({
         adminCaseStudies: resolve(__dirname, 'admin-case-studies.html'),
         blogIndex: resolve(__dirname, 'blog/index.html'),
         blogArticle: resolve(__dirname, 'blog/article.html'),
-        contact: resolve(__dirname, 'contact.html')
+        contact: resolve(__dirname, 'contact.html'),
+        healthDashboard: resolve(__dirname, 'health-dashboard.html')
       }
     }
   },

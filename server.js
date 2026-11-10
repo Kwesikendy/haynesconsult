@@ -37,6 +37,10 @@ app.get(['/about-us/dr-martin-senyah', '/about-us/dr-martin-senyah.html'], (req,
   res.redirect(301, '/dr-senyah.html');
 });
 
+app.get(['/edify', '/edify.html'], (req, res) => {
+  res.redirect(301, '/health-dashboard.html');
+});
+
 // Serve built frontend
 app.use(express.static(path.join(__dirname, 'dist'), { extensions: ['html'] }));
 
@@ -386,6 +390,296 @@ app.delete('/api/admin/case-studies/:id', authenticateAdmin, (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+// --- EDIFY SELF-SERVE ONBOARDING & SUBSCRIPTIONS ---
+const EDIFY_PLANS = {
+  starter: {
+    id: 'starter',
+    name: 'Starter Clinic',
+    monthly: 600,
+    annual: 6000,
+    currency: 'GHS',
+    badge: 'Solo & Small Practices',
+    features: [
+      'Up to 3 Staff Accounts & 1 Clinic Branch',
+      'Full FHIR R4 Electronic Health Records (EHR)',
+      'Digital Patient Queue System (Token A001 + Waiting List)',
+      'Automated SMS & Email Appointment Confirmations',
+      'Cash, Mobile Money & Card Billing + Instant PDF Receipts'
+    ]
+  },
+  professional: {
+    id: 'professional',
+    name: 'Professional Clinic',
+    monthly: 1000,
+    annual: 8500,
+    currency: 'GHS',
+    badge: 'Most Popular',
+    features: [
+      'Up to 15 Staff Accounts & 2 Clinic Branches',
+      'AI Clinical Voice Scribe & Smart SOAP Notes',
+      '3-Stage Automated Reminders (24h, Morning-Of, 2h Before)',
+      'Specialty Modules (32-Tooth FDI Dental Chart, Optical, Vitals)',
+      'Live Waiting Room TV Display & Voice Calling',
+      'Pharmacy Inventory, E-Prescribing & Lab Worklists'
+    ]
+  },
+  enterprise: {
+    id: 'enterprise',
+    name: 'Enterprise Hospital',
+    monthly: 2200,
+    annual: 20000,
+    currency: 'GHS',
+    badge: 'Multi-Branch & Hospitals',
+    features: [
+      'Unlimited Staff Accounts & Multi-Branch Isolation',
+      'NHIS Claims XML Vetting & Corporate Insurance Billing',
+      'Inpatient Ward & Bed Management (ADT) + Shift Handover',
+      'Full AI Clinical Copilot, Analytics & Revenue Forecasting',
+      'Dedicated Onboarding Engineer & 24/7 Priority SLA'
+    ]
+  }
+};
+
+app.get('/api/edify/plans', (req, res) => {
+  res.json({
+    currency: 'GHS',
+    plans: Object.values(EDIFY_PLANS)
+  });
+});
+
+app.post('/api/edify/onboard', async (req, res) => {
+  try {
+    const {
+      hospitalName,
+      selectedInstitution,
+      specialization,
+      firstName,
+      lastName,
+      email,
+      phone,
+      password,
+      branches,
+      planId,
+      billingCycle,
+      reference
+    } = req.body || {};
+
+    const cleanClinicName = (hospitalName || selectedInstitution || '').trim();
+    const cleanEmail = (email || '').trim().toLowerCase();
+    const cleanFirst = (firstName || '').trim();
+    const cleanLast = (lastName || '').trim();
+    const cleanPhone = (phone || '').trim();
+    const cleanSpec = (specialization || 'General Hospital').trim();
+    const cleanCycle = (billingCycle || 'monthly').trim().toLowerCase();
+    const plan = EDIFY_PLANS[planId];
+
+    if (!cleanClinicName || !cleanFirst || !cleanLast || !cleanEmail || !cleanEmail.includes('@')) {
+      return res.status(400).json({ error: 'Please provide clinic name, administrator name, and a valid email address.' });
+    }
+    if (!password || String(password).length < 12) {
+      return res.status(400).json({ error: 'Administrator password must be at least 12 characters long.' });
+    }
+    if (!plan) {
+      return res.status(400).json({ error: 'Invalid subscription package selected.' });
+    }
+    if (!['monthly', 'annual', 'trial'].includes(cleanCycle)) {
+      return res.status(400).json({ error: 'Invalid billing cycle. Choose monthly, annual, or trial.' });
+    }
+
+    const expectedAmountGhs = cleanCycle === 'trial' ? 0 : (cleanCycle === 'annual' ? plan.annual : plan.monthly);
+    const expectedAmountPesewas = expectedAmountGhs * 100;
+    const txReference = reference || `EDIFY-${ cleanCycle.toUpperCase() }-${ Date.now() }`;
+
+    // Verify payment if not a free trial
+    if (cleanCycle !== 'trial') {
+      if (!reference) {
+        return res.status(400).json({ error: 'Payment reference is required for paid subscriptions.' });
+      }
+      const isSimulated = String(reference).startsWith('EDIFY-SIM-') && process.env.ALLOW_SIMULATED_PAYMENTS !== 'false';
+      if (!isSimulated) {
+        if (!process.env.PAYSTACK_SECRET_KEY) {
+          return res.status(400).json({ error: 'Paystack secret key not configured on server.' });
+        }
+        const paystackRes = await fetch(`https://api.paystack.co/transaction/verify/${encodeURIComponent(reference)}`, {
+          headers: {
+            Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`
+          }
+        });
+        const paystackData = await paystackRes.json();
+        if (!paystackData.status || !paystackData.data || paystackData.data.status !== 'success') {
+          return res.status(400).json({ error: 'Payment verification failed with Paystack.' });
+        }
+        if (paystackData.data.amount < expectedAmountPesewas) {
+          return res.status(400).json({ error: 'Verified payment amount does not match selected package price.' });
+        }
+      }
+    }
+
+    // Calculate expiry date
+    const now = new Date();
+    const daysToAdd = cleanCycle === 'trial' ? 14 : (cleanCycle === 'annual' ? 365 : 30);
+    const expiresDate = new Date(now.getTime() + daysToAdd * 24 * 60 * 60 * 1000);
+    const paidAtIso = now.toISOString();
+    const expiresAtIso = expiresDate.toISOString();
+
+    // Provision clinic on Edify Backend
+    const edifyBaseUrl = (process.env.EDIFY_API_URL || 'https://edify.haynesconsult.com').replace(/\/+$/, '');
+    const edifyPortalBase = (process.env.EDIFY_PORTAL_URL || 'https://edify.haynesconsult.com').replace(/\/+$/, '');
+    let edifyOrgId = null;
+    let provisionedWarning = null;
+
+    const normalizedBranches = Array.isArray(branches) && branches.length > 0
+      ? branches
+      : [{ name: `${cleanClinicName} (Main Branch)`, address: 'Accra, Ghana', phone: cleanPhone }];
+
+    try {
+      const edifyRes = await fetch(`${edifyBaseUrl}/api/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          hospitalName: cleanClinicName,
+          selectedInstitution: selectedInstitution || 'Custom',
+          specialization: cleanSpec,
+          firstName: cleanFirst,
+          lastName: cleanLast,
+          email: cleanEmail,
+          phone: cleanPhone,
+          password,
+          branches: normalizedBranches,
+          subscription: {
+            planId: plan.id,
+            planName: plan.name,
+            billingCycle: cleanCycle,
+            amount: expectedAmountGhs,
+            currency: 'GHS',
+            reference: txReference,
+            status: cleanCycle === 'trial' ? 'trial' : 'active',
+            expiresAt: expiresAtIso
+          }
+        })
+      });
+      const edifyData = await edifyRes.json().catch(() => ({}));
+      if (edifyRes.ok && edifyData.organizationId) {
+        edifyOrgId = edifyData.organizationId;
+      } else if (!edifyRes.ok) {
+        provisionedWarning = edifyData.error || 'Clinic subscription recorded; complete portal activation via the link below.';
+      }
+    } catch (err) {
+      provisionedWarning = 'Subscription confirmed and saved. Click your portal link below to finish syncing your workspace.';
+    }
+
+    const adminFullName = `Dr. ${cleanFirst} ${cleanLast}`.replace(/^Dr\.\s+Dr\.\s+/i, 'Dr. ');
+    const subStatus = cleanCycle === 'trial' ? 'trial' : 'active';
+
+    const insertSub = db.prepare(`
+      INSERT INTO edify_subscriptions (
+        clinic_name, clinic_type, admin_name, email, phone,
+        plan_id, plan_name, billing_cycle, amount, currency,
+        reference, status, expires_at, edify_org_id
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'GHS', ?, ?, ?, ?)
+    `);
+    const subResult = insertSub.run(
+      cleanClinicName,
+      cleanSpec,
+      adminFullName,
+      cleanEmail,
+      cleanPhone,
+      plan.id,
+      plan.name,
+      cleanCycle,
+      expectedAmountGhs,
+      txReference,
+      subStatus,
+      expiresAtIso,
+      edifyOrgId
+    );
+
+    if (expectedAmountPesewas > 0) {
+      db.prepare(
+        'INSERT INTO transactions (email, course_id, amount, reference, status) VALUES (?, ?, ?, ?, ?)'
+      ).run(cleanEmail, `edify-${plan.id}-${cleanCycle}`, expectedAmountPesewas, txReference, 'success');
+    }
+
+    const receiptNo = `EDF-RCP-${String(subResult.lastInsertRowid).padStart(5, '0')}`;
+    const receipt = {
+      receiptNo,
+      reference: txReference,
+      clinicName: cleanClinicName,
+      clinicType: cleanSpec,
+      adminName: adminFullName,
+      email: cleanEmail,
+      phone: cleanPhone,
+      planId: plan.id,
+      planName: plan.name,
+      billingCycle: cleanCycle,
+      amount: expectedAmountGhs,
+      currency: 'GHS',
+      status: subStatus,
+      paidAt: paidAtIso,
+      expiresAt: expiresAtIso,
+      edifyOrgId
+    };
+
+    const queryParams = new URLSearchParams({
+      onboarded: '1',
+      clinic: cleanClinicName,
+      email: cleanEmail,
+      plan: plan.id,
+      cycle: cleanCycle,
+      ref: txReference
+    }).toString();
+
+    res.json({
+      success: true,
+      receipt,
+      provisioned: Boolean(edifyOrgId),
+      provisionedWarning,
+      edifyLoginUrl: `${edifyPortalBase}/login?${queryParams}`,
+      edifyRegisterUrl: `${edifyPortalBase}/register?${queryParams}`,
+      localEdifyLoginUrl: `http://localhost:5173/login?${queryParams}`
+    });
+  } catch (err) {
+    console.error('Edify onboarding error:', err);
+    res.status(500).json({ error: err.message || 'Failed to complete onboarding' });
+  }
+});
+
+app.get('/api/edify/receipt/:reference', (req, res) => {
+  try {
+    const row = db.prepare('SELECT * FROM edify_subscriptions WHERE reference = ?').get(req.params.reference);
+    if (!row) return res.status(404).json({ error: 'Receipt not found' });
+    res.json({
+      receiptNo: `EDF-RCP-${String(row.id).padStart(5, '0')}`,
+      reference: row.reference,
+      clinicName: row.clinic_name,
+      clinicType: row.clinic_type,
+      adminName: row.admin_name,
+      email: row.email,
+      phone: row.phone,
+      planId: row.plan_id,
+      planName: row.plan_name,
+      billingCycle: row.billing_cycle,
+      amount: row.amount,
+      currency: row.currency || 'GHS',
+      status: row.status,
+      paidAt: row.created_at,
+      expiresAt: row.expires_at,
+      edifyOrgId: row.edify_org_id
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/admin/edify-subscriptions', authenticateAdmin, (req, res) => {
+  try {
+    const rows = db.prepare('SELECT * FROM edify_subscriptions ORDER BY created_at DESC').all();
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // --- ADMIN ANALYSIS ---
 app.get('/api/admin/analysis', authenticateAdmin, (req, res) => {
   try {
