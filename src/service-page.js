@@ -1,4 +1,4 @@
-// Lightweight JS for service pages — cursor + nav scroll state only
+// Lightweight JS for service pages - cursor + nav scroll state only
 import './style.css';
 
 // Custom cursor
@@ -21,7 +21,7 @@ if (nav && !nav.classList.contains('nav--scrolled')) {
   nav.classList.add('nav--scrolled');
 }
 
-// Scroll reveal — simple IntersectionObserver for glass cards
+// Scroll reveal - simple IntersectionObserver for glass cards
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {

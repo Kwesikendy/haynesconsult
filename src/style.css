@@ -3323,3 +3323,258 @@ body.cursor--hover .cursor-follower { width: 60px; height: 60px; border-color: v
   background: var(--royal);
   transform: scale(1.3);
 }
+
+
+/* ==========================================================================
+   SOFT-UI (NEUMORPHISM) ACCENTS + DE-AI POLISH
+   Neumorphism is opt-in, only on flat matte off-white surfaces (--neu-bg).
+   Text, forms and primary CTAs stay high-contrast and are never softened.
+   ========================================================================== */
+:root {
+  --neu-bg:        #EEF2F6;
+  --neu-light:     rgba(255, 255, 255, 0.85);
+  --neu-dark:      rgba(163, 177, 198, 0.45);
+  --neu-light-in:  rgba(255, 255, 255, 0.8);
+  --neu-edge:      rgba(255, 255, 255, 0.4);
+  --neu-radius:    20px;
+  --neu-raised:    -6px -6px 14px var(--neu-light), 6px 6px 14px var(--neu-dark);
+  --neu-raised-sm: -4px -4px 9px var(--neu-light), 4px 4px 9px var(--neu-dark);
+  --neu-inset:     inset -4px -4px 10px var(--neu-light-in), inset 4px 4px 10px var(--neu-dark);
+  --neu-inset-sm:  inset -3px -3px 7px var(--neu-light-in), inset 3px 3px 7px var(--neu-dark);
+}
+
+/* Flat matte surface host: add .neu-surface (or use the section hooks below) */
+.neu-surface,
+.services, .process, .projects, .edify-pricing, #edify-flagship {
+  background: var(--neu-bg) !important;
+}
+
+/* ---- Reusable utilities ---- */
+.neu-raised {
+  background: var(--neu-bg);
+  border: 1px solid var(--neu-edge);
+  border-radius: var(--neu-radius);
+  box-shadow: var(--neu-raised);
+  transition: all 0.25s ease;
+}
+.neu-raised--press:hover,
+.neu-raised--press:active { box-shadow: var(--neu-inset); }
+
+.neu-inset {
+  background: var(--neu-bg);
+  border-radius: var(--neu-radius);
+  box-shadow: var(--neu-inset);
+  transition: all 0.25s ease;
+}
+
+.neu-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--neu-bg);
+  color: var(--navy);
+  border: 1px solid var(--neu-edge);
+  border-radius: 100px;
+  box-shadow: var(--neu-raised-sm);
+  transition: all 0.25s ease;
+}
+
+/* Debossed track + tactile raised active tab (billing / pipeline / switches) */
+.neu-track {
+  background: var(--neu-bg);
+  border-radius: 100px;
+  box-shadow: var(--neu-inset);
+}
+.neu-tab {
+  background: transparent;
+  color: var(--navy);
+  border: 1px solid transparent;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.neu-tab:hover { color: var(--royal); }
+.neu-tab:active { box-shadow: var(--neu-inset-sm); }
+.neu-tab.active, .neu-tab[aria-selected="true"] {
+  background: var(--neu-bg);
+  color: var(--navy);
+  border-color: var(--neu-edge);
+  box-shadow: var(--neu-raised-sm);
+}
+
+/* ---- 1. Three Pillars: extruded cards, depress on hover ---- */
+.services__card.glass-card {
+  background: var(--neu-bg);
+  border: 1px solid var(--neu-edge);
+  border-radius: var(--neu-radius);
+  box-shadow: var(--neu-raised);
+  transition: all 0.25s ease;
+}
+.services__card.glass-card:hover {
+  transform: none;
+  box-shadow: var(--neu-inset);
+}
+.services__card-icon-wrapper {
+  width: 72px; height: 72px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--neu-bg);
+  border: 1px solid var(--neu-edge);
+  border-radius: var(--neu-radius);
+  box-shadow: var(--neu-raised-sm);
+  perspective: none;
+  transition: all 0.25s ease;
+}
+.services__card:hover .services__card-icon-wrapper { box-shadow: var(--neu-inset-sm); }
+/* spinning 3D cube -> static front icon */
+.services__card-icon-3d { width: 28px; height: 28px; perspective: none; animation: none !important; }
+.icon3d-cube { transform: none !important; animation: none !important; transform-style: flat; }
+.icon3d-face { position: static; backface-visibility: visible; transform: none !important; background: none; border: 0; box-shadow: none; width: 28px; height: 28px; color: var(--navy); }
+.icon3d-face:not(.icon3d-face--front) { display: none; }
+.services__card-number { display: none; }             /* decorative 01/02/03, not a sequence */
+.services__card--featured::after { display: none; }   /* stray "Most Popular" on a pillar */
+.services__card-glow, .services__card-shine, .services__bg-orb { display: none; }
+
+/* ---- Edify flagship (home) ---- */
+#edify-flagship { border-color: transparent !important; }
+.about__pillar {
+  background: var(--neu-bg);
+  border: 1px solid var(--neu-edge);
+  border-radius: var(--neu-radius);
+  box-shadow: var(--neu-raised-sm);
+  transition: all 0.25s ease;
+}
+.about__pillar:hover { transform: none; background: var(--neu-bg); box-shadow: var(--neu-inset-sm); border-color: transparent; }
+.about__pillar-icon {
+  background: var(--neu-bg);
+  border: 1px solid var(--neu-edge);
+  border-radius: 16px;
+  box-shadow: var(--neu-raised-sm);
+  color: var(--navy);
+}
+.about__pillar p { color: var(--navy); opacity: 0.8; }
+#edify-flagship .about__right .glass-card { background: var(--neu-bg); border: 1px solid var(--neu-edge) !important; box-shadow: var(--neu-raised); }
+
+/* ---- Edify product page: billing switch, queue/scribe preview, pipeline ---- */
+body .edify-billing-toggle {
+  background: var(--neu-bg);
+  border: 0;
+  box-shadow: var(--neu-inset);
+}
+body .edify-billing-btn { transition: all 0.25s ease; border: 1px solid transparent; }
+body .edify-billing-btn.active {
+  background: var(--neu-bg);
+  color: var(--navy);
+  border-color: var(--neu-edge);
+  box-shadow: var(--neu-raised-sm);
+}
+body .edify-pricing { background: var(--neu-bg) !important; }
+body .edify-plan-card {
+  background: var(--neu-bg);
+  border: 1px solid var(--neu-edge);
+  border-radius: var(--neu-radius);
+  box-shadow: var(--neu-raised);
+  transition: all 0.25s ease;
+}
+body .edify-plan-card--popular { border: 2px solid var(--navy); transform: none; }
+body .edify-console { background: var(--neu-bg); box-shadow: var(--neu-raised); border: 1px solid var(--neu-edge); }
+body .edify-queue-token { box-shadow: var(--neu-raised-sm); transition: all 0.25s ease; }  /* navy stays solid */
+body .edify-console-metric { background: var(--neu-bg); border: 1px solid var(--neu-edge); box-shadow: var(--neu-raised-sm); transition: all 0.25s ease; }
+body .edify-console-metric:hover, body .edify-queue-token:hover { box-shadow: var(--neu-inset-sm); }
+body .edify-pipeline-strip { background: var(--neu-bg); border: 0; box-shadow: var(--neu-inset); border-radius: 16px; }
+body .edify-pipeline-badges span {
+  background: transparent; border: 1px solid transparent; color: var(--navy);
+  transition: all 0.25s ease;
+}
+body .edify-pipeline-badges span.active {
+  background: var(--neu-bg); color: var(--navy); font-weight: 800;
+  border-color: var(--neu-edge); box-shadow: var(--neu-raised-sm);
+}
+/* Onboarding wizard inputs: deliberately NOT neumorphic - crisp borders for legibility */
+.edify-modal-overlay input, .edify-modal-overlay select, .edify-modal-overlay textarea {
+  background: #fff; color: var(--navy); border: 1.5px solid rgba(13, 43, 126, 0.45); box-shadow: none;
+}
+.edify-modal-overlay input:focus, .edify-modal-overlay select:focus, .edify-modal-overlay textarea:focus {
+  outline: 3px solid rgba(21, 101, 192, 0.35); outline-offset: 1px; border-color: var(--royal);
+}
+
+/* ---- 3. Our Work & Impact: stat callouts as soft pills ---- */
+.projects__card-stats { background: none; border: 0; padding: 4px 0; gap: 14px; }
+.projects__stat {
+  background: var(--neu-bg);
+  border: 1px solid var(--neu-edge);
+  border-radius: 100px;
+  box-shadow: var(--neu-raised-sm);
+  padding: 10px 14px;
+  transition: all 0.25s ease;
+}
+.projects__stat:hover { box-shadow: var(--neu-inset-sm); }
+.projects__stat-num {
+  background: none; -webkit-text-fill-color: currentColor; color: var(--navy);
+  font-weight: 900;
+}
+.projects__stat-label { color: var(--navy); opacity: 0.8; font-weight: 700; }
+
+/* ---- 4. Process: raised medallions on a debossed progress line ---- */
+.process__bg { display: none; }
+.process__line {
+  width: 8px; border-radius: 8px;
+  background: var(--neu-bg);
+  box-shadow: var(--neu-inset-sm);
+}
+.process__step-number {
+  width: 60px; height: 60px;
+  background: var(--neu-bg);
+  color: var(--navy);
+  border: 1px solid var(--neu-edge);
+  box-shadow: var(--neu-raised);
+  transition: all 0.25s ease;
+}
+.process__step:hover .process__step-number { box-shadow: var(--neu-inset); }
+.process__step-card.glass-card { background: #fff; box-shadow: 0 1px 2px rgba(13,43,126,.08); border: 1px solid rgba(13,43,126,.1); }
+.process__step-body { color: var(--navy); opacity: 0.8; }
+
+/* ---- De-AI polish (flat, quiet, purposeful) ---- */
+/* glassmorphism -> opaque surfaces, no blur */
+.glass-card { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--white); }
+.glass-card::before { display: none; }
+/* label above headline: plain eyebrow text, not a pill */
+.section-badge {
+  background: none; border: 0; border-radius: 0; padding: 0 0 0 14px;
+  border-left: 3px solid var(--royal);
+  letter-spacing: 0.12em; color: var(--navy);
+}
+/* gradient text -> solid colour */
+.projects__stat-num, .text-accent { background: none; -webkit-text-fill-color: currentColor; }
+/* no decorative looping motion / swivel zoom */
+.animate-float, .hover-swivel { animation: none !important; }
+.hover-swivel:hover { transform: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .neu-raised, .neu-inset, .neu-pill, .neu-tab { transition: none; }
+}
+
+/* ---- Mobile: soften shadow scale so it never looks heavy or clipped ---- */
+@media (max-width: 768px) {
+  :root {
+    --neu-raised:    -4px -4px 10px var(--neu-light), 4px 4px 10px var(--neu-dark);
+    --neu-raised-sm: -3px -3px 7px var(--neu-light), 3px 3px 7px var(--neu-dark);
+    --neu-inset:     inset -3px -3px 7px var(--neu-light-in), inset 3px 3px 7px var(--neu-dark);
+  }
+  .process__line { display: none; }
+}
+
+
+/* ---- Accessibility baseline (ECC frontend-a11y) ---- */
+:focus-visible {
+  outline: 3px solid var(--royal);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.btn--primary:focus-visible { outline-color: var(--navy); }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -4,18 +4,39 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Edify Healthcare OS — Automated EHR, Queue & Clinic Management | Haynes Consult</title>
+  <title>Edify Healthcare OS - Automated EHR, Queue & Clinic Management | Haynes Consult</title>
   <meta name="description" content="Edify by Haynes Consult is the all-in-one automated healthcare operating system for General Hospitals, Dental Clinics, Specialist Practices, and Optical Centres. Self-serve signup, instant activation, AI Voice Scribe, Digital Queue System, and automated patient reminders." />
   
   <!-- Open Graph / Facebook / LinkedIn -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Edify Healthcare OS — Automated EHR & Clinic Management | Haynes Consult" />
+  <meta property="og:title" content="Edify Healthcare OS - Automated EHR & Clinic Management | Haynes Consult" />
   <meta property="og:description" content="Digitize and automate your hospital or clinic in minutes. Select a package, sign up, pay, and activate your Edify workspace automatically." />
   <meta property="og:image" content="https://haynesconsult.com/hc.png" />
+  <meta property="og:url" content="https://haynesconsult.com/health-dashboard" />
+  <link rel="canonical" href="https://haynesconsult.com/health-dashboard" />
+
+  <!-- Structured data: Edify as a SaaS product with its three public plans -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Edify Healthcare OS",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Web",
+    "url": "https://edify.haynesconsult.com",
+    "description": "Cloud EHR, AI clinical voice scribe, digital queue management and automated patient reminders for hospitals and clinics.",
+    "publisher": { "@type": "Organization", "name": "Haynes Consult", "url": "https://haynesconsult.com" },
+    "offers": [
+      { "@type": "Offer", "name": "Starter Clinic", "price": "600", "priceCurrency": "GHS" },
+      { "@type": "Offer", "name": "Professional Clinic", "price": "1000", "priceCurrency": "GHS" },
+      { "@type": "Offer", "name": "Enterprise Hospital", "price": "2200", "priceCurrency": "GHS" }
+    ]
+  }
+  </script>
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Edify Healthcare OS — Automated EHR & Clinic Management | Haynes Consult" />
+  <meta name="twitter:title" content="Edify Healthcare OS - Automated EHR & Clinic Management | Haynes Consult" />
   <meta name="twitter:description" content="Digitize and automate your hospital or clinic in minutes. Select a package, sign up, pay, and activate your Edify workspace automatically." />
   <meta name="twitter:image" content="https://haynesconsult.com/hc.png" />
 
@@ -764,7 +785,7 @@
   </div>
 
   <!-- ============================================================ -->
-  <!-- HERO SECTION — EDIFY HEALTHCARE OS                           -->
+  <!-- HERO SECTION - EDIFY HEALTHCARE OS                           -->
   <!-- ============================================================ -->
   <section class="edify-hero" id="dashboard-hero">
     <div class="section-container">
@@ -772,13 +793,13 @@
         <div data-animate="slideLeft">
           <div class="section-badge">Flagship Product by Haynes Consult</div>
           <h1 class="section-title" style="margin-bottom: 20px;">
-            <span class="text-accent">Edify</span> — The Automated Operating System for Modern Clinics &amp; Hospitals
+            <span class="text-accent">Edify</span> - The Automated Operating System for Modern Clinics &amp; Hospitals
           </h1>
           <p class="section-body" style="font-size: 1.12rem; margin-bottom: 18px;">
             Replace paper folders, crowded waiting rooms, and missed appointments with one intelligent platform. Edify unifies <strong>FHIR R4 Electronic Health Records</strong>, <strong>AI Clinical Voice Scribe</strong>, <strong>Digital Queue Management</strong>, <strong>Automated SMS &amp; Email Reminders</strong>, and <strong>NHIS/Private Billing</strong>.
           </p>
           <p class="section-body" style="font-size: 0.98rem;">
-            No manual sales calls required — choose your clinic package below, create your administrator account, complete instant checkout, and your hospital workspace activates automatically.
+            No manual sales calls required - choose your clinic package below, create your administrator account, complete instant checkout, and your hospital workspace activates automatically.
           </p>
 
           <div class="edify-hero__actions">
@@ -805,21 +826,8 @@
             </div>
 
             <a href="https://edify.haynesconsult.com" target="_blank" rel="noopener" style="display:block; margin-bottom: 16px; border-radius: 16px; overflow: hidden; border: 1px solid rgba(21, 101, 192, 0.18); box-shadow: 0 12px 28px rgba(10, 36, 99, 0.12);">
-              <img src="/edify.png" alt="Edify Healthcare Platform — edify.haynesconsult.com" style="width: 100%; height: auto; display: block; object-fit: cover;" />
+              <img src="/edify.png" alt="Edify Healthcare Platform - edify.haynesconsult.com" style="width: 100%; height: auto; display: block; object-fit: cover;" />
             </a>
-
-            <div class="edify-queue-preview">
-              <div class="edify-queue-token">
-                <small>Now Serving · Room 2</small>
-                <strong>Token A014</strong>
-                <span>Assigned: Dr. Mensah · Dental / OPD</span>
-              </div>
-              <div class="edify-console-metric">
-                <small>AI Voice Scribe</small>
-                <strong>SOAP Auto-Drafted</strong>
-                <span>ICD-10 &amp; Rx generated in 4.2s</span>
-              </div>
-            </div>
 
             <div class="edify-pipeline-strip">
               <div class="edify-pipeline-strip__title">Automated Patient Queue Lifecycle</div>
@@ -1024,10 +1032,10 @@
         <p class="section-subtitle">Transparent pricing in Ghana Cedis (GH₵). Sign up online, receive your official payment receipt immediately, and access your activated clinic portal in under 2 minutes.</p>
 
         <div class="edify-billing-toggle" role="tablist" aria-label="Billing Cycle Toggle">
-          <button type="button" class="edify-billing-btn active" id="toggleMonthlyBtn" onclick="setBillingCycle('monthly')">
+          <button type="button" class="edify-billing-btn active" id="toggleMonthlyBtn" role="tab" aria-selected="true" onclick="setBillingCycle('monthly')">
             Monthly Billing
           </button>
-          <button type="button" class="edify-billing-btn" id="toggleAnnualBtn" onclick="setBillingCycle('annual')">
+          <button type="button" class="edify-billing-btn" id="toggleAnnualBtn" role="tab" aria-selected="false" onclick="setBillingCycle('annual')">
             Annual Billing <span class="edify-save-pill">Save up to 24%</span>
           </button>
         </div>
@@ -1145,12 +1153,12 @@
             <strong id="summaryPlanName" style="font-family:var(--font-head); font-size:18px; color:var(--navy);">Professional Clinic</strong>
           </div>
           <div style="display:flex; gap:10px; align-items:center;">
-            <select id="onboardPlanSelect" onchange="updateOnboardingSummary()" style="padding:8px 12px; border-radius:10px; border:1px solid rgba(21,101,192,0.25); font-weight:700; color:var(--navy); background:var(--white);">
+            <select id="onboardPlanSelect" aria-label="Selected package" onchange="updateOnboardingSummary()" style="padding:8px 12px; border-radius:10px; border:1px solid rgba(21,101,192,0.25); font-weight:700; color:var(--navy); background:var(--white);">
               <option value="starter">Starter Clinic</option>
               <option value="professional" selected>Professional Clinic</option>
               <option value="enterprise">Enterprise Hospital</option>
             </select>
-            <select id="onboardCycleSelect" onchange="updateOnboardingSummary()" style="padding:8px 12px; border-radius:10px; border:1px solid rgba(21,101,192,0.25); font-weight:700; color:var(--navy); background:var(--white);">
+            <select id="onboardCycleSelect" aria-label="Billing cycle" onchange="updateOnboardingSummary()" style="padding:8px 12px; border-radius:10px; border:1px solid rgba(21,101,192,0.25); font-weight:700; color:var(--navy); background:var(--white);">
               <option value="monthly">Monthly Billing</option>
               <option value="annual">Annual Billing (Save up to 24%)</option>
               <option value="trial">14-Day Free Trial (GH₵ 0 Today)</option>
@@ -1204,7 +1212,7 @@
         <div class="edify-form-grid">
           <div class="edify-field">
             <label for="onboardBranch">Primary Branch Location *</label>
-            <input type="text" id="onboardBranch" required placeholder="East Legon, Accra" value="Main Branch — Accra" />
+            <input type="text" id="onboardBranch" required placeholder="East Legon, Accra" value="Main Branch - Accra" />
           </div>
           <div class="edify-field">
             <label for="onboardPassword">Create Portal Password (min. 12 chars) *</label>
@@ -1386,6 +1394,8 @@
       currentBillingCycle = cycle;
       document.getElementById('toggleMonthlyBtn').classList.toggle('active', cycle === 'monthly');
       document.getElementById('toggleAnnualBtn').classList.toggle('active', cycle === 'annual');
+      document.getElementById('toggleMonthlyBtn').setAttribute('aria-selected', String(cycle === 'monthly'));
+      document.getElementById('toggleAnnualBtn').setAttribute('aria-selected', String(cycle === 'annual'));
 
       Object.keys(EDIFY_PRICING).forEach((planId) => {
         const plan = EDIFY_PRICING[planId];
@@ -1552,7 +1562,7 @@
         }
 
         const r = data.receipt;
-        document.getElementById('rcpClinicName').textContent = r.clinicName + ' — Active';
+        document.getElementById('rcpClinicName').textContent = r.clinicName + ' - Active';
         document.getElementById('rcpNumber').textContent = r.receiptNo;
         document.getElementById('rcpPlan').textContent = r.planName + ' (' + r.billingCycle.toUpperCase() + ')';
         document.getElementById('rcpAmount').textContent = 'GH₵ ' + Number(r.amount).toLocaleString();

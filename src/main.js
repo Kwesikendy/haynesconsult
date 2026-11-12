@@ -1,5 +1,5 @@
 /**
- * HAYNES CONSULT — MAIN JS
+ * HAYNES CONSULT - MAIN JS
  * Premium Light-Theme Rebuild
  * Typing animation hero · Crystal navbar · Floating blobs
  */
@@ -15,7 +15,7 @@ const isMobile = window.matchMedia('(max-width: 768px)').matches;
 const isTouch  = window.matchMedia('(pointer: coarse)').matches;
 
 /* ============================================================
-   SMOOTH SCROLL — LENIS
+   SMOOTH SCROLL - LENIS
 ============================================================ */
 const lenis = new Lenis({
   duration: 1.1,
@@ -44,7 +44,7 @@ document.querySelectorAll('a[href^="#"]').forEach((el) => {
 });
 
 /* ============================================================
-   LOADER — Light Theme
+   LOADER - Light Theme
 ============================================================ */
 const loader = document.getElementById('loader');
 const loaderProgress = document.getElementById('loaderProgress');
@@ -124,7 +124,7 @@ if (cursor && cursorFollower && window.matchMedia('(pointer: fine)').matches && 
 }
 
 /* ============================================================
-   HERO CANVAS — updated for light background
+   HERO CANVAS - updated for light background
 ============================================================ */
 function initCanvas() {
   const canvas = document.getElementById('heroCanvas');
@@ -197,7 +197,7 @@ function initCanvas() {
       ctx.fill();
     });
 
-    // Connection lines — blue on light bg
+    // Connection lines - blue on light bg
     ctx.lineWidth = 0.5;
     for (let i = 0; i < 50; i++) {
       const a = particles[i];
@@ -230,7 +230,7 @@ function initCanvas() {
 }
 
 /* ============================================================
-   HERO SLIDER — Word-bounce animation + video crossfade
+   HERO SLIDER - Word-bounce animation + video crossfade
    Slide 1 → video right-positioned (heroo.mp4)
    Slide 2 → video centred (heroo2.mp4)
 ============================================================ */
@@ -560,7 +560,7 @@ document.querySelectorAll('.hover-swivel').forEach((card) => {
 });
 
 /* ============================================================
-   TEXT SCRAMBLE — service card titles
+   TEXT SCRAMBLE - service card titles
 ============================================================ */
 const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -591,7 +591,7 @@ document.querySelectorAll('.services__card-title').forEach((el) => {
 });
 
 /* ============================================================
-   NAVBAR ENTRANCE — slide down on load
+   NAVBAR ENTRANCE - slide down on load
 ============================================================ */
 gsap.from('.nav', {
   y: -80,

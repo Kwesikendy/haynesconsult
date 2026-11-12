@@ -18,7 +18,7 @@
       window.location.href = '/login.html';
     }
 
-    // On load: validate the JWT against the server — catches expired tokens
+    // On load: validate the JWT against the server - catches expired tokens
     window.addEventListener("DOMContentLoaded", () => {
       const token = localStorage.getItem('haynesToken');
       const base = window.location.hostname === 'localhost' || window.location.hostname.includes('127.0.0.1')
@@ -27,7 +27,7 @@
         headers: { 'Authorization': 'Bearer ' + token }
       }).then(r => {
         if (r.status === 401 || r.status === 403) {
-          // Token invalid or expired — force re-login
+          // Token invalid or expired - force re-login
           localStorage.removeItem('haynesAdmin');
           localStorage.removeItem('haynesToken');
           localStorage.removeItem('haynesUserEmail');
@@ -453,7 +453,7 @@
         </div>
 
         <div class="form-group">
-          <label>Course Materials — PDFs <span style="font-weight:500;color:rgba(13,43,126,0.45);text-transform:none;font-size:11px;">(optional)</span></label>
+          <label>Course Materials - PDFs <span style="font-weight:500;color:rgba(13,43,126,0.45);text-transform:none;font-size:11px;">(optional)</span></label>
           <div class="file-drop" onclick="document.getElementById('c_pdfs').click()">
             <div class="file-drop-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--royal)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
@@ -621,7 +621,7 @@
     const fetchApiBase = window.location.hostname === 'localhost' || window.location.hostname.includes('127.0.0.1') ? 'http://localhost:3001' : '';
 
     async function loadAdminCourses() {
-        // Revenue is now fetched in the security enforcer with auth — skip here to avoid duplicate
+        // Revenue is now fetched in the security enforcer with auth - skip here to avoid duplicate
 
       try {
         const res = await fetch(fetchApiBase + '/api/courses');

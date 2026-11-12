@@ -14,7 +14,8 @@ description: Enforces the architectural and visual design system of the Haynes C
   - `var(--royal)` and `var(--sky)` for accents and secondary text.
   - `var(--white)`, `var(--ice)`, or `var(--body-bg)` for lighter sections.
 - **Maintain Contrast:** The standard background is a light ice-blue color. Text on light backgrounds MUST be `var(--navy)` or `var(--royal)` to ensure proper contrast. Avoid using `color: #ffffff;` unless the text is placed on a dark background or dark gradient (like `var(--navy)`).
-- **Glassmorphism Aesthetic**: Use established classes like `.glass-card` for transparent, card-like components. Do not invent new card styling rules if a glass card is appropriate. 
+- **Surfaces (updated)**: `.glass-card` is now an opaque flat card (no blur). Use `.neu-raised` / `.neu-inset` / `.neu-pill` / `.neu-track` / `.neu-tab` (end of `src/style.css`) ONLY on matte `--neu-bg` (#EEF2F6) sections for tactile accents. Keep text, forms and primary CTAs high-contrast. See the global `soft-ui-anti-ai-design` skill for the full rules and the 15 AI-look patterns to avoid.
+- **Zero Em Dashes (Copy & Typography Rule)**: Never use em dashes (`—`, `&mdash;`, `&#8212;`). Em dashes look distinctly like AI-generated promotional copy. Replace with standard hyphens (` - `) or break sentences into clean, direct phrases.
 - **Uniform Navigation**: Ensure any newly created or modified `.html` pages include the exact, uniform `<nav class="nav" id="nav">` block containing the dropdown menu structure found in `index.html`. 
 
 ## Best Practices / Workflow
@@ -58,3 +59,4 @@ description: Enforces the architectural and visual design system of the Haynes C
 - "Add a new section to..."
 - "The color looks wrong on the text..."
 - "Make the navigation consistent"
+
